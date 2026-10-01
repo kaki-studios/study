@@ -8,7 +8,7 @@ solutions. Notes are written in LaTeX and I read them as a hot-reloaded PDF.
 - Studying math to build real understanding, not just pass exams.
 - Link new ideas to code or CS analogies where they genuinely help, and
   say where the analogy breaks down.
-- Math background: <fill in, e.g. "high-school calculus, rusty">.
+- Math background: Intermediate/Advanced high-school level.
 
 ## Layout
 Each topic is a directory (e.g. `math/linear-algebra/`) containing:

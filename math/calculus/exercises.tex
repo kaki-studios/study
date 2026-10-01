@@ -1,0 +1,53 @@
+%! TEX root = main.tex
+
+\begin{exercise}\label{ex:calc-1}
+Using the $\varepsilon$--$\delta$ definition, prove that
+\[\lim_{x\to -1}(3x+4)=1.\]
+\end{exercise}
+
+\begin{exercise}\label{ex:calc-2}
+Using the $\varepsilon$--$\delta$ definition, prove that
+\[\lim_{x\to 1}(x^2+x)=2.\]
+\end{exercise}
+
+\begin{exercise}\label{ex:calc-3}
+Let $c\in\R$.  Prove directly from the definition that
+\[\lim_{x\to a}c=c\]
+for every accumulation point $a$ of the domain.
+\end{exercise}
+
+\begin{exercise}\label{ex:calc-4}
+Let
+\[
+ f(x)=\begin{cases}
+  x^2, & x\ne 2,\\
+  17, & x=2.
+ \end{cases}
+\]
+Prove that $\lim_{x\to2}f(x)=4$ directly from the definition.
+\end{exercise}
+
+\begin{exercise}\label{ex:calc-5}
+Prove from the negation of the definition that
+\[\lim_{x\to0}\frac{1}{x}\]
+does not exist as a real number.
+\end{exercise}
+
+\begin{exercise}\label{ex:calc-6}
+Let $f:D\to\R$ and let $a$ be an accumulation point of $D$.  Suppose that
+$\lim_{x\to a}f(x)=L$.  Prove that for every $r>0$, there exists a
+$\delta>0$ such that
+\[
+  x\in D\text{ and }0<\abs{x-a}<\delta
+  \quad\Longrightarrow\quad \abs{f(x)}<\abs{L}+r.
+\]
+\end{exercise}
+
+\begin{exercise}\label{ex:calc-7}
+Write pseudocode for a procedure which, given a tolerance $\varepsilon>0$,
+returns a valid $\delta$ for the claim
+\[\lim_{x\to2}x^2=4.\]
+Specify its precondition and postcondition, then prove the postcondition from
+the $\varepsilon$--$\delta$ definition.
+\end{exercise}
+

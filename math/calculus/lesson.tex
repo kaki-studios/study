@@ -1,0 +1,118 @@
+%! TEX root = main.tex
+
+\subsection{Roadmap: from intuition to proofs}
+
+You already know how to compute many limits and integrals.  This course is
+about stating precisely what those computations mean, and proving that the
+rules you use are valid.  We will proceed in this order:
+\begin{enumerate}
+  \item limits and their $\varepsilon$--$\delta$ definition;
+  \item continuity and its consequences (especially the intermediate value
+    and extreme value theorems);
+  \item differentiability, the mean value theorem, and rigorous local
+    approximation;
+  \item sequences and series, including convergence tests and uniform ideas
+    where they matter;
+  \item the Riemann integral and the theorem connecting integration with
+    antiderivatives.
+\end{enumerate}
+The dependency graph is real: the completeness of $\R$ drives the main global
+theorems about continuous functions, while sequences give a second, often more
+usable, language for limits.
+
+\subsection{Limits: the local contract}
+
+The informal statement ``$f(x)$ gets close to $L$ when $x$ gets close to
+$a$'' hides a contract between two players.  An adversary first chooses any
+desired output accuracy $\varepsilon>0$.  You must then give an input radius
+$\delta>0$ which guarantees that accuracy.  Crucially, your $\delta$ may
+depend on $\varepsilon$, but not on the particular $x$ later chosen inside
+that radius.
+
+\begin{definition}[Limit at a point]
+Let $D\subseteq\R$, let $f:D\to\R$, and suppose that $a$ is an
+\emph{accumulation point} of $D$: every interval around $a$ contains a point
+of $D$ distinct from $a$.  We write
+\[
+  \lim_{x\to a}f(x)=L
+\]
+if, for every $\varepsilon>0$, there is a $\delta>0$ such that for every
+$x\in D$,
+\[
+  0<\abs{x-a}<\delta \quad\Longrightarrow\quad \abs{f(x)-L}<\varepsilon.
+\]
+\end{definition}
+
+The exclusion $x\ne a$ is not decoration: a limit describes values nearby,
+not necessarily at, $a$.  Thus changing $f(a)$ never changes a limit at $a$.
+The accumulation-point condition prevents a vacuous definition---without
+nearby domain points, any $L$ would satisfy the implication.
+
+\begin{example}
+Prove $\lim_{x\to 3}(2x-1)=5$.  Let $\varepsilon>0$.  Choose
+$\delta=\varepsilon/2$.  If $0<\abs{x-3}<\delta$, then
+\[
+  \abs{(2x-1)-5}=2\abs{x-3}<2\delta=\varepsilon.
+\]
+Since this works for every $\varepsilon>0$, the limit is $5$.
+\end{example}
+
+This proof is the ideal simple shape: begin with an arbitrary $\varepsilon$,
+announce a positive $\delta$, and turn the assumed bound on $\abs{x-a}$ into
+the required bound.  Working backwards before writing the proof often reveals
+the right choice of $\delta$.
+
+\begin{example}
+Prove $\lim_{x\to 2}x^2=4$.  We have
+\[
+  \abs{x^2-4}=\abs{x-2}\abs{x+2}.
+\]
+The second factor is troublesome: it is not controlled directly by the output
+tolerance.  First impose the auxiliary condition $\abs{x-2}<1$.  Then
+$1<x<3$, so $\abs{x+2}<5$.  Given $\varepsilon>0$, set
+\[
+  \delta=\min\left\{1,\frac{\varepsilon}{5}\right\}.
+\]
+For $0<\abs{x-2}<\delta$, the auxiliary bound gives
+\[
+  \abs{x^2-4}<5\abs{x-2}<5\delta\leq\varepsilon.
+\]
+\end{example}
+
+The $\min$ is the standard way to satisfy multiple local requirements at
+once.  It is analogous to establishing an invariant (here, $\abs{x+2}<5$)
+before using it.  Unlike a program invariant, however, the claim quantifies
+over a continuum of possible inputs, so the proof must establish the bound
+symbolically.
+
+\begin{theorem}[Uniqueness of limits]
+If $\lim_{x\to a}f(x)=L$ and $\lim_{x\to a}f(x)=M$, then $L=M$.
+\end{theorem}
+
+\begin{proof}
+Suppose instead that $L\ne M$, and put
+$\varepsilon=\abs{L-M}/3>0$.  Obtain positive radii $\delta_L,\delta_M$
+from the two limit statements for this same $\varepsilon$.  Since $a$ is an
+accumulation point, choose $x\in D$ with
+$0<\abs{x-a}<\min\{\delta_L,\delta_M\}$.  The triangle inequality gives
+\[
+  \abs{L-M}\leq \abs{L-f(x)}+\abs{f(x)-M}
+  <2\varepsilon=\frac{2}{3}\abs{L-M},
+\]
+which is impossible.  Therefore $L=M$.
+\end{proof}
+
+\begin{remark}[Common proof failures]
+\begin{itemize}
+  \item Choosing $\delta$ after seeing $x$ reverses the quantifiers and is
+  not a limit proof.
+  \item Saying ``take $x$ sufficiently close'' is the conclusion to prove;
+  name an explicit $\delta(\varepsilon)$.
+  \item A bound such as $\abs{x+2}<5$ needs a stated reason, typically an
+  auxiliary restriction like $\delta\leq1$.
+  \item To disprove a proposed limit, negate the definition correctly:
+  find some $\varepsilon_0>0$ such that every $\delta>0$ admits an $x$ with
+  $0<\abs{x-a}<\delta$ and $\abs{f(x)-L}\geq\varepsilon_0$.
+\end{itemize}
+\end{remark}
+
