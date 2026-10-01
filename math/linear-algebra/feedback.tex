@@ -1,0 +1,41 @@
+%! TEX root = main.tex
+
+\begin{feedback}[\cref{ex:la-1}]
+Parts (b) and (c) are correct.  In (b), your counterexample is sufficient: a subspace must be closed under scalar multiplication.  In (c), you correctly verify that the zero vector is present and that both required closure properties hold.
+
+Part (a) has the right strategy and conclusion, but there is an error in the scalar-multiplication computation.  From $v_1=(x_1,y_1,z_1)$, one has
+\[
+  av_1=(ax_1,ay_1,az_1),
+\]
+not $(ax_1,ay_1,z_1)$.  Your following line uses $az_1$, so the intended argument is valid once the displayed vector is corrected.  Also, the final closure property is closure under \emph{vector addition}, not vector multiplication.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-2}]
+Your formulation of the span and the criterion $au+bv=w$ are correct.  The conclusion is not: $w$ \emph{does} lie in the span.  The arithmetic error occurs after substituting $a=4-3b$ into the second equation.  It should give
+\[
+  2(4-3b)+b=3,
+\]
+because the second equation is $2a+b=3$; you instead changed both the left expression and right-hand side.  Solving the first two equations correctly gives coefficients that also satisfy the third equation.  Recheck that final substitution and then state the corresponding linear combination of $u$ and $v$.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-3}]
+Correct.  Your row operations produce a row-reduced echelon form with pivots in columns $1$ and $3$.  You then correctly take columns $1$ and $3$ from the \emph{original} matrix, not the reduced matrix, as the basis.  The relations $c_2=2c_1$ and $c_4=2c_1+c_3$ justify that these two independent columns span the whole column space, so its dimension is $2$.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-4}]
+Correct: you exhibit a nontrivial linear combination of the three polynomials that equals the zero polynomial, so the list is linearly dependent.  The relevant condition is that the coefficients are \emph{not all zero}; they do not need to sum to zero.  Here the coefficients are $1,1,-1$, and the displayed polynomial identity is exactly the justification required by the definition.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-5}]
+The algebra is correct and it proves the result.  There is one logical issue in the initial statement: linear dependence means that there exist $a,b$ which are \emph{not both zero}, rather than that both $a$ and $b$ are nonzero.  Your calculation actually handles the correct, more general condition: it shows that any equation
+\[
+  a(u-v)+b(u+v)=0
+\]
+forces $a=b=0$.  State that directly as a proof of independence, or use ``not both zero'' in the contradiction setup.  The use of independence of $u,v$ to obtain $a+b=0$ and $b-a=0$ is exactly right.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-6}]
+Your first sentence correctly identifies redundancy: a column is redundant when it is a linear combination of the other feature columns.  This indeed implies $\rank A<n$ when $A$ has $n$ columns.  More precisely, it means there is a nonzero coefficient vector $x$ with $Ax=0$; saying that the matrix ``collapses'' vectors to the same line or plane is not the right general description.
+
+The pivot-column claim needs one crucial correction.  The pivot columns of the \emph{row-reduced matrix} need not be a basis for the column space of $A$, because row operations generally change that column space.  Instead, row reduction tells you the pivot \emph{indices}; take the columns with those indices from the \emph{original matrix} $A$.  Those original columns form a nonredundant basis for the same column space.
+\end{feedback}

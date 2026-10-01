@@ -1,0 +1,155 @@
+%! TEX root = main.tex
+
+\begin{solution}{ex:la-1}
+  (a)
+  We immediately notice that $0 \in W_1$, since setting $x=y=z=0$ satisfies the condition $x-2y+z=0$
+  We then need to prove that it is closed under scalar multiplication and vector addition.
+  Looking at scalar multiplication:
+  \[
+    v_1=(x_1,y_1,z_1) \qquad \text{where } x_1-2y_1+z_1=0
+  \]
+  Multiplying by $a\in\R$ gives us:
+  \[
+    av_1=(ax_1,ay_1,az_1)
+  \]
+  The equation is now:
+  \[
+    \begin{aligned}
+    ax_1-2ay_1+az_1=0\\
+    a(x_1-2y_1+z_1)=0
+    \end{aligned}
+  \]
+  Since $x_1-2y_1+z_1=0$, we know that the equation is correct. Thus $W_1$ is closed under scalar multiplication. Now let's look at vector addition:
+  \[
+    v_1+v_2=(x_1+x_2,y_1+y_2,z_1+z_2)
+  \]
+  The equation is now:
+  \[
+    \begin{aligned}
+      (x_1+x_2)-2(y_1+y_2)+(z_1+z_2)=0\\
+      (x_1-2y_1+z_1)+(x_2-2y_2+z_2)=0\\
+      0+0=0
+    \end{aligned}
+  \]
+  Thus, $W_1$ is closed under vector multiplication.\\
+  We have now proven that $W_1$ is a subspace of $\R^3$\\\\
+  (b)
+  $W_2$ is not a subspace of $\R^3$. A simple counter-example is the following: $v_1=(0,0,1), v_1\in W_2$, but $2v_1=(0,0,2), 2v_1 \notin W_2$\\\\
+  (c)
+  $W_3$ is a subspace of $\R^3$. It is clear that $0\in W_3$ (when $x=y=z=0$). It is also evident that it is closed under scalar multiplication, since:
+  \begin{gather*}
+    v_1=(a,a,a)\\
+    rv_1=(ra,ra,ra)\\
+    ra=ra=ra\\
+    rv_1\in W_3\\
+  \end{gather*}
+  Furthermore, it is also closed under vector addition. Looking at 2 vectors $v_1$ and $v_2$, $v_1, v_2 \in W_3$:
+  \begin{gather*}
+    v_1=(a,a,a)\\
+    v_2=(b,b,b)\\
+    v_1+v_2=(a+b,a+b,a+b)\\
+    a+b=a+b=a+b\\
+    v_1+v_2\in W_3
+  \end{gather*}\\
+
+
+\end{solution}
+
+\begin{solution}{ex:la-2}
+  The span of $u = (1,2,-1)$ and $v=(3,1,2)$ is the set
+  \[
+    S=\left\{au+bv:a,b \in \R\right\}
+  \]
+  Knowing if $w=(4,3,1)$ lies in the span $S$ is equivalent to knowing some $a,b\in \R$ that satisfy the equation $au+bv=w$. We have:
+  \[
+    (a,2a,-a)+(3b,b,2b)=(4,3,1)
+  \]
+  Setting up a system of equations:
+  $$
+  \begin{cases}
+    a+3b=4\\
+    2a+b=3\\
+    -a+2b=1
+  \end{cases}\\
+  $$
+
+  \begin{align*}
+    a&=4-3b\\
+    2(4-3b)&=4\\
+    8-6b&=4\\
+    4&=6b\\
+    b&=\frac{2}{3}\\
+    a&=4-3(\frac{2}{3})\\
+    a&=4-2=2
+  \end{align*}
+  Verifying with the 3rd equations yields:
+  \[
+    -2+2(\frac{2}{3})=-2+\frac{4}{3}\neq 1
+  \]
+  Thus, $w\notin S$
+
+\end{solution}
+
+\begin{solution}{ex:la-3}
+  We have
+  \[
+    A=\begin{pmatrix}1&2&1&3\\2&4&3&7\\1&2&2&4\end{pmatrix}
+  \]
+  Performing Gaussian elimination:\\
+
+  \begin{align*}
+    R_2\rightarrow R_2-2R_1\\
+    A=\begin{pmatrix}1&2&1&3\\0&0&1&1\\1&2&2&4\end{pmatrix}\\\\
+    R_3\rightarrow R_3-R_1\\
+    A=\begin{pmatrix}1&2&1&3\\0&0&1&1\\0&0&1&1\end{pmatrix}\\\\
+    R_3\rightarrow R_3-R_2\\
+    A=\begin{pmatrix}1&2&1&3\\0&0&1&1\\0&0&0&0\end{pmatrix}\\\\
+    R_1\rightarrow R_1-R_2\\
+    A=\begin{pmatrix}1&2&0&2\\0&0&1&1\\0&0&0&0\end{pmatrix}\\\\
+  \end{align*}
+  $A$ is now in row-reduced echelon form. Column 2 is free ($c_2=2c_1$) and so is column 4 ($c_4=2c_1+c_3$). This means that $c_1$ and $c_3$ are linearly independent and span the column space of A. Thus they form a basis for the column space for A, so the dimension for the column space is 2. The basis is:
+  \[
+    \left\{\begin{pmatrix}1\\2\\1\end{pmatrix},\begin{pmatrix}1\\3\\2\end{pmatrix}\right\}
+  \]
+\end{solution}
+
+\begin{solution}{ex:la-4}
+  No they are not linearly independent. It is evident at first glance that:
+  \[
+    (1+x)+(x+x^2)-(1+2x+x^2)=0
+  \]
+  The coefficients on these terms are not 0 (they are 1,1,-1), but they sum to 0, so they are not linearly independent and do not form a basis.
+\end{solution}
+\begin{solution}{ex:la-5}
+  Let's do a proof by contradiction. If $u-v$ and $u+v$ were linearly dependent, that would imply:
+  \[
+    a(u-v)+b(u+v)=0 \qquad\text{where } a,b\neq 0
+  \]\\
+  Distributing the product:
+  \[
+    \begin{gathered}
+      au-av+bu+bv=0\\
+      au+bu+bv-av=0\\
+      (a+b)u+(b-a)v=0
+    \end{gathered}
+  \]
+  This last equation implies that $a+b=0$ and $b-a=0$, since $u$ and $v$ are linearly independent. We have:
+  \[
+    \begin{gathered}
+      \text{(1st eq.)}\quad b-a=0\\
+      b=a\\
+      \text{(2nd eq.)}\quad a+b=0\\
+      2a=0\\
+      a=b=0
+    \end{gathered}
+  \]
+    This contradicts our original statement $a,b\neq 0$. So $u-v$ and $u+v$ have to be linearly independent.
+\end{solution}
+
+\begin{solution}{ex:la-6}
+  If one of these columns is redundant, it means that it can be expressed as a linear combination of the other columns. This implies that the matrix A has a rank strictly less than n, since it "collapses" different vectors to the same line/plane.
+  The pivot columns in a row-reduced echelon form matrix form the basis of the column space, as all other columns can be expressed as a linear combination of the pivot columns.
+  They can thus represent the column space non-redundantly.
+
+
+\end{solution}

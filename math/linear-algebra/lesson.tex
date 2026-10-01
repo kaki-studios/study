@@ -1,0 +1,113 @@
+%! TEX root = main.tex
+
+\subsection{The shape of linear algebra: vector spaces, bases, and dimension}
+
+Many problems that look different on the surface have the same underlying form: combine some basic ``directions'' using scalar coefficients. Solving $A\mathbf{x}=\mathbf{b}$ asks whether $\mathbf{b}$ can be assembled from the columns of $A$. An eigenvector problem asks whether a transformation sends a direction back into that same one-dimensional space. To make these claims precise, we first need to know which collections of objects can be added and scaled, and which directions are genuinely new.
+
+Here is a useful route through a first course in linear algebra:
+\begin{enumerate}[label=\arabic*.]
+  \item vector spaces, subspaces, span, independence, bases, and dimension;
+  \item linear maps and matrices; kernels, images, rank, and systems;
+  \item determinants and eigenvalues/eigenvectors, then diagonalisation;
+  \item inner products, orthogonality, projections, and least squares.
+\end{enumerate}
+We begin with the first item. It is the common language for all the others.
+
+\begin{definition}[Vector space]
+A \emph{real vector space} is a set $V$ with addition $V\times V\to V$ and scalar multiplication $\R\times V\to V$ such that, for all $u,v,w\in V$ and $a,b\in\R$,
+\begin{align*}
+  u+v&=v+u, & (u+v)+w&=u+(v+w),\\
+  \text{there is }0\in V\text{ with }u+0&=u, & \text{and there is }-u\in V\text{ with }u+(-u)&=0,\\
+  a(u+v)&=au+av, &(a+b)u&=au+bu,\\
+  (ab)u&=a(bu), &1u&=u.
+\end{align*}
+\end{definition}
+
+The axioms are not a list to memorise mechanically: they say that ordinary algebra with linear combinations is valid. The vectors need not be arrows. For example, $\R^n$, the set of real polynomials of degree at most $d$, and the set of real $m\times n$ matrices are vector spaces with their usual operations. In the polynomial space, $1,x,x^2,\ldots,x^d$ play the role of coordinate directions.
+
+\begin{example}[A set which is not a vector space]
+The set $S=\{(x,y)\in\R^2:x+y=1\}$ is not a vector space: $(1,0)\in S$, but $2(1,0)=(2,0)\notin S$. In particular, every vector space must contain its zero vector. By contrast, $\{(x,y):x+y=0\}$ \emph{is} a vector space.
+\end{example}
+
+\begin{definition}[Subspace and span]
+Let $V$ be a vector space. A subset $W\subseteq V$ is a \emph{subspace} if it is itself a vector space under the operations inherited from $V$.
+
+For vectors $v_1,\ldots,v_k\in V$, their \emph{span} is
+\[
+  \operatorname{span}\{v_1,\ldots,v_k\}=\{a_1v_1+\cdots+a_kv_k:a_1,\ldots,a_k\in\R\}.
+\]
+It is the set of all linear combinations of those vectors.
+\end{definition}
+
+In code terms, the span is the closure of a list of generators under the two operations we permit: vector addition and multiplication by real numbers. The analogy is useful, but not exact: over $\R$ the coefficient set is infinite, so span is a geometric/algebraic object rather than a finite set that we enumerate.
+
+\begin{theorem}[Subspace test]\label{thm:subspace-test}
+A nonempty subset $W$ of a vector space $V$ is a subspace if and only if
+\[
+  au+bv\in W \qquad\text{for every }u,v\in W\text{ and }a,b\in\R.
+\]
+Consequently, the span of any collection of vectors is a subspace.
+\end{theorem}
+
+\begin{proof}
+If $W$ is a subspace, it is closed under scalar multiplication and addition, so $au+bv\in W$. Conversely, take $a=b=0$ to obtain $0\in W$; take $a=b=1$ to obtain closure under addition; and take $a=0$ to obtain closure under scalar multiplication. The remaining vector-space axioms are inherited from $V$.
+
+For the consequence, $0$ is a linear combination (all coefficients zero). Moreover, if $x=\sum_i c_iv_i$ and $y=\sum_i d_iv_i$, then
+\[
+  ax+by=\sum_i(ac_i+bd_i)v_i,
+\]
+which is again in the span. Apply the subspace test.
+\end{proof}
+
+\begin{example}[Column space]
+Let
+\[
+ A=\begin{pmatrix}1&2&1\\2&4&3\\1&2&2\end{pmatrix},\qquad
+ c_1=\begin{pmatrix}1\\2\\1\end{pmatrix},\quad
+ c_2=\begin{pmatrix}2\\4\\2\end{pmatrix},\quad
+ c_3=\begin{pmatrix}1\\3\\2\end{pmatrix}.
+\]
+The set of possible outputs $A\mathbf{x}$ is $\operatorname{span}\{c_1,c_2,c_3\}$, called the \emph{column space} of $A$. Since $c_2=2c_1$, the second column adds no new direction. The first and third columns are not scalar multiples, so they span a plane through the origin in $\R^3$.
+\end{example}
+
+\begin{definition}[Linear independence and basis]
+Vectors $v_1,\ldots,v_k\in V$ are \emph{linearly independent} if
+\[
+  a_1v_1+\cdots+a_kv_k=0 \quad\Longrightarrow\quad a_1=\cdots=a_k=0.
+\]
+Otherwise they are \emph{linearly dependent}. A \emph{basis} of $V$ is a list of vectors that is both linearly independent and spans $V$.
+\end{definition}
+
+Independence means no member of the list is redundant. A basis is therefore like a minimal, nonredundant API for constructing every vector in the space. It has an important payoff: each vector has exactly one coordinate list with respect to a basis. Row reduction is the practical tool for detecting the redundant vectors: when vectors are placed as columns of a matrix, pivot columns identify an independent subset that spans the same column space.
+
+\begin{theorem}[Coordinates in a basis]\label{thm:unique-coordinates}
+If $(v_1,\ldots,v_n)$ is a basis of $V$, then every $v\in V$ has a unique representation
+\[
+  v=a_1v_1+\cdots+a_nv_n.
+\]
+The coefficient vector $(a_1,\ldots,a_n)^T$ is denoted $[v]_{\mathcal B}$, where $\mathcal B=(v_1,\ldots,v_n)$.
+\end{theorem}
+
+\begin{proof}
+Existence follows because the basis spans $V$. If both $(a_i)$ and $(b_i)$ represent $v$, subtracting the two equations gives
+\[
+  (a_1-b_1)v_1+\cdots+(a_n-b_n)v_n=0.
+\]
+Independence forces $a_i-b_i=0$ for every $i$, so the representations agree.
+\end{proof}
+
+\begin{definition}[Dimension]
+If a vector space has a finite basis with $n$ vectors, its \emph{dimension} is $n$, written $\dim V=n$.
+\end{definition}
+
+It is a theorem, not an assumption, that all finite bases of the same vector space have the same number of vectors. Thus $\dim\R^3=3$ and the polynomial space of degree at most $d$ has dimension $d+1$. We will soon prove the theorem behind this fact and connect dimension to rank and nullity.
+
+\begin{remark}[Common traps]
+\begin{itemize}
+  \item A subspace must pass through the origin. A shifted line or plane is usually not a subspace.
+  \item ``Not scalar multiples'' proves independence only for a pair of nonzero vectors. Three vectors in $\R^2$ are always dependent even when no two are parallel.
+  \item A spanning list need not be a basis: it can contain redundant vectors. An independent list need not be a basis: it may fail to reach every direction in the ambient space.
+\end{itemize}
+\end{remark}
+
+The next lesson will turn these static spaces into \emph{linear maps}. Their kernels and images will make Gaussian elimination conceptual, and will set up eigenspaces. After that, inner products will add geometry: length, angle, and orthogonality.

@@ -8,6 +8,25 @@
 
   $\vert (3x+4) - 1 \vert = 3\vert x-1 \vert < 3\delta = \varepsilon$
 
+\end{solution}
+
+\begin{solution}{ex:calc-2}
+  We need to prove that:
+  \[
+    0 < \abs{x^2+x-2} < \delta \Rightarrow \abs{(x^2+x-2)-L}<\varepsilon
+  \]
+
+  We can rewrite $|x^2+x-2|$ as $|x+2||x-1|$.  Imposing that $|x-1|<1$ we get that $0<x<2$, so $\abs{x+2}<4$
+  Given $\varepsilon>0$, we set: 
+  \[
+    \delta = \min\left\{1, \frac{\varepsilon}{4}\right\}
+    \]
+  For $0<\abs{x-1}<\delta$, the auxiliary bound gives
+  \[
+    \abs{x^2+x-2}<4\abs{x-1}<4\delta \leq \varepsilon
+  \]
+\end{solution}
+\begin{solution}{ex:calc-3}
 
 
 \end{solution}
