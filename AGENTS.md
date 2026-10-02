@@ -11,13 +11,13 @@ solutions. Notes are written in LaTeX and I read them as a hot-reloaded PDF.
 - Math background: Intermediate/Advanced high-school level.
 
 ## Layout
-Each topic is a directory (e.g. `math/linear-algebra/`) containing:
+Each topic is a directory (e.g. `math/linear-algebra/lesson-01`) containing:
 - `main.tex`       root file; includes the files below. Do not restructure it.
 - `lesson.tex`     YOURS. Explanations, definitions, theorems, worked examples.
 - `exercises.tex`  YOURS. Problems only, no solutions or hints inline.
 - `solutions.tex`  MINE. Never edit this file.
 - `feedback.tex`   YOURS. Review of my solutions.
-- `../../preamble.tex` shared preamble. Never edit it; if you need a new
+- `../../../preamble.tex` shared preamble. Never edit it; if you need a new
   macro or package, tell me and I'll add it.
 
 ## Ownership rules
