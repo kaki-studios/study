@@ -1,0 +1,307 @@
+%! TEX root = main.tex
+
+\subsection{Electromagnetism: charges, fields, and the link between them}
+
+A battery, a magnet, and a beam of light look like three different topics. They are three faces of one interaction. Electric charges act on each other, moving charges produce magnetism, and a changing magnetic field produces an electric field and vice versa---which is how generators, transformers, and radio work. This lesson covers the electromagnetism shared by FY6 (charge, electric field, potential, capacitors, simple DC circuits) and FY7 (magnetic field, the force on a moving charge, induction). The optics half of FY7 is left for another lesson.
+
+The organising idea of the whole topic is the \emph{field}. A charge does not pull on a distant charge across empty space; it creates a field at every point of space, and that field acts on whatever charge happens to sit there. In code terms a field is a function from positions to force-per-unit-charge vectors. The analogy is useful because superposition in physics is exactly linearity in code: compute the contribution of each charge and add. Where the analogy breaks down is discussed at the end.
+
+A route through the topic:
+\begin{enumerate}[label=\arabic*.]
+  \item charge and Coulomb's law;
+  \item the electric field;
+  \item electric potential and energy;
+  \item conductors and capacitors;
+  \item current and simple DC circuits;
+  \item the magnetic field and the force on a moving charge;
+  \item magnetic flux and induction;
+  \item the unified picture: Maxwell's equations and electromagnetic waves.
+\end{enumerate}
+
+Constants used throughout:
+$k = 9.0\times 10^{9}\ \mathrm{N\,m^2/C^2}$ (often written $k = 1/(4\pi\varepsilon_0)$, with $\varepsilon_0 = 8.85\times 10^{-12}\ \mathrm{F/m}$),
+$e = 1.60\times 10^{-19}\ \mathrm{C}$,
+$m_e = 9.11\times 10^{-31}\ \mathrm{kg}$,
+$m_p = 1.67\times 10^{-27}\ \mathrm{kg}$,
+$c = 3.0\times 10^{8}\ \mathrm{m/s}$.
+
+\subsubsection{Charge and Coulomb's law}
+
+\begin{definition}[Coulomb's law]\label{def:coulomb}
+Two point charges $q_1$ and $q_2$ a distance $r$ apart attract or repel each other along the line joining them, with force magnitude
+\[
+  \abs{F} = k\,\frac{\abs{q_1 q_2}}{r^2}.
+\]
+Like signs repel, opposite signs attract. The forces on the two charges are an action--reaction pair: equal magnitude, opposite direction. If more than two charges are present, the total force on any one of them is the vector sum of the pairwise forces (\emph{superposition}).
+\end{definition}
+
+Charge is quantised in nature, $q = ne$ with $n\in\Z$, but at this level we treat $q$ as a continuous quantity: one coulomb is an enormous number of elementary charges, so the discreteness only matters in single-particle physics. The inverse-square form is the same shape as Newton's gravity, but the analogy breaks down immediately in one respect: gravity has only one sign, so masses only attract, while charges of both signs exist and fields can cancel.
+
+\begin{example}[Force between two charges]\label{exm:two-charges}
+Charges $q_1 = 2.0\ \mu\mathrm{C}$ and $q_2 = -3.0\ \mu\mathrm{C}$ sit $30\ \mathrm{cm}$ apart. Then
+\[
+  \abs{F} = 9.0\times 10^{9}\cdot\frac{(2.0\times 10^{-6})(3.0\times 10^{-6})}{(0.30)^2} = 0.60\ \mathrm{N}.
+\]
+The signs are opposite, so the force pulls the charges together: $0.60\ \mathrm{N}$ on each, toward the other one. Note that the force does not depend on what, if anything, lies between the charges.
+\end{example}
+
+\subsubsection{The electric field}
+
+\begin{definition}[Electric field]\label{def:field}
+The electric field at a point is the force experienced by a small positive test charge $q_0$ placed there, per unit charge:
+\[
+  \vec{E} = \frac{\vec{F}}{q_0}, \qquad \text{unit } \mathrm{N/C} = \mathrm{V/m}.
+\]
+The field of a point charge $q$ at distance $r$ points radially away from (or toward, for $q<0$) the charge and has magnitude
+\[
+  E = k\,\frac{\abs{q}}{r^2}.
+\]
+Fields of several charges add as vectors (superposition).
+\end{definition}
+
+\begin{example}[Two equal charges]\label{exm:two-fields}
+Two identical charges $q = 1.0\ \mathrm{nC}$ sit at $(\pm 5.0\ \mathrm{cm},\,0)$. At the midpoint the fields cancel exactly and $E = 0$, which is a useful warning: zero field does not mean no charges nearby. At the point $P = (0,\,10\ \mathrm{cm})$ each charge is $r = \sqrt{(0.050)^2 + (0.10)^2} = 0.112\ \mathrm{m}$ away, so each contributes
+\[
+  E_1 = 9.0\times 10^{9}\cdot\frac{1.0\times 10^{-9}}{0.0125} = 720\ \mathrm{N/C}.
+\]
+The horizontal components cancel by symmetry; the vertical ones add with $\cos\theta = 0.10/0.112 = 0.894$:
+\[
+  E = 2\cdot 720\cdot 0.894 \approx 1.3\ \mathrm{kN/C},
+\]
+pointing away from the midpoint along $+y$.
+\end{example}
+
+Between two large parallel plates with voltage $U$ and separation $d$ the field is uniform (constant in magnitude and direction):
+\begin{equation}\label{eq:uniform-field}
+  E = \frac{U}{d}.
+\end{equation}
+For example, $U = 200\ \mathrm{V}$ across $2.0\ \mathrm{cm}$ gives $E = 1.0\times 10^{4}\ \mathrm{V/m}$.
+
+\begin{theorem}[Static charge lives on the surface of a conductor]\label{thm:conductor}
+In electrostatic equilibrium the electric field inside a solid conductor is zero, any excess charge resides on the outer surface, and the whole conductor is at one and the same potential.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+If $\vec{E}\neq 0$ inside the metal, a free electron would feel $\vec{F} = q\vec{E}\neq 0$ and move---so the situation would not be static. Hence $\vec{E} = 0$ inside. If some excess charge sat in the interior, field lines would run from it (or to it) through the metal, giving $\vec{E}\neq 0$ nearby; the charges therefore migrate to the surface until no field remains inside. Finally, if two points of the conductor had different potentials, a charge could be moved between them with the field doing net work, meaning a field component along the metal---again motion. So the potential is constant throughout.
+\end{proof}
+
+This is why a car is a safe place in a lightning storm (a metal shell keeps its interior field-free) and why sensitive electronics live in metal enclosures.
+
+\subsubsection{Potential and energy}
+
+\begin{definition}[Potential, potential energy, voltage]\label{def:potential}
+Moving a charge $q$ in a field changes its potential energy by
+\[
+  \Delta W_\text{pot} = q\,\Delta V, \qquad \Delta V = V_B - V_A,
+\]
+where $V$ is the \emph{electric potential}, unit volt ($\mathrm{V} = \mathrm{J/C}$). The voltage between $A$ and $B$ is the work the field does per unit charge moving from $A$ to $B$:
+\[
+  U_{AB} = V_A - V_B = \frac{W_{AB}}{q}.
+\]
+In a uniform field of strength $E$, the potential difference across a distance $d$ measured along the field lines is
+\[
+  U = E d,
+\]
+and the potential always \emph{decreases} in the direction the field points.
+\end{definition}
+
+\begin{example}[Electron accelerated through 5.0 kV]\label{exm:electron-kv}
+An electron released from rest and pulled through $U = 5.0\ \mathrm{kV}$ loses potential energy
+\[
+  \Delta W_\text{pot} = eU = (1.60\times 10^{-19})(5.0\times 10^{3}) = 8.0\times 10^{-16}\ \mathrm{J},
+\]
+which becomes kinetic energy $\tfrac{1}{2}m_e v^2$. Solving,
+\[
+  v = \sqrt{\frac{2eU}{m_e}} = 4.2\times 10^{7}\ \mathrm{m/s}.
+\]
+This is about $14\%$ of the speed of light, so the non-relativistic formula is already drifting by a percent or so---fine for high school, but a real accelerator needs Einstein's version.
+\end{example}
+
+\begin{remark}[Three quantities that are easy to mix up]\label{rmk:potential-confusions}
+$\vec{E}$ is force per unit charge ($\mathrm{V/m}$), $V$ is potential energy per unit charge ($\mathrm{V}$), and $W_\text{pot} = qV$ is energy ($\mathrm{J}$). A handy unit appears here: one \emph{electron-volt} is the energy an electron gains through one volt, $1\ \mathrm{eV} = 1.60\times 10^{-19}\ \mathrm{J}$. Also mind the signs: a positive charge ``wants to fall'' toward lower potential (it speeds up going downhill), a negative charge speeds up going \emph{up} in potential. Equations stay correct if you let $q$ carry its sign and never take absolute values prematurely.
+\end{remark}
+
+\subsubsection{Conductors and capacitors}
+
+\begin{definition}[Capacitance]\label{def:capacitance}
+A capacitor stores charge $Q$ separated by a voltage $U$, with
+\[
+  C = \frac{Q}{U}, \qquad \text{unit farad } \mathrm{F} = \mathrm{C/V}.
+\]
+For a parallel-plate capacitor with plate area $A$, separation $d$, and dielectric (insulator) of relative permittivity $\varepsilon_r$,
+\begin{equation}\label{eq:parallel-plate-C}
+  C = \varepsilon_0\varepsilon_r\frac{A}{d}.
+\end{equation}
+\end{definition}
+
+$C$ is a property of the geometry and the insulator, not of how much charge you put on---it answers the question ``how much voltage do I pay per unit of stored charge?''
+
+\begin{proposition}[Energy stored in a capacitor]\label{prop:cap-energy}
+A capacitor charged to charge $Q$ and voltage $U = Q/C$ stores energy
+\[
+  W = \frac{Q^{2}}{2C} = \frac{1}{2}CU^{2}.
+\]
+\end{proposition}
+
+\begin{proof}
+Charge the capacitor in infinitesimal slices. When it already holds charge $q$, its voltage is $u = q/C$, so moving the next slice $dq$ against that voltage takes work $\mathrm{d}W = u\,\mathrm{d}q = (q/C)\,\mathrm{d}q$. Summing over the whole charge:
+\[
+  W = \int_0^Q \frac{q}{C}\,\mathrm{d}q = \frac{Q^2}{2C} = \frac{1}{2}CU^{2}. \qedhere
+\]
+\end{proof}
+
+\begin{example}[A parallel-plate capacitor]\label{exm:capacitor}
+Plates of area $A = 100\ \mathrm{cm^2} = 1.0\times 10^{-2}\ \mathrm{m^2}$, separated by $d = 1.0\ \mathrm{mm}$ of plastic with $\varepsilon_r = 3.0$:
+\[
+  C = (8.85\times 10^{-12})(3.0)\frac{1.0\times 10^{-2}}{1.0\times 10^{-3}} = 2.7\times 10^{-10}\ \mathrm{F} = 0.27\ \mathrm{nF}.
+\]
+At $U = 12\ \mathrm{V}$ this holds $Q = CU = 3.2\ \mathrm{nC}$ and energy
+\[
+  W = \tfrac{1}{2}CU^{2} = 1.9\times 10^{-8}\ \mathrm{J}.
+\]
+Tiny on the scale of a hot drink, large on the scale of a camera flash, which dumps exactly this kind of energy in a millisecond.
+\end{example}
+
+\begin{remark}[Breakdown and safety]\label{rmk:breakdown}
+If the field exceeds the \emph{breakdown strength} of the insulator (roughly $3\ \mathrm{MV/m}$ for air), the dielectric ionises and conducts---a spark. This is why capacitors and cables have voltage ratings, and why FY6 emphasises fuses, protective grounding, and enclosure classes: the physics of breakdown is what safety regulations are written around. A capacitor can hold a lethal charge long after power is removed.
+\end{remark}
+
+\subsubsection{Current and simple DC circuits}
+
+\begin{definition}[Current, resistance, power]\label{def:current}
+Electric current is charge in motion,
+\[
+  I = \frac{\Delta Q}{\Delta t}, \qquad \text{unit ampere } \mathrm{A} = \mathrm{C/s}.
+\]
+A resistor obeys \emph{Ohm's law},
+\[
+  U = RI, \qquad \text{unit ohm } \Omega = \mathrm{V/A},
+\]
+and a component with voltage $U$ across it and current $I$ through it converts electrical energy at power
+\[
+  P = UI = I^{2}R = \frac{U^{2}}{R}, \qquad \text{unit watt}.
+\]
+\end{definition}
+
+By convention current flows from $+$ to $-$ around the circuit, while in metal wires the electrons actually drift the other way. Only the sign convention matters for the calculations.
+
+\begin{proposition}[Series, parallel, and the voltage divider]\label{prop:series-parallel}
+Resistors in series add, $R = R_1 + R_2 + \cdots$, and resistors in parallel combine as
+\[
+  \frac{1}{R} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots
+\]
+In particular, two resistors in series across a source $U$ share the voltage in proportion to their resistances:
+\begin{equation}\label{eq:divider}
+  U_2 = U\,\frac{R_2}{R_1 + R_2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+In series the same current $I$ flows through both, and the voltages add: $U = IR_1 + IR_2 = I(R_1 + R_2)$, so $R = R_1 + R_2$. In parallel both see the same voltage $U$, and the currents add:
+\[
+  I = \frac{U}{R_1} + \frac{U}{R_2} = U\left(\frac{1}{R_1} + \frac{1}{R_2}\right),
+\]
+giving the parallel formula. The divider formula is $U_2 = IR_2$ with $I = U/(R_1 + R_2)$.
+\end{proof}
+
+\begin{example}[A small network]\label{exm:network}
+A $12\ \mathrm{V}$ source drives $R_1 = 100\ \Omega$ in series with the parallel pair $R_2 = 200\ \Omega$, $R_3 = 300\ \Omega$. The pair combines to
+\[
+  R_{23} = \frac{R_2 R_3}{R_2 + R_3} = 120\ \Omega,
+\]
+so the source sees $R = 220\ \Omega$ and the main current is $I = 12/220 = 55\ \mathrm{mA}$. The power delivered is $P = UI = 0.65\ \mathrm{W}$. By the divider formula the parallel pair takes $U_{23} = 12\cdot 120/220 = 6.5\ \mathrm{V}$, so $I_2 = 33\ \mathrm{mA}$ and $I_3 = 22\ \mathrm{mA}$ (they sum to $55\ \mathrm{mA}$, a good self-check).
+\end{example}
+
+\subsubsection{The magnetic field and the force on a moving charge}
+
+\begin{definition}[Magnetic field and the Lorentz force]\label{def:magnetic-field}
+A magnetic field exerts on a charge $q$ moving with velocity $\vec{v}$ the force
+\begin{equation}\label{eq:lorentz}
+  \vec{F} = q\,\vec{v}\times\vec{B}, \qquad \abs{F} = \abs{q}\,v\,B\,\sin\alpha,
+\end{equation}
+where $\alpha$ is the angle between $\vec{v}$ and $\vec{B}$. The unit of $B$ is the tesla, $\mathrm{T} = \mathrm{N/(A\,m)}$. The direction is given by the right-hand rule: point fingers along $\vec{v}$, curl them toward $\vec{B}$; $\vec{F}$ is the thumb, reversed in sign for a negative charge.
+
+A straight wire of length $L$ carrying current $I$ at angle $\alpha$ to the field feels $\abs{F} = BIL\sin\alpha$, the wire form of the same law ($\vec{v}$ replaced by the drift of the charge carriers).
+\end{definition}
+
+Two features of \cref{eq:lorentz} deserve emphasis. First, a charge at rest feels nothing---magnetism is a relativistic aspect of the same interaction, which is why a current balance measures electric and magnetic forces against each other. Second, since $\vec{F}\perp\vec{v}$ always, the magnetic field never changes the speed of a particle, only its direction. This is the content of \cref{ex:em-6}.
+
+\begin{example}[Proton in a uniform field]\label{exm:proton-circle}
+A proton enters $B = 0.40\ \mathrm{T}$ at $v = 3.0\times 10^{5}\ \mathrm{m/s}$, perpendicular to the field. The force $\abs{F} = qvB$ is always perpendicular to the motion, so it is a centripetal force and the path is a circle:
+\[
+  qvB = \frac{m_p v^2}{r} \implies r = \frac{m_p v}{qB} = \frac{(1.67\times 10^{-27})(3.0\times 10^{5})}{(1.60\times 10^{-19})(0.40)} = 7.8\ \mathrm{mm}.
+\]
+The period of one lap is
+\[
+  T = \frac{2\pi r}{v} = \frac{2\pi m_p}{qB} = 0.16\ \mu\mathrm{s},
+\]
+and remarkably it does not depend on $v$ (as long as $v\ll c$): faster particles just travel bigger circles in the same time. This is the operating principle of the cyclotron.
+\end{example}
+
+\subsubsection{Magnetic flux and induction}
+
+\begin{definition}[Magnetic flux]\label{def:flux}
+The magnetic flux through a flat coil of area $A$ is the amount of field passing through it,
+\[
+  \Phi = BA\cos\alpha,
+\]
+where $\alpha$ is the angle between $\vec{B}$ and the normal (perpendicular) of the coil. The unit is the weber, $\mathrm{Wb} = \mathrm{T\,m^2}$. For a coil of $N$ turns one usually counts the total flux $N\Phi$.
+\end{definition}
+
+\begin{definition}[Faraday's law and Lenz's law]\label{def:faraday}
+A changing magnetic flux induces a voltage,
+\begin{equation}\label{eq:faraday}
+  U_\text{ind} = -N\,\frac{\Delta \Phi}{\Delta t},
+\end{equation}
+with the sign fixed by \emph{Lenz's law}: the induced current creates a field that opposes the change in flux. If the flux increases into the coil, the induced current pushes a field out of it; the induced current always fights whatever is changing.
+\end{definition}
+
+Lenz's law is not bookkeeping pedantry---it is conservation of energy in disguise. If the induced current \emph{helped} the change, the flux would grow, inducing a larger current, growing the flux further: free energy from nothing. Opposing the change is what makes you do mechanical work to turn a generator.
+
+\begin{example}[A coil in a growing field]\label{exm:coil}
+A coil of $N = 200$ turns, area $4.0\ \mathrm{cm^2}$, sits perpendicular to a field which grows from $0$ to $B = 0.10\ \mathrm{T}$ in $\Delta t = 20\ \mathrm{ms}$. The flux grows to $\Phi = BA = 4.0\times 10^{-4}\ \mathrm{Wb}$, so
+\[
+  U_\text{ind} = N\,\frac{\Delta\Phi}{\Delta t} = 200\cdot\frac{4.0\times 10^{-4}}{2.0\times 10^{-2}} = 4.0\ \mathrm{V}.
+\]
+The direction: the field into the coil is growing, so the induced current drives a field out of the coil (right-hand rule: curl your fingers in the current direction and the thumb points out).
+\end{example}
+
+Two classic applications close FY7's electromagnetism. If the coil rotates at angular frequency $\omega$ in a fixed field, the flux oscillates and \cref{eq:faraday} gives an alternating voltage
+\[
+  U_\text{ind}(t) = NBA\omega\sin(\omega t)
+\]
+---the AC generator. And if a rod of length $L$ slides along rails at speed $v$ perpendicular to a field, the flux swept per second is $BLv$, so the induced voltage is
+\[
+  U_\text{ind} = BLv.
+\]
+
+\subsubsection{One interaction: Maxwell's equations and electromagnetic waves}
+
+Everything above condenses into four statements---Maxwell's equations---which in words say:
+\begin{enumerate}[label=(\roman*)]
+  \item electric charges create electric fields (field lines start and end on charges);
+  \item there are no magnetic charges: field lines never start or end, they close on themselves;
+  \item a changing magnetic field creates an electric field (\cref{def:faraday});
+  \item a moving charge (current) \emph{or a changing electric field} creates a magnetic field.
+\end{enumerate}
+
+Item (iv) is the piece Ampère originally missed and Maxwell fixed. Its consequence is spectacular: take a region with no charges and no matter. A changing $B$ makes an $E$, a changing $E$ makes a $B$, and the pair detaches from whatever created it and travels outward as an \emph{electromagnetic wave} at
+\[
+  c = \frac{1}{\sqrt{\varepsilon_0\mu_0}} = 3.0\times 10^{8}\ \mathrm{m/s},
+\]
+a number built purely from measured constants of electricity and magnetism. The waves carry energy; visible light, radio, and X-rays are all the same phenomenon at different wavelengths---which is exactly where FY7's optics section picks up.
+
+\begin{remark}[How far the code analogy goes]\label{rmk:analogy}
+Treating $\vec{E}$ and $\vec{B}$ as functions evaluated at sample points, and computing total fields by summing per-charge contributions, is precisely how a physics engine or a field solver works---superposition is linearity, so memoising and adding contributions is legitimate. The analogy breaks in two places. A field is not mere bookkeeping: it carries energy and momentum of its own (\cref{prop:cap-energy} already stores $W$ in the field, not in the plates), and deleting a charge does not update the rest of the universe instantly---the disturbance travels at $c$. There is also a floor to the classical field picture entirely: at low enough energies the field is quantised into photons, and no continuous function describes a single one of them.
+\end{remark}
+
+\begin{remark}[Most common mistakes]\label{rmk:mistakes}
+\begin{enumerate}[label=\alph*)]
+  \item Confusing force with field and energy with potential: keep track of the per-unit-charge quantities ($\vec{E}$, $V$) versus the whole-charge ones ($\vec{F}$, $W_\text{pot}$).
+  \item Forgetting that $\vec{F} = q\vec{v}\times\vec{B}$ needs $\sin\alpha$: a charge moving parallel to $\vec{B}$ feels nothing.
+  \item Applying $E = k q / r^2$ or $U = kq/r$ at $r = 0$---point charges are an idealisation that breaks at the origin.
+  \item Dropping the minus sign of Lenz's law and getting the current direction backwards. Say the sentence ``the induced current opposes the change'' every single time.
+  \item Mixing up $Q$ and $U$ as the fixed quantity in capacitor questions: with the battery connected, $U$ is fixed; disconnected, $Q$ is fixed.
+  \item Using $r = mv/(qB)$ without checking that $\vec{v}\perp\vec{B}$; at an angle the path is a helix and only the perpendicular component of $v$ sets the radius.
+\end{enumerate}
+\end{remark}

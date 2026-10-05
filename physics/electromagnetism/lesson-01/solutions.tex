@@ -1,0 +1,48 @@
+%! TEX root = main.tex
+
+\begin{solution}{ex:em-1}
+  (a)
+
+  Using Coulomb's law, we have
+
+  \[\abs{F}=k \frac{\abs{q_1q_2}}{r^2}\]
+  The force on $q_3$ due to $q_1$:
+
+  \[\abs{F_{31}}=k \frac{10.0 \cdot 10^{-12} C}{0.15m} \approx 0.6N\]
+  The direction is away from $q_1$, since they are both positively charged. The force on $q_3$ due to $q_2$:
+
+  \[\abs{F_{32}}=k \frac{15.0 \cdot 10^{-12} C}{0.25cm} \approx 0.54 N \]
+  This time the force points towards $q_2$ since they are oppositely charged.
+  (b)
+
+  The net force is just the sum of the previous 2 forces in this case.
+  \[\overrightarrow{F_{net}}=\overrightarrow{F_{31}}+\overrightarrow{F_{32}}\]
+  It is clear that $\overrightarrow{F_{32}}$ and $\overrightarrow{F_{31}}$ both point in the positive x-axis direction. Thus:
+  \[
+  \begin{gathered}
+        F_{net}=F_{31}+F_{32}\\
+        F_{net}=0.6N+0.54N=1.14N
+  \end{gathered}
+\]
+  (c)
+  The electric field is given by:
+  \[
+    E=\frac{F_{net}}{q_0}
+  \]
+  We have the following equation:
+  \[
+    \begin{aligned}
+      E&=0\\
+      \frac{F_{net}}{q_0}&=0\\
+      \frac{\frac{q_1q_0}{x^2}+\frac{q_2q_0}{(40-x)^2}}{q_0}&=0\\
+      \frac{q_1}{x^2}+\frac{q_2}{(40-x)^2}&=0\\
+      \frac{(40-x)^2q_1}{x^2}+q_2&=0\\
+      \frac{(40-x)^2}{x^2}&=-\frac{q_2}{q_1}\\
+      \frac{40-x}{x}&=\sqrt{-\frac{q_2}{q_1}}\\
+      40-x&=x\sqrt{-\frac{q_2}{q_1}}\\
+      40&=x(1+\sqrt{-\frac{q_2}{q_1}})\\
+      x&=\frac{40}{1+\sqrt{-\frac{q_2}{q_1}}}\\
+      x&\approx18cm
+    \end{aligned}
+  \]
+\end{solution}

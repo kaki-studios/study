@@ -1,0 +1,72 @@
+%! TEX root = main.tex
+
+\begin{exercise}\label{ex:em-1}
+Charges $q_1 = +2.0\ \mu\mathrm{C}$ at $x = 0$ and $q_2 = -3.0\ \mu\mathrm{C}$ at $x = 40\ \mathrm{cm}$ are fixed on the $x$-axis. A third charge $q_3 = +5.0\ \mu\mathrm{C}$ is placed at $x = 15\ \mathrm{cm}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Find the force on $q_3$ due to $q_1$ and the force on $q_3$ due to $q_2$: magnitude and direction of each.
+  \item Find the net force on $q_3$ (magnitude and direction).
+  \item At what $x$ between the two fixed charges does the electric field vanish?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-2}
+Two large parallel plates are $3.0\ \mathrm{mm}$ apart and connected to a $400\ \mathrm{V}$ supply, so the field between them is uniform. An electron is released from rest at the negative plate.
+\begin{enumerate}[label=(\alph*)]
+  \item Find the electric field strength between the plates.
+  \item Find the force on the electron and its acceleration.
+  \item Find the electron's speed when it reaches the positive plate, using energy.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-3}
+A parallel-plate capacitor has plate area $50\ \mathrm{cm^2}$, separation $0.50\ \mathrm{mm}$, and a dielectric with $\varepsilon_r = 4.0$ between the plates.
+\begin{enumerate}[label=(\alph*)]
+  \item Find its capacitance.
+  \item Find the stored charge and energy when it is connected to $24\ \mathrm{V}$.
+  \item The battery is disconnected and the plates are then pulled to twice their original separation. State what happens to $C$, $U$, and the stored energy, and explain where the extra work goes.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-4}
+A $12\ \mathrm{V}$ battery drives $R_1 = 150\ \Omega$ in series with the parallel combination of $R_2 = 220\ \Omega$ and $R_3 = 330\ \Omega$.
+\begin{enumerate}[label=(\alph*)]
+  \item Find the total resistance seen by the battery and the current it delivers.
+  \item Find the current through each resistor and the voltage across each.
+  \item Find the power dissipated in $R_1$ and the total power delivered by the battery.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-5}
+A proton enters a uniform magnetic field of $B = 0.25\ \mathrm{T}$ at $v = 4.0\times 10^{5}\ \mathrm{m/s}$, perpendicular to the field.
+\begin{enumerate}[label=(\alph*)]
+  \item Determine the direction of the initial force (describe it in words, choosing axes yourself).
+  \item Find the radius and the period of the resulting circular path.
+  \item An electron enters with the same velocity in the same field. How do its radius and period compare with the proton's? Justify from the formulas.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-6}
+Prove that a magnetic field does no work on a moving charge. Start from $\vec{F} = q\vec{v}\times\vec{B}$ and the definition of mechanical work, and deduce that a particle moving in a pure magnetic field keeps constant speed and constant kinetic energy.
+\end{exercise}
+
+\begin{exercise}\label{ex:em-7}
+A metal rod of length $L = 50\ \mathrm{cm}$ slides without friction along horizontal rails in a uniform vertical field $B = 0.20\ \mathrm{T}$, at constant speed $v = 4.0\ \mathrm{m/s}$. The rails are connected to a resistor $R = 5.0\ \Omega$; the rod and rails have negligible resistance.
+\begin{enumerate}[label=(\alph*)]
+  \item Starting from the magnetic force on the charge carriers in the rod, derive that the induced voltage across the moving rod is $U_\text{ind} = BLv$, and state the condition under which this formula holds.
+  \item Find the induced voltage, the induced current, and its direction (explain your reasoning with Lenz's law).
+  \item Find the external force needed to keep the rod at constant speed, and the mechanical power supplied. Compare with the power dissipated in the resistor.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-8}
+A proton moves in a uniform magnetic field $\vec{B} = (0,0,B)$ in vacuum, with initial velocity in the $xy$-plane. Its motion obeys
+\[
+  \frac{\mathrm{d}\vec{v}}{\mathrm{d}t} = \frac{q}{m}\,\vec{v}\times\vec{B}.
+\]
+Simulate this numerically in a language of your choice.
+\begin{enumerate}[label=(\alph*)]
+  \item Implement the semi-implicit Euler step $\vec{v}_{n+1} = \vec{v}_n + \frac{q}{m}\,\Delta t\,(\vec{v}_n\times\vec{B})$, then $\vec{r}_{n+1} = \vec{r}_n + \Delta t\,\vec{v}_{n+1}$, and also plain (explicit) Euler where $\vec{r}$ is updated with $\vec{v}_n$.
+  \item Run both for a few periods with $\Delta t = T/100$ (estimate $T$ from \cref{exm:proton-circle}) and plot the orbits. Measure how the particle's speed drifts over one period for each scheme.
+  \item Compare the simulated orbit radius with the theoretical $r = mv/(qB)$ and explain any discrepancy. State which scheme you would use in a real physics engine and why.
+\end{enumerate}
+\end{exercise}
