@@ -49,7 +49,7 @@
 \begin{solution}{ex:em-2}
   The electric field strength is given by:
   \[
-    E=\frac{U}{d}
+    E=\frac{U}{d}\\
     E=133 333 V/m
   \]
   (b) The force is given by
@@ -112,12 +112,109 @@
   It is also clear that this energy is double of what it used to be. This is because separating the plates is doing work on the capacitor.
 \end{solution}
 \begin{solution}{ex:em-4}
-  The total resistance is given by:
+  (a) The total resistance is given by:
   \[
     \begin{gathered}
       R_t=R_1+R_{23}\\
-      R_t=R_1+\frac{R_2R_3}{R_2+R_3}
+      R_t=R_1+\frac{R_2R_3}{R_2+R_3}\\
       R_t=282 \Omega
     \end{gathered}
   \]
+  The current is given by:
+  \[
+    \begin{gathered}
+      I_{total}=\frac{U_{total}}{R_{total}}\\
+      I_{total}=\frac{12V}{282\Omega}\approx42mA
+    \end{gathered}
+  \]
+
+  (b) For the whole circuit, we can think of the resistor pair $R_{23}$ as one single resistor. Then, we see that $R_1$ and $R_{23}$ are wired in series. We know that the voltage divides between resistors in series in proportion to their resistance. The voltage across $R_1$ is then:
+  \[
+    \begin{gathered}
+      U_1=U_{total}\frac{R_1}{R_t}\\
+      U_1=12V \frac{150\Omega}{282\Omega}\\
+      U_1\approx6.4V
+    \end{gathered}
+  \]
+    Then for the pair $R_{23}$, we have:
+    \[
+      \begin{gathered}
+        U_{23}=U_{total}\frac{R_{23}}{R_t}\\
+        U_{23}\approx5.6V
+      \end{gathered}
+    \]
+    For the resistors $R_2$ and $R_3$, the voltage stays the same ($5.6V$), but the current gets divided in proportion to the conductance ($G=\frac{1}{R}$):
+    \[
+      \begin{gathered}
+        I_{23}=I_{total} \qquad\text{(Since $R_1$ and $R_{23}$ are wired in series)}\\
+        I_{2}=I_{23} \frac{\frac{1}{R_2}}{\frac{1}{R_2}+\frac{1}{R_3}}\\
+        I_{2}=I_{23} \frac{R_{23}}{R_2}\\
+        I_2\approx 25 mA\\\\
+        I_3=I_{23}\frac{R_{23}}{R_3}\\
+        I_3\approx17mA
+      \end{gathered}
+    \]
+    (c)
+    The power dissipated in $R_1$ is given by:
+    \[
+      \begin{gathered}
+        P_1=U_1I_1\\
+        P_1=6.4V\cdot 42mA\\
+        P_1=0.27W
+      \end{gathered}
+    \]
+    The total power given by the battery is given by:
+    \[
+      P_{total}=U_{total}I_{total}
+      P_{total}=12V \cdot 42mA
+      P_{total}=0.5W
+    \]
+\end{solution}
+\begin{solution}{ex:em-5}
+  (a)
+  Let's choose that the field points to the left (negative x), and that the proton is going forward (positive y). The z-axis points up. Using the right hand rule (middle finger represents the field, index finger represents the velocity and the thumb represents the resulting force), we deduce that the initial force vector points upwards, towards the z-axis.
+  (b) The magnitude of the force is given by:
+  \[
+    \abs{F}=qvB \qquad\text{(Since the velocity is perpendicular to the field)}
+  \]
+  Since the proton is perpendicular to the field, $F$ is a centripetal force and the proton traces a circular path. Following the equations for circular motion:
+  \[
+    \begin{gathered}
+      a=\frac{v^2}{r}
+      F=\frac{mv^2}{r}
+      qvB=\frac{mv^2}{r}
+      r=\frac{mv^2}{qvB}
+      r=\frac{mv}{qB}
+      r\approx0.013m=13mm
+    \end{gathered}
+  \]
+  The period is just the circumference divided by the velocity:
+  \[
+    T=\frac{2\pi r}{v}\approx2.6\cdot10^{-7}s
+  \]
+  (c) For an electron, the equations don't change, except that it has an equal and opposite charge compared to a proton. Then, the force will point in the opposite direction (negative z) and thus the circular motion will be the same but in the opposite direction.
+\end{solution}
+\begin{solution}{ex:em-6}
+  Knowing that $\overrightarrow{F}=q\overrightarrow{v}\times\overrightarrow{B}$ already tells us a crucial detail: the force exerted on a particle in a magnetic field is always perpendicular to the velocity. Let's see the definition of mechanical work:
+  \[
+    \begin{gathered}
+      W =\int \overrightarrow{F}\cdot ds\\
+      W =\int \overrightarrow{F} \cdot \overrightarrow{v} dt\\
+      W =\int (q \overrightarrow{v}\times \overrightarrow{B}) \cdot \overrightarrow{v} dt \\
+      W =q\int(\overrightarrow{v}\times \overrightarrow{B}) \cdot \overrightarrow{v} dt \\
+    \end{gathered}
+  \]
+  The integrand is now a scalar triple product. A crucial identity of the scalar triple product is that $\overrightarrow{a}\cdot(\overrightarrow{a}\times \overrightarrow{b})=0$. Thus, the integral evaluates to 0 and the work done is also 0.
+  From this we can deduce that the mechanical energy is conserved. Furthermore, since the force is always perpendicular to the velocity, we know that the magnitude of the velocity (speed) is also constant, and from this follows that the kinetic energy is also constant.
+\end{solution}
+\begin{solution}{ex:em-7}
+  Each charge carrier experiences a force from the magnetic field given by:
+  \[
+     \overrightarrow{F}=q \overrightarrow{v}\times\overrightarrow{B}
+  \]
+  NOTE to self: two ways to see \begin{itemize}
+    \item The one above, a more fundamental approach, where the charges build up to one end of the rod until their electric field balances this force ($qE=qvB$, then calculate tension as the difference in potential). Works even without the circuit.
+    \item The one you may see in textbooks: the rod moves away from the resistor, the whole circuit is the coil and the circuits area changes by $Lv$ each second. This is also easier to calculate and explain but only works when there is a circuit (like here).
+  \end{itemize}
+
 \end{solution}
