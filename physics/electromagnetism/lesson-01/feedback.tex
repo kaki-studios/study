@@ -1,0 +1,68 @@
+%! TEX root = main.tex
+
+\begin{feedback}[\cref{ex:em-1}]
+Verdict: redo (a)--(c). The directions are right; both magnitudes and the zero-field point are wrong.
+\begin{enumerate}[label=(\alph*)]
+  \item You dropped the square on $r$. You wrote $\abs{F_{31}} = k\cdot 10.0\cdot 10^{-12}/0.15$, but Coulomb's law needs $r^2$, and the units give it away: $q_1q_3$ is in $\mathrm{C^2}$ and the denominator must be in $\mathrm{m^2}$. Correct:
+  \[
+    \abs{F_{31}} = k\,\frac{(2.0\times 10^{-6})(5.0\times 10^{-6})}{(0.15)^2} = 4.0\ \mathrm{N},
+    \qquad
+    \abs{F_{32}} = k\,\frac{(3.0\times 10^{-6})(5.0\times 10^{-6})}{(0.25)^2} \approx 2.2\ \mathrm{N},
+  \]
+  both pointing in $+x$ (repulsion from $q_1$, attraction toward $q_2$). Your ``$0.25\ \mathrm{cm}$'' is a units slip for $25\ \mathrm{cm} = 0.25\ \mathrm{m}$.
+  \item Carries the error above: $F_\text{net} = 4.0 + 2.2 \approx 6.2\ \mathrm{N}$ in $+x$.
+  \item Conceptually wrong, not just numerically. Between a $+$ and a $-$ charge the two fields point the \emph{same} way (both toward the negative charge), so they add and $E$ never vanishes there. Your scalar equation $\frac{q_1}{x^2}+\frac{q_2}{(40-x)^2} = 0$ silently treated both contributions as pointing the same algebraic direction, which is false on this interval; you then took a square root and kept only one sign without substituting back. The zero sits \emph{outside} the pair, on the side of the smaller $\abs{q}$: at $x \approx -1.8\ \mathrm{m}$ (about $178\ \mathrm{cm}$ left of $q_1$). To redo: write each field as a vector ($\vec{E}_2$ from the charge at $x = 40$ carries a geometric minus sign on $0 < x < 40$), solve, and verify the candidate makes the vector sum zero.
+\end{enumerate}
+\end{feedback}
+
+\begin{feedback}[\cref{ex:em-2}]
+Verdict: fix (c); (a) and (b) are correct.
+\begin{enumerate}[label=(\alph*)]
+  \item Correct, $E = U/d \approx 1.33\times 10^{5}\ \mathrm{V/m}$.
+  \item Correct, $a = eE/m_e \approx 2.3\times 10^{16}\ \mathrm{m/s^2}$. State the direction (toward the positive plate) for full marks.
+  \item Arithmetic slip of $10^6$, and it is physically impossible: $11.8\times 10^{12}\ \mathrm{m/s}$ exceeds $c$ by four orders of magnitude, so the non-relativistic formula you used could never produce it. Always sanity-check against $c$. Correct:
+  \[
+    v = \sqrt{\frac{2eU}{m_e}} = \sqrt{\frac{2(1.60\times 10^{-19})(400)}{9.11\times 10^{-31}}} \approx 1.2\times 10^{7}\ \mathrm{m/s},
+  \]
+  about $4\%$ of $c$, so the non-relativistic energy is self-consistent here. Find the dropped square root or mishandled exponent in your evaluation and redo it.
+\end{enumerate}
+\end{feedback}
+
+\begin{feedback}[\cref{ex:em-3}]
+Verdict: fix the numbers in (a)--(b); the reasoning in (c) is right.
+\begin{enumerate}[label=(\alph*)]
+  \item You used $d = 0.005\ \mathrm{m}$, but the exercise gives $0.50\ \mathrm{mm} = 5.0\times 10^{-4}\ \mathrm{m}$ --- a factor of 10. Also, $\varepsilon_r = 4.0$ is dimensionless; ``$4.0\ \mathrm{F/m}$'' belongs to $\varepsilon_0\varepsilon_r$, not $\varepsilon_r$. Correct: $C = \varepsilon_0\varepsilon_r A/d \approx 3.5\times 10^{-10}\ \mathrm{F}$.
+  \item Carries the factor of 10: $Q = CU \approx 8.5\times 10^{-9}\ \mathrm{C}$. And you never computed the second quantity asked for: $W = \tfrac{1}{2}CU^2 \approx 1.0\times 10^{-7}\ \mathrm{J}$. Add it.
+  \item Physically correct: disconnected means $Q$ fixed, $C \to C/2$, so $U = Q/C$ doubles to $48\ \mathrm{V}$ and $W = Q^2/2C$ doubles, with the extra energy coming from the work you do pulling the attracting plates apart. Only the numbers carry the earlier factor of 10 ($W_f \approx 2.0\times 10^{-7}\ \mathrm{J}$). Fix by correcting $C$.
+\end{enumerate}
+\end{feedback}
+
+\begin{feedback}[\cref{ex:em-4}]
+Verdict: correct, no redo. $R_t = 282\ \Omega$, $I_\text{total} \approx 43\ \mathrm{mA}$, $U_1 \approx 6.4\ \mathrm{V}$, $U_{23} \approx 5.6\ \mathrm{V}$, $I_2 \approx 25\ \mathrm{mA}$, $I_3 \approx 17\ \mathrm{mA}$, $P_1 \approx 0.27\ \mathrm{W}$, $P_\text{total} \approx 0.51\ \mathrm{W}$ --- all check out, and your $I_2 + I_3 = I_\text{total}$ self-check is exactly the right habit. One optional extra check for the future: $P_1 + P_2 + P_3 = P_\text{total}$.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:em-5}]
+Verdict: redo (b, radius) and (c).
+\begin{enumerate}[label=(\alph*)]
+  \item Fine --- any self-consistent choice of axes with the right-hand rule gets full marks.
+  \item $T \approx 2.6\times 10^{-7}\ \mathrm{s}$ is right, but $r \approx 13\ \mathrm{mm}$ is not:
+  \[
+    r = \frac{m_p v}{qB} = \frac{(1.67\times 10^{-27})(4.0\times 10^{5})}{(1.60\times 10^{-19})(0.25)} \approx 1.7\times 10^{-2}\ \mathrm{m} = 17\ \mathrm{mm}.
+  \]
+  Note your own two numbers are inconsistent with each other: $r = vT/2\pi$ must hold, and $4.0\times 10^{5}\cdot 2.6\times 10^{-7}/2\pi \approx 17\ \mathrm{mm}$. That identity is a free self-check --- use it.
+  \item Wrong. ``Equal and opposite charge'' is sloppy (the magnitudes are equal; the signs are opposite), and worse, you kept the mass fixed: the electron is $\sim 1836\times$ lighter, and both $r = mv/qB$ and $T = 2\pi m/qB$ scale linearly with $m$. So the electron's radius ($\approx 9\ \mu\mathrm{m}$) and period ($\approx 1.4\times 10^{-10}\ \mathrm{s}$) are each smaller by $m_p/m_e \approx 1836$, and it circulates with opposite handedness. ``The same circle in the opposite direction'' misses the whole point of the formulas. Redo from the scaling.
+\end{enumerate}
+\end{feedback}
+
+\begin{feedback}[\cref{ex:em-6}]
+Verdict: correct, no redo. The chain $W = \int \vec{F}\cdot d\vec{s} = \int \vec{F}\cdot\vec{v}\,dt = q\int(\vec{v}\times\vec{B})\cdot\vec{v}\,dt = 0$ via the repeated vector in the scalar triple product is the whole proof. One tightening if you revisit it: the step ``perpendicular force, therefore constant speed'' deserves its one-line justification, $\frac{d}{dt}v^2 = 2\vec{v}\cdot\vec{a} = 2\vec{v}\cdot\vec{F}/m = 0$. Also note the proof is instantaneous, so it holds even if $\vec{B}$ varies in space or time --- and ``mechanical energy conserved'' here means kinetic energy, since there is no electric potential in play.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:em-7}]
+Verdict: (a)--(b) accepted with qualifiers; (c) needs a real redo of the $v(t)$ derivation (the final $F$ and $P$ numbers are right).
+\begin{enumerate}[label=(\alph*)]
+  \item The $qE = qvB \to E = vB \to U = BLv$ chain is correct. Two fixes: the condition as stated (``field perpendicular to the circuit and the velocity'') is vague --- it must be that $\vec{v}$, $\vec{B}$, and the rod are mutually perpendicular, with the general form $U = (\vec{v}\times\vec{B})\cdot\vec{L}$. And ``tension'' is French jargon; in English write voltage or emf. Your flux-area argument ($Lv$ of new area per second) is a correct second viewpoint.
+  \item $U_\text{ind} = 0.40\ \mathrm{V}$ and $I_\text{ind} = 80\ \mathrm{mA}$ are correct, and the Lenz sentence (growing upward flux $\to$ induced field points down) is the part that earns the marks. But ``counter-clockwise'' is viewpoint-less and, under the usual drawing, sign-flipped: an induced field pointing down through the loop means clockwise seen from above. Always name the viewpoint.
+  \item The last lines ($F = (BL)^2v/R = 8.0\ \mathrm{mN}$, $P = U^2/R = 32\ \mathrm{mW} = Fv$) are correct. Everything above them, starting from ``$E_k + E_e = E_0$'' with $\frac{1}{2}mv(t)^2 + \frac{U^2}{R}t$, is invalid: once $v$ varies, $P = U^2/R$ varies too, so the dissipated energy is $\int P\,dt$, not $P\cdot t$ with $v(t)$ pulled inside. Your square-root $v(t)$ is wrong; the braking force $F = ILB = (BL)^2v/R$ gives $m\,dv/dt = -(BL)^2v/R$, i.e.\ exponential decay, not algebraic. And ``the magnetic field does no work, so energy is conserved'' misleads here: mechanical energy drains into the resistor as Joule heat, and the external agent pays $Fv$ to top it up. Redo: derive the braking force from $\vec{F} = I\vec{L}\times\vec{B}$, write the equation of motion, and solve (or at least set up) it properly.
+\end{enumerate}
+\end{feedback}

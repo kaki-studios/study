@@ -2,7 +2,6 @@
 
 \begin{solution}{ex:em-1}
   (a)
-
   Using Coulomb's law, we have
 
   \[\abs{F}=k \frac{\abs{q_1q_2}}{r^2}\]
@@ -11,10 +10,11 @@
   \[\abs{F_{31}}=k \frac{10.0 \cdot 10^{-12} C}{0.15m} \approx 0.6N\]
   The direction is away from $q_1$, since they are both positively charged. The force on $q_3$ due to $q_2$:
 
-  \[\abs{F_{32}}=k \frac{15.0 \cdot 10^{-12} C}{0.25cm} \approx 0.54 N \]
-  This time the force points towards $q_2$ since they are oppositely charged.
+  \[
+    \abs{F_{32}}=k \frac{15.0 \cdot 10^{-12} C}{0.25cm} \approx 0.54 N 
+  \]
+  This time the force points towards $q_2$ since they are oppositely charged.\\\\
   (b)
-
   The net force is just the sum of the previous 2 forces in this case.
   \[\overrightarrow{F_{net}}=\overrightarrow{F_{31}}+\overrightarrow{F_{32}}\]
   It is clear that $\overrightarrow{F_{32}}$ and $\overrightarrow{F_{31}}$ both point in the positive x-axis direction. Thus:
@@ -50,7 +50,7 @@
   The electric field strength is given by:
   \[
     E=\frac{U}{d}\\
-    E=133 333 V/m
+    E=133 \, 333 V/m
   \]
   (b) The force is given by
   \[
@@ -65,7 +65,7 @@
   \]
   (c) The electric potential between the 2 plates is given by:
   \[
-    \Delta W_pot = q\Delta V
+    \Delta W_{pot} = q\Delta V
   \]
   We also have:
   \[
@@ -83,7 +83,7 @@
   \[
     C=\varepsilon_0\varepsilon_r \frac{A}{d}
   \]
-  We'll use $\varepsilon_0 = 8.85 \cdot 10^{-12} F/m$ $\varepsilon_r = 4.0 F/m$, $A=0.005 m^2$ and $d=0.005 m$. We have:
+  We'll use $\varepsilon_0 = 8.85 \cdot 10^{-12} F/m$, $\varepsilon_r = 4.0 F/m$, $A=0.005 m^2$ and $d=0.005 m$. We have:
   \[
     \begin{gathered}
       C\approx3.5 \cdot 10^{-11} F
@@ -96,7 +96,7 @@
   \]
   So using the capacitance obtained earlier we have:
   \[
-    Q\approx8.5 \cdot 10^{-10}
+    Q\approx8.5 \cdot 10^{-10} C
   \]
   (c) The battery is disconnected, let's treat Q as fixed and U as variable. The capacitance is half of what it used to be, since the separation is doubled. We have:
   \[
@@ -165,9 +165,11 @@
     \]
     The total power given by the battery is given by:
     \[
-      P_{total}=U_{total}I_{total}
-      P_{total}=12V \cdot 42mA
+      \begin{gathered}
+      P_{total}=U_{total}I_{total}\\
+      P_{total}=12V \cdot 42mA\\
       P_{total}=0.5W
+      \end{gathered}
     \]
 \end{solution}
 \begin{solution}{ex:em-5}
@@ -180,11 +182,11 @@
   Since the proton is perpendicular to the field, $F$ is a centripetal force and the proton traces a circular path. Following the equations for circular motion:
   \[
     \begin{gathered}
-      a=\frac{v^2}{r}
-      F=\frac{mv^2}{r}
-      qvB=\frac{mv^2}{r}
-      r=\frac{mv^2}{qvB}
-      r=\frac{mv}{qB}
+      a=\frac{v^2}{r}\\
+      F=\frac{mv^2}{r}\\
+      qvB=\frac{mv^2}{r}\\
+      r=\frac{mv^2}{qvB}\\
+      r=\frac{mv}{qB}\\
       r\approx0.013m=13mm
     \end{gathered}
   \]
@@ -212,9 +214,83 @@
   \[
      \overrightarrow{F}=q \overrightarrow{v}\times\overrightarrow{B}
   \]
-  NOTE to self: two ways to see \begin{itemize}
-    \item The one above, a more fundamental approach, where the charges build up to one end of the rod until their electric field balances this force ($qE=qvB$, then calculate tension as the difference in potential). Works even without the circuit.
-    \item The one you may see in textbooks: the rod moves away from the resistor, the whole circuit is the coil and the circuits area changes by $Lv$ each second. This is also easier to calculate and explain but only works when there is a circuit (like here).
-  \end{itemize}
-
+  These forces apply to each electron so the charges build up to one end of the rod. They will then achieve an equilibrium once the electric field they build up cancels out the aforementioned force, so:
+  \[
+    \begin{gathered}
+      qE=q \overrightarrow{v} \times \overrightarrow{B}\\
+      qE=qvB \qquad \text{(Since the magnetic field is perpendicular to the velocity)}\\
+      E=vB
+    \end{gathered}
+  \]
+  To get the tension, we just need the difference in potential, which scales linearly in proportion to the length:
+  \[
+    \begin{gathered}
+      U_{ind}=LE\\
+      U_{ind}=BLv
+    \end{gathered}
+  \]
+  There's also a more simple explanation for the formula. If we take the whole circuit as the coil, then its flux changes in proportion to its area. The area grows $Lv$ each second, so the flux in this scenario grows $BLv$ each second which is exactly the induced voltage. This formula holds when the magnetic field is perpendicular to the circuit and the velocity of the rod. Otherwise we'd have to take cross products for the velocity and dot products for the coil.\\
+  (b) Using the aforementioned formula, the induced voltage is:
+  \[
+    \begin{gathered}
+      U_{ind}=BLv\\
+      U_{ind}=0.2 T \cdot 0.5 m \cdot 4.0 m/s\\
+      U_{ind}=0.4 V
+    \end{gathered}
+  \]
+  The induced current can be calculated using the relation $I=\frac{U}{R}$:
+  \[
+    I_{ind}=\frac{0.4 V}{5.0 \Omega}=80 mA
+  \]
+  Since the uniform magnetic field points up, the induced magnetic field must point down. Using the right hand rule (curling the fingers in the induced magnetic field gives us the direction of current), we can deduce that the current must flow counter-clockwise. (The electrons flow in the opposite direction).\\
+  (c) Since the magnetic field doesn't do any work, we can assert that energy is conserved in the system:
+  \[
+    \begin{gathered}
+      E_k+E_e=E_0\\
+      \frac{1}{2}mv(t)^2+Pt=\frac{1}{2}mv_0^2\\
+      \frac{1}{2}mv(t)^2+UIt=\frac{1}{2}mv_0^2\\
+      \frac{1}{2}mv(t)^2+\frac{U^2}{R}t=\frac{1}{2}mv_0^2\\
+      \frac{1}{2}mv(t)^2+\frac{(BLv(t))^2}{R}t=\frac{1}{2}mv_0^2\\
+      v(t)^2(\frac{1}{2}m+\frac{(BL)^2t}{R})=\frac{1}{2}mv_0^2\\
+      v(t)^2=\frac{\frac{1}{2}mv_0^2}{\frac{1}{2}m+\frac{(BL)^2t}{R}}\\
+      v(t)^2=\frac{mv_0^2}{m+\frac{2(BL)^2t}{R}}\\
+      v(t)^2=\frac{Rmv_0^2}{Rm+2(BL)^2t}\\
+      v(t)^2=\frac{Rmv_0^2}{Rm+2B^2L^2t}\\
+      v(t)=\sqrt{\frac{Rmv_0^2}{Rm+2B^2L^2t}}
+    \end{gathered}
+  \]
+    We observe that $v(t)$ is decreasing. To keep the velocity constant, we need to do work that is equal to the energy dissipated in the resistor.
+    \[
+      \begin{gathered}
+        W=E_e\\
+        W=UIt\\
+        W=\frac{U^2t}{R}\\
+        W=\frac{(BLv)^2t}{R}
+      \end{gathered}
+    \]
+    Let's find the external force from the work:
+    \[
+      \begin{gathered}
+        W=Fs\\
+        Fs=\frac{(BLv)^2t}{R}\\
+        Fvt=\frac{(BLv)^2t}{R}\\
+        Fv=\frac{(BLv)^2}{R}\\
+        F=\frac{(BL)^2v}{R}\\
+      \end{gathered}
+    \]
+    Since the velocity stays constant in this scenario, we can calculate F:
+    \[
+        F=\frac{(0.2 T \cdot 0.5 m)^2 4.0 m/s}{5.0 \Omega}\\
+        F=0.008N
+    \]
+    The power dissipated in the resistor is simply. 
+    \[
+      \begin{gathered}
+        P=UI\\
+        P=\frac{U^2}{R}\\
+        P=\frac{(BLv)^2}{R}\\
+        P=\frac{(0.2 T \cdot 0.5 m \cdot 4.0 m/s)^2}{5.0 \Omega}\\
+        P= 0.032W = Fv
+      \end{gathered}
+    \]
 \end{solution}
