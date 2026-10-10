@@ -1,0 +1,77 @@
+%! TEX root = main.tex
+
+\begin{exercise}\label{ex:em-9}
+Two long straight parallel wires are $8.0\ \mathrm{cm}$ apart. Wire~1 carries $I_1 = 6.0\ \mathrm{A}$, wire~2 carries $I_2 = 4.0\ \mathrm{A}$, in the same direction.
+\begin{enumerate}[label=(\alph*)]
+  \item Find the magnetic field produced by wire~1 at the position of wire~2 (magnitude and direction, described in words with axes you choose).
+  \item Find the force per unit length on wire~2 (magnitude and direction). Is it attractive or repulsive?
+  \item A solenoid has $N = 400$ turns over $\ell = 20\ \mathrm{cm}$ and carries $I = 3.0\ \mathrm{A}$. Find its interior field. How many times Earth's field ($\approx 50\ \mu\mathrm{T}$) is this?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-10}
+A beam of singly ionized carbon isotopes ($q = +e$) with a spread of speeds enters a velocity selector with $E = 4.0\times 10^{4}\ \mathrm{V/m}$ and $B = 0.20\ \mathrm{T}$, then enters a spectrometer chamber with $B' = 0.20\ \mathrm{T}$ perpendicular to the beam. In the chamber each ion traces a half-circle and hits a detector plate; the distance from the entry slit to the impact point is the diameter $2r$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that only ions with one specific speed pass the selector, and compute that speed.
+  \item Find the orbit radius in the spectrometer for $^{12}\mathrm{C}$ ($m = 12\,u$).
+  \item The second isotope $^{13}\mathrm{C}$ lands $2.1\ \mathrm{cm}$ further out along the plate. Verify this separation from the formulas (no full recalculation needed: use scaling, and remember the plate measures diameters).
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-11}
+A power station delivers $P = 100\ \mathrm{MW}$ over a line of resistance $R = 2.0\ \Omega$, first at $U_\text{rms} = 20\ \mathrm{kV}$, then stepped up to $400\ \mathrm{kV}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Find the rms current and the power lost as heat in the line in each case.
+  \item Give the loss as a percentage of delivered power in each case.
+  \item Explain in one or two sentences why the grid uses high voltage for transmission and steps it down near consumers, naming the device that makes this possible.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-12}
+A laser beam ($\lambda = 532\ \mathrm{nm}$) strikes an air--glass boundary ($n_\text{glass} = 1.52$) at $50^\circ$ to the normal.
+\begin{enumerate}[label=(\alph*)]
+  \item Find the angle of the refracted ray inside the glass.
+  \item The refracted ray hits the opposite face of a glass slab (glass to air). The slab faces are parallel. Show that the exiting ray is parallel to the incoming ray, and find the critical angle for the glass--air face. Does total internal reflection occur here?
+  \item An optical fibre has core $n = 1.50$ and cladding $n = 1.48$. Find the critical angle at the core--cladding boundary and explain in words why light stays in the fibre.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-13}
+A converging lens has focal length $f = 12\ \mathrm{cm}$.
+\begin{enumerate}[label=(\alph*)]
+  \item An object stands $a = 30\ \mathrm{cm}$ from the lens. Find the image distance $b$ and magnification $m$. Is the image real or virtual, upright or inverted?
+  \item The object is moved to $a = 8.0\ \mathrm{cm}$ (inside the focal length). Find $b$ and $m$ and describe the image (this is the magnifying-glass case).
+  \item A flat mirror stands $2.0\ \mathrm{m}$ from a person $1.7\ \mathrm{m}$ tall. How tall must the mirror be for the person to see their whole body, and at what height must its top edge sit? (Draw the rays; the answer is independent of the $2.0\ \mathrm{m}$.)
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-14}
+In a grating experiment the screen is $L = 1.20\ \mathrm{m}$ from a grating with $500$ lines per mm. A green laser produces first-order maxima $33.1\ \mathrm{cm}$ on either side of the central maximum.
+\begin{enumerate}[label=(\alph*)]
+  \item Find the slit spacing $d$ and the angle $\theta_1$ of the first maximum.
+  \item Use $d\sin\theta_1 = \lambda$ to determine the laser wavelength.
+  \item The laser is replaced by white light. Explain in words what pattern appears on the screen and why the centre stays white while higher orders smear into spectra.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-15}
+An ideal transformer has $N_1 = 200$ primary turns and $N_2 = 20$ secondary turns. The primary is fed $U_{1,\text{rms}} = 230\ \mathrm{V}$ at $50\ \mathrm{Hz}$; the secondary drives a load $R = 4.0\ \Omega$.
+\begin{enumerate}[label=(\alph*)]
+  \item Starting from Faraday's law applied to each coil, derive $U_2/U_1 = N_2/N_1$ (state the shared-flux assumption explicitly) and find $U_{2,\text{rms}}$.
+  \item Find the secondary current and the power delivered to the load. What primary current does energy conservation predict?
+  \item Give two mechanisms that make a real transformer deliver slightly less than this, with one sentence each linking to the physics of this lesson.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:em-16}
+A plane wave of wavelength $\lambda$ passes $N$ identical narrow slits spaced $d$ apart. The complex amplitude in direction $\theta$ is the phasor sum
+\[
+  A(\theta) = A_0\sum_{k=0}^{N-1} e^{ik\phi}, \qquad \phi = \frac{2\pi d\sin\theta}{\lambda},
+\]
+and the observed intensity is $I(\theta) = \abs{A(\theta)}^2$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that the principal maxima sit exactly at the grating condition $d\sin\theta = m\lambda$, for any $N$.
+  \item Simulate $I(\theta)$ numerically (e.g.\ in Python) for $N = 2$ and $N = 8$ over $-90^\circ < \theta < 90^\circ$ with $d = 4\lambda$, and plot both. Count the small secondary maxima between neighbouring principal maxima for each $N$ and state the pattern.
+  \item Explain in words why increasing $N$ makes the principal maxima sharper, connecting the phasor picture to the experimental fact that a grating resolves wavelengths far better than a double slit.
+\end{enumerate}
+\end{exercise}

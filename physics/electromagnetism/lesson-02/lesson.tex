@@ -1,0 +1,336 @@
+%! TEX root = main.tex
+
+\subsection{Electromagnetism and light II: currents, AC, and optics}
+
+Lesson~1 built the statics (charges, fields, potential, capacitors, DC circuits), the Lorentz force, induction, and the wave idea. This lesson finishes the Finnish high-school picture: currents as \emph{sources} of magnetic fields, magnetism in matter, AC and the transformer, the electromagnetic spectrum, and the whole optics half of FY7 (reflection, refraction, interference, diffraction, polarization). Bits marked \emph{Extra} go beyond the exams but are one step away.
+
+Route:
+\begin{enumerate}[label=\arabic*.]
+  \item magnetism in matter: dipoles, domains, ferromagnetism;
+  \item magnetic fields of currents: straight wire, parallel wires, solenoid;
+  \item charged particles in combined fields: selector, mass spectrometer, accelerators;
+  \item eddy currents (and self-induction as an extra);
+  \item alternating current and effective values;
+  \item the transformer and power transmission;
+  \item the spectrum, black-body radiation, photon energies;
+  \item geometric optics: reflection, refraction, total internal reflection, lenses;
+  \item wave optics: double slit, grating, single-slit diffraction, thin films;
+  \item polarization;
+  \item how antennas radiate (extra);
+  \item common mistakes.
+\end{enumerate}
+
+Constants (lesson~1 plus): $\mu_0 = 4\pi\times 10^{-7}\ \mathrm{T\,m/A}$,
+$h = 6.63\times 10^{-34}\ \mathrm{J\,s}$,
+$\sigma = 5.67\times 10^{-8}\ \mathrm{W/(m^2\,K^4)}$,
+Wien's $b = 2.90\times 10^{-3}\ \mathrm{m\,K}$,
+$u = 1.66\times 10^{-27}\ \mathrm{kg}$,
+Earth's field $\approx 50\ \mu\mathrm{T}$.
+
+\subsubsection{Magnetism in matter}
+
+\begin{definition}[Magnetic dipole]\label{def:dipole}
+A small current loop, a compass needle, and (at the classical level) an orbiting electron all act as a \emph{magnetic dipole}: far away their field has the same shape, and in an external field $\vec{B}$ the dipole twists to align with the field, like a compass needle. The strength is the dipole moment $\vec{\mu}$ (loop: $\mu = IA$, direction by the right-hand rule).
+\end{definition}
+
+Most magnetism in matter comes from electron spin plus orbital motion, but the organizing fact for FY7 is simpler: materials differ in how their atomic dipoles respond.
+
+\begin{itemize}
+  \item \emph{Ferromagnetic} (iron, nickel, cobalt): neighbouring dipoles lock parallel in regions called \emph{domains}. An unmagnetized nail has randomly oriented domains that cancel; an external field grows the aligned domains at the expense of others, and some alignment stays when the field is removed---a permanent magnet. Heating above the \emph{Curie temperature} (iron: $770\,^\circ\mathrm{C}$) shakes the alignment apart.
+  \item \emph{Paramagnetic} (aluminium, oxygen): dipoles align weakly with the field, Randall style---pulled in slightly, no memory.
+  \item \emph{Diamagnetic} (copper, water, bismuth): dipoles oppose weakly---pushed out slightly. All matter is slightly diamagnetic; it is just usually drowned out.
+\end{itemize}
+
+\begin{remark}[Hysteresis, qualitatively]\label{rmk:hysteresis}
+Magnetizing iron is not reversible: ramping the external field up and back down traces a loop (\emph{hysteresis}), because domain walls snag. The loop area is energy lost as heat per cycle---which is why transformer cores use ``soft'' iron with a narrow loop, and permanent magnets use ``hard'' steel with a wide one. Plotting the loop is a standard lab exercise, not an exam derivation.
+\end{remark}
+
+\subsubsection{Magnetic fields of currents}
+
+Lesson~1 only asked what a field \emph{does} to charges. Now the reverse: currents \emph{make} fields.
+
+\begin{theorem}[Field of a long straight wire]\label{thm:wire}
+A long straight wire carrying current $I$ produces at perpendicular distance $r$ the field
+\begin{equation}\label{eq:wire}
+  B = \frac{\mu_0 I}{2\pi r},
+\end{equation}
+circling the wire with direction given by the right-hand rule: thumb along the current, fingers curl along $\vec{B}$.
+\end{theorem}
+
+\begin{example}[How big is it?]\label{exm:wire-number}
+$I = 10\ \mathrm{A}$ at $r = 2.0\ \mathrm{cm}$:
+\[
+  B = \frac{4\pi\times 10^{-7}\cdot 10}{2\pi\cdot 0.020} = 1.0\times 10^{-4}\ \mathrm{T} = 0.10\ \mathrm{mT},
+\]
+about twice Earth's field. Household currents magnetically matter only centimetres away---which is why a clamp meter must hug the wire.
+\end{example}
+
+\begin{theorem}[Force between parallel currents]\label{thm:wire-force}
+Two long parallel wires distance $d$ apart, carrying $I_1$ and $I_2$, exert on each other over length $L$
+\begin{equation}\label{eq:wire-force}
+  F = \frac{\mu_0 I_1 I_2 L}{2\pi d}.
+\end{equation}
+Currents in the \emph{same} direction attract, opposite directions repel.
+\end{theorem}
+
+Reason in one line: wire~1's field at wire~2 is $B = \mu_0 I_1/(2\pi d)$ by \cref{eq:wire}, and wire~2, sitting in that field, feels $F = I_2 L B$ by the wire form of the Lorentz force. Direction: same-direction currents give opposite-facing ``gears'' of field lines that pull together---check it with the right-hand rule once, then remember the slogan.
+
+\begin{remark}[Extra: the old ampere]\label{rmk:ampere}
+Until 2019 the ampere was \emph{defined} by \cref{eq:wire-force}: $1\ \mathrm{A}$ is the current that gives $2\times 10^{-7}\ \mathrm{N/m}$ between wires $1\ \mathrm{m}$ apart. Since 2019 the ampere is defined by fixing $e$, and the force is something to measure. Exam-wise nothing changes; it is just nice to know the $2\times 10^{-7}$ is not an accident.
+\end{remark}
+
+\begin{theorem}[Solenoid]\label{thm:solenoid}
+A long coil (solenoid) of $N$ turns over length $\ell$ carrying $I$ has an approximately uniform interior field
+\begin{equation}\label{eq:solenoid}
+  B = \mu_0\,\frac{N}{\ell}\,I,
+\end{equation}
+with field lines running along the axis (right-hand rule: curl fingers with the current, thumb points to the ``north'' end). Outside, the field is weak---a solenoid is the magnetic analogue of the parallel-plate capacitor.
+\end{theorem}
+
+\begin{example}[Lab solenoid]\label{exm:solenoid}
+$N = 500$ turns over $\ell = 25\ \mathrm{cm}$ with $I = 2.0\ \mathrm{A}$:
+\[
+  B = 4\pi\times 10^{-7}\cdot\frac{500}{0.25}\cdot 2.0 \approx 5.0\times 10^{-3}\ \mathrm{T} = 5.0\ \mathrm{mT},
+\]
+a hundred times Earth's field---enough to visibly deflect a compass across the bench. Slip an iron core in and the domains of \cref{def:dipole} multiply the field by hundreds: an electromagnet.
+\end{example}
+
+\subsubsection{Particles in combined fields, and accelerators}
+
+\begin{proposition}[Velocity selector]\label{prop:selector}
+Send a beam through perpendicular uniform $\vec{E}$ and $\vec{B}$ with $\vec{v}\perp\vec{E},\vec{B}$. The electric force $qE$ and magnetic force $qvB$ cancel exactly when
+\begin{equation}\label{eq:selector}
+  v = \frac{E}{B},
+\end{equation}
+independent of $q$ and $m$. Slower particles bend toward the electric side, faster ones toward the magnetic side---so a slit downstream passes only speed $E/B$.
+\end{proposition}
+
+\begin{proof}
+Take $\vec{E}$ along $+y$, $\vec{B}$ along $+z$, $\vec{v}$ along $+x$. Then $\vec{F}_E = qE\,\hat{y}$ and $\vec{F}_B = q\vec{v}\times\vec{B} = -qvB\,\hat{y}$. Zero net force needs $qE = qvB$, and $q$ cancels. \qedhere
+\end{proof}
+
+Feed the selected beam into a pure field $B'$ and $r = mv/(qB')$ separates masses: the \emph{mass spectrometer}. With $v$ fixed by \cref{eq:selector}, $r\propto m/q$, so isotopes land at different spots---this is \cref{ex:em-10}.
+
+\begin{remark}[Accelerators: the FY7 minimum]\label{rmk:accelerators}
+A \emph{cyclotron} is lesson~1's circle plus a kick: two half-discs (``dees'') in a uniform $B$ with an alternating voltage between them, timed to the lap frequency
+\[
+  f = \frac{qB}{2\pi m},
+\]
+which is independent of $v$ (and hence of radius) as long as $v\ll c$---each lap adds the same energy. Example: protons in $B = 1.0\ \mathrm{T}$ give $f \approx 15\ \mathrm{MHz}$. A \emph{linac} is a straight line of drift tubes with alternating voltages; a \emph{synchrotron} ramps $B$ up as the particles gain (relativistic) momentum so the orbit radius stays fixed. All three steer with magnetism and accelerate with electric fields---magnetism bends, electricity pays, because $\vec{B}$ does no work.
+\end{remark}
+
+\subsubsection{Eddy currents}
+
+\begin{definition}[Eddy currents]\label{def:eddy}
+A changing flux through a \emph{bulk} conductor induces loop currents inside the metal itself---\emph{eddy currents} (py\"orr\"evirrat). By Lenz's law they oppose the change: a magnet dropped through a copper tube falls slowly, and an aluminium disc swinging between magnet poles brakes hard (a standard demo and \emph{eddy-current brake}).
+\end{definition}
+
+Eddies are Lenz's law with no coil to point at, and they cut both ways: induction hobs and induction furnaces cook with them on purpose, while transformer cores laminate the iron into insulated sheets so the loops cannot close---thin sheets, thin losses. Whenever an exam asks ``why laminated?'', the answer is these two words.
+
+\begin{remark}[Extra: self-induction]\label{rmk:selfind}
+A coil's own changing current changes its own flux, so it induces a back-voltage opposing the change, $U = -L\,\Delta I/\Delta t$, with inductance $L$ in henries. Sparks when unplugging an inductive load, and the delayed current rise in a coil, are this. FY7 never asks for $L$ quantitatively.
+\end{remark}
+
+\subsubsection{Alternating current}
+
+Rotate the generator coil of lesson~1 at angular frequency $\omega = 2\pi f$ and the flux is $\Phi = BA\cos(\omega t)$, so Faraday gives a sinusoidal voltage
+\begin{equation}\label{eq:ac}
+  u(t) = U_\text{max}\sin(\omega t), \qquad i(t) = I_\text{max}\sin(\omega t)
+\end{equation}
+(the resistive case: current in step with voltage). Finland's mains: $f = 50\ \mathrm{Hz}$ ($T = 20\ \mathrm{ms}$, $\omega = 314\ \mathrm{rad/s}$).
+
+\begin{proposition}[Effective (rms) values]\label{prop:rms}
+A sinusoidal voltage with peak $U_\text{max}$ heats a resistor exactly like a DC voltage of
+\begin{equation}\label{eq:rms}
+  U_\text{rms} = \frac{U_\text{max}}{\sqrt{2}}, \qquad I_\text{rms} = \frac{I_\text{max}}{\sqrt{2}},
+\end{equation}
+and the average heating power is $P = U_\text{rms} I_\text{rms} = U_\text{rms}^2/R$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Instantaneous power is $p = u^2/R = U_\text{max}^2\sin^2(\omega t)/R$. Over a full cycle $\sin^2$ averages to $1/2$ (write $\sin^2 = (1 - \cos 2\omega t)/2$; the cosine averages away). So $\bar{P} = U_\text{max}^2/(2R) = (U_\text{max}/\sqrt{2})^2/R$. \qedhere
+\end{proof}
+
+Socket ``$230\ \mathrm{V}$'' means $U_\text{rms} = 230\ \mathrm{V}$; the peak is $230\sqrt{2} \approx 325\ \mathrm{V}$, and the insulation must survive that, not 230. Multimeters read rms by default---a fact worth one exam point some year.
+
+\begin{example}[Heater on mains]\label{exm:heater}
+$R = 48\ \Omega$ across $230\ \mathrm{V}$ rms: $I_\text{rms} = 230/48 = 4.8\ \mathrm{A}$,
+\[
+  P = \frac{230^2}{48} \approx 1.1\ \mathrm{kW},
+\]
+and one hour eats $1.1\ \mathrm{kWh}\approx 4.0\ \mathrm{MJ}$. The current reverses 100 times per second and the heater never notices, because heating goes as $i^2$.
+\end{example}
+
+\subsubsection{The transformer and the grid}
+
+\begin{proposition}[Ideal transformer]\label{prop:transformer}
+Two coils sharing one iron core, with turns $N_1$, $N_2$, satisfy
+\begin{equation}\label{eq:transformer}
+  \frac{U_2}{U_1} = \frac{N_2}{N_1}, \qquad \frac{I_2}{I_1} = \frac{N_1}{N_2}\quad\text{(ideal, loaded)},
+\end{equation}
+so $U_1 I_1 = U_2 I_2$: power in equals power out.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The core guides (nearly) all flux through both coils, so each turn sees the same $\Delta\Phi/\Delta t$ and Faraday gives $U_1 = N_1\,\Delta\Phi/\Delta t$, $U_2 = N_2\,\Delta\Phi/\Delta t$---divide and the flux cancels. The current ratio follows from energy conservation: what the secondary delivers, the primary must draw. Real transformers lose a few percent to resistance, hysteresis (\cref{rmk:hysteresis}), and eddy currents (\cref{def:eddy}). \cref{ex:em-15} asks for the careful version. \qedhere
+\end{proof}
+
+Why AC won: voltage transforms, and high voltage is how power travels. For delivered power $P = UI$, the current is $I = P/U$ and the line's own resistance burns $P_\text{loss} = RI^2 = RP^2/U^2$---doubling the voltage quarters the loss. So the grid steps up to $110$--$400\ \mathrm{kV}$ for transport and back down to $230\ \mathrm{V}$ at your socket. \cref{ex:em-11} runs the numbers that make DC transmission lose by two orders of magnitude. Note the transformer needs \emph{changing} flux, which is why the grid is AC at all.
+
+\subsubsection{The spectrum and black-body radiation}
+
+An accelerating charge radiates (\cref{sec:antenna} below); the frequency equals the charge's oscillation frequency, and $c = \lambda f$ stretches the whole family---radio to gamma---along one line:
+
+\begin{center}
+\begin{tabular}{l|l|l}
+band & $\lambda$ range & typical source \\ \hline
+radio & mm--km & antennas, phones, FM ($\sim 100\ \mathrm{MHz}$) \\
+microwave & mm--cm & radar, Wi-Fi, Gunn diode \\
+infrared & $\mu$m--mm & warm bodies, remote controls \\
+visible & $400$--$700\ \mathrm{nm}$ & Sun, LEDs, lasers \\
+ultraviolet & $10$--$400\ \mathrm{nm}$ & Sun, mercury lamp \\
+X-ray & $10\ \mathrm{pm}$--$10\ \mathrm{nm}$ & electron tubes, synchrotrons \\
+gamma & $< 10\ \mathrm{pm}$ & nuclei, cosmic events \\
+\end{tabular}
+\end{center}
+
+Light is one octave of thirty. What differs across bands is what the wave \emph{does}---it penetrates, ionises, or resonates with different-sized things---not what it \emph{is}.
+
+Photon energies (FY8 owns the photon; FY7 needs the numbers): $E = hf = hc/\lambda$. Green $550\ \mathrm{nm}$ light carries $3.6\times 10^{-19}\ \mathrm{J} \approx 2.3\ \mathrm{eV}$ per photon; an FM photon at $100\ \mathrm{MHz}$ carries $6.6\times 10^{-26}\ \mathrm{J}$---ten million billion times less, which is why one radio photon does nothing and a mole of them runs the speaker.
+
+\begin{theorem}[Black-body spectrum: Wien and Stefan--Boltzmann]\label{thm:blackbody}
+A hot object radiates at all wavelengths with a peak at
+\begin{equation}\label{eq:wien}
+  \lambda_\text{max}\,T = b = 2.90\times 10^{-3}\ \mathrm{m\,K} \qquad\text{(Wien)},
+\end{equation}
+and total power per area
+\begin{equation}\label{eq:stefan}
+  \frac{P}{A} = \sigma T^4 \qquad\text{(Stefan--Boltzmann)}.
+\end{equation}
+\end{theorem}
+
+\begin{example}[Two bodies]\label{exm:blackbody}
+Sun, $T = 5800\ \mathrm{K}$: $\lambda_\text{max} = 2.90\times 10^{-3}/5800 \approx 500\ \mathrm{nm}$---green, mid-visible, which is no coincidence for eyes. Human skin, $T = 310\ \mathrm{K}$: $\lambda_\text{max} \approx 9.3\ \mu\mathrm{m}$, deep infrared---night-vision goggles see you by your own glow. And $5800^4/2800^4 \approx 18$: per square metre the Sun's surface out-radiates a $2800\ \mathrm{K}$ bulb filament eighteenfold.
+\end{example}
+
+\subsubsection{Geometric optics}
+
+Light travels straight in uniform medium and obeys two laws at boundaries. Angles are always measured from the \emph{normal}.
+
+\begin{theorem}[Reflection and refraction]\label{thm:snell}
+\emph{Reflection:} angle in equals angle out, $\theta_1 = \theta_1'$, in the plane of incidence. \emph{Refraction (Snell):}
+\begin{equation}\label{eq:snell}
+  n_1\sin\theta_1 = n_2\sin\theta_2,
+\end{equation}
+where $n = c/v$ is the refractive index. Bending is always toward the normal entering higher $n$.
+\end{theorem}
+
+\begin{example}[Air to glass]\label{exm:snell}
+$n_1 = 1.00$, $n_2 = 1.52$, $\theta_1 = 45^\circ$:
+\[
+  \sin\theta_2 = \frac{\sin 45^\circ}{1.52} = 0.465 \implies \theta_2 \approx 27.7^\circ.
+\]
+Reverse the ray (glass to air at $27.7^\circ$) and it exits at $45^\circ$---Snell is symmetric, which the next result exploits.
+\end{example}
+
+\begin{proposition}[Total internal reflection]\label{prop:tir}
+Going from higher $n_1$ to lower $n_2$, Snell demands $\sin\theta_2 = (n_1/n_2)\sin\theta_1 > \sin\theta_1$. Beyond the \emph{critical angle}
+\begin{equation}\label{eq:critical}
+  \sin\theta_c = \frac{n_2}{n_1}
+\end{equation}
+no refraction exists: all light reflects. Glass--air: $\sin\theta_c = 1/1.52$, $\theta_c \approx 41^\circ$. Diamond ($n = 2.42$) traps everything past $24^\circ$---that is the sparkle.
+\end{proposition}
+
+Optical fibre is \cref{prop:tir} as infrastructure: core $n \approx 1.5$, cladding slightly lower, light launched inside $\theta_c$ bounces kilometres with almost no loss, and because frequencies (colours) don't cross-talk, one fibre carries terabits. Endoscopes, broadband, decorative lamps---same law.
+
+\begin{remark}[Dispersion]\label{rmk:dispersion}
+$n$ depends slightly on $\lambda$ (glass bends blue more than red), so a prism fans white light into a spectrum and lenses fringe in colour unless corrected (achromats). Rainbows are dispersion plus one internal reflection in each droplet.
+\end{remark}
+
+\begin{proposition}[Thin lens and flat mirror (standard toolkit)]\label{prop:lens}
+Flat mirror: image as far behind as object is in front, same size, laterally reversed. Thin lens/converging mirror, real-is-positive convention:
+\begin{equation}\label{eq:lens}
+  \frac{1}{f} = \frac{1}{a} + \frac{1}{b}, \qquad m = -\frac{b}{a},
+\end{equation}
+$a$ object distance, $b$ image distance, $m$ magnification (negative = inverted). Converging lens: $f > 0$.
+\end{proposition}
+
+\begin{example}[Projector lens]\label{exm:lens}
+$f = 10\ \mathrm{cm}$, slide at $a = 15\ \mathrm{cm}$: $1/b = 1/10 - 1/15 = 1/30$, so $b = 30\ \mathrm{cm}$ and $m = -2$---an inverted image twice life-size, which is why projector slides go in upside down.
+\end{example}
+
+\subsubsection{Wave optics}
+
+Geometric optics fails exactly where waves matter: light plus light can give darkness. The rule is Huygens': every point of a wavefront re-radiates, and the field downstream is the \emph{sum} of all contributions---superposition again, now with phases.
+
+\begin{theorem}[Double slit and grating]\label{thm:grating}
+Coherent light of wavelength $\lambda$ through slits spaced $d$ apart reinforces in directions
+\begin{equation}\label{eq:grating}
+  d\sin\theta_m = m\lambda, \qquad m = 0, \pm 1, \pm 2, \ldots
+\end{equation}
+(bright fringes; dark halfway between). On a screen at distance $L \gg d$, fringe spacing is $\Delta y = \lambda L/d$. A \emph{grating} with hundreds of slits per mm obeys the same \cref{eq:grating} with far sharper, brighter maxima.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+At angle $\theta$ the second slit's path is longer by $d\sin\theta$ (draw the right triangle at the slits; small-angle geometry). Constructive interference needs that extra path to be a whole number of wavelengths. \qedhere
+\end{proof}
+
+\begin{example}[Fringes you can measure with a ruler]\label{exm:fringes}
+$d = 0.25\ \mathrm{mm}$, $L = 1.5\ \mathrm{m}$, $\lambda = 650\ \mathrm{nm}$:
+\[
+  \Delta y = \frac{6.50\times 10^{-7}\cdot 1.5}{2.5\times 10^{-4}} \approx 3.9\ \mathrm{mm}.
+\]
+Measure $\Delta y$ and you have measured $\lambda$---this is \cref{ex:em-14} with a grating, where the sharpness makes the angle precise.
+\end{example}
+
+\begin{proposition}[Single-slit diffraction]\label{prop:singleslit}
+One slit of width $a$ gives \emph{minima} (dark) at
+\begin{equation}\label{eq:singleslit}
+  a\sin\theta_m = m\lambda, \qquad m = \pm 1, \pm 2, \ldots
+\end{equation}
+so the central bright band has width $2L\lambda/a$ on a screen at $L$. Narrower slit, wider smear---squeezing light sideways spreads it.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Pair up points half a slit apart: when $a\sin\theta = \lambda$, each pair differs by half a wavelength and cancels. Repeat per quarter for $m = 2$, and so on. \qedhere
+\end{proof}
+
+\begin{example}[How wide is ``wide''?]\label{exm:singleslit}
+$a = 0.10\ \mathrm{mm}$, $\lambda = 650\ \mathrm{nm}$, $L = 1.5\ \mathrm{m}$: first minimum at $\sin\theta = 6.5\times 10^{-3}$ ($\theta \approx 0.37^\circ$), central band $2\cdot 1.5\cdot 6.5\times 10^{-7}/10^{-4} \approx 2.0\ \mathrm{cm}$ wide. The $m = 0$ exception in \cref{eq:singleslit} is the point: straight through always reinforces.
+\end{example}
+
+\begin{remark}[Coherence and thin films]\label{rmk:coherence}
+\cref{eq:grating} needs a fixed phase relation (\emph{coherence}): laser light interferes across the bench; white light only over microns, which is why oil films and soap bubbles show colour---the film is thin enough that front- and back-surface reflections still ``remember'' each other's phase, and different $\lambda$ reinforce at different thicknesses. Anti-reflection coatings are the same trick tuned to cancel: thickness $\lambda/(4n)$.
+\end{remark}
+
+\subsubsection{Polarization}
+
+\begin{definition}[Polarization]\label{def:polarization}
+An EM wave is \emph{transverse}: $\vec{E}$ oscillates perpendicular to travel. \emph{Polarization} is the direction of $\vec{E}$. Unpolarized light (Sun, bulbs) mixes all directions; a polarizer passes one component. This has no sound-wave analogue---air vibrates along travel, so ``polarized sound'' is meaningless.
+\end{definition}
+
+Cross two polarizers and nothing gets through (the second eats what the first passed); slip a third at $45^\circ$ between them and light returns---the middle one rotates the vote, so to speak. Uses: glare-cutting sunglasses (reflected light is partly polarized), LCD screens (liquid crystals twist the polarization pixel by pixel), polarization microscopy, bee navigation by sky polarization.
+
+\begin{remark}[Extra: Malus's law]\label{rmk:malus}
+Already-polarized intensity $I_0$ through a polarizer at angle $\theta$ gives $I = I_0\cos^2\theta$: project the $\vec{E}$ vector, square for intensity. Three-filter paradox above follows in one line each.
+\end{remark}
+
+\subsubsection{How antennas radiate (extra)}\label{sec:antenna}
+
+Stationary charges give Coulomb fields; \emph{accelerating} charges also shed a kink that propagates at $c$---the EM wave. A dipole antenna drives electrons sinusoidally up and down; the radiated $\vec{E}$ is parallel to the antenna, strongest sideways, zero along the axis (charges don't radiate along their own motion). Frequency in equals frequency out: $100\ \mathrm{MHz}$ drive makes $3\ \mathrm{m}$ waves. Reception is the reverse---the wave's $\vec{E}$ shakes the receiving antenna's electrons, Faraday/Lorentz in action. Radio is lesson~1's induction with the coil stretched into a rod and the flux arriving from kilometres away.
+
+\begin{remark}[Most common mistakes]\label{rmk:mistakes2}
+\begin{enumerate}[label=\alph*)]
+  \item Right-hand-rule soup: current-field (grip the wire) vs.\ force (point fingers along $v$/$I$, curl toward $B$). Two different rules---say which one you are using.
+  \item Parallel wires: same direction \emph{attracts}. The electricity intuition (``likes repel'') misfires because the force is mediated by fields, not charges.
+  \item rms vs.\ peak: $230\ \mathrm{V}$ is already rms. Dividing by $\sqrt{2}$ again is the classic double discount.
+  \item Transformer ratios upside down: $N$ sits on the same side as $U$ ($U_2/U_1 = N_2/N_1$), but current crosses over ($I_2/I_1 = N_1/N_2$). Energy conservation ($UI$ in = $UI$ out) rebuilds it if memory fails.
+  \item Snell: angles from the \emph{normal}, and $n$ pairs with the sine on its own side ($n_1\sin\theta_1 = n_2\sin\theta_2$). Most errors are measuring from the surface.
+  \item Grating vs.\ single slit zero order: double-slit/grating have a bright $m = 0$ straight through; single-slit ``$m = 0$'' would be the brightest spot of all, so its minima start at $m = \pm 1$.
+  \item Coherence amnesia: two bulbs never make fringes, however narrow the slits. No fixed phase, no pattern---only equal intensities added.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Code links]\label{rmk:code2}
+Three genuine ones. (1) A diffraction grating \emph{is} a Fourier transform in glass: slit positions in, spatial frequencies out, intensities as the power spectrum---\cref{ex:em-16} computes one. (2) Interference is complex addition $I = \abs{\sum A_k e^{i\phi_k}}^2$, exactly phased-array beamforming / antenna code. (3) Lenz's law is negative feedback: opposes the change, like a control loop with gain $-1$; the exponential $v(t)$ decay of a braked conductor is the same ODE as an RC discharge. Where the analogies break: nature sums infinite continuous paths (Feynman would insist), sampled at $\lambda$-scale---no mesh needed, and no aliasing until you simulate it.
+\end{remark}
