@@ -12,12 +12,96 @@
   \]
   Using the right hand rule (point thumb towards current, curl fingers to see induced magnetic field), we can see that the when the current is going towards +y, the induced magnetic field on wire 2 (assuming it is to the right of wire 1) points down.
   (b)
-  Applying the Lorentz force on the whole wire, we get:
+  The force between parallel currents is given by (derived from $F=I\overline{L}\times \overline{B}$):
   \[
     \begin{gathered}
-      F=I \overline{L}\times \overline{B}
-      F=4.0A \overline{L}\times \oveline{B}
+      F=\frac{\mu_0 I_1 I_2 L}{2\pi d}\\
+      F=\frac{\mu_0 \cdot 6.0A \cdot 4.0A\cdot L}{2\pi \cdot 8.0cm}\\
+      \frac{F}{L}=\frac{\mu_0 \cdot 6.0A \cdot 4.0A}{2\pi \cdot 0.08m}\\
+      \frac{F}{L}\approx 6.0 \cdot 10^{-5} N/m
     \end{gathered}
   \]
-
+  (c)
+  The interior field can be calculated by:
+  \[
+    \begin{gathered}
+      B=\mu_0 \frac{N}{\ell}I\\
+      B=\mu_0 \frac{400}{0.2m} 3.0A\\
+      B\approx 7.54 \cdot 10^{-3} T\\
+      \frac{7.54 \cdot 10^{-3}T}{5 \cdot 10^{-5}} \approx 1.5 \cdot 10^2
+    \end{gathered}
+  \]
+  So the interior magnetic field is about 150 times stronger that Earth's magnetic field.
+\end{solution}
+\begin{solution}{ex:em-10}
+  (a) To pass the selector, the electric and magnetic forces have to cancel out. Since the fields are perpendicular and their forces are opposed, we have:
+  \[
+    \begin{gathered}
+      qvB=qE\\
+      vB=E\\
+      v=\frac{E}{B}\\
+      v=\frac{4.0 \cdot 10^4 V/m}{0.20 T}\\
+      v=2 \cdot 10^5 m/s
+    \end{gathered}
+  \]
+  (b) In the spectrometer chamber, the atoms experience a single force $F$:
+  \[
+    \begin{gathered}
+      \overline{F}=q \overline{v} \times {B} \qquad \text{($\overline{v} \perp \overline{B}$)}\\
+      \abs{\overline{F}} = qvB\\
+      ma = qvB\\
+      a = \frac{qvB}{m}\\
+      \frac{v^2}{r_1} = \frac{qvB}{m}\\
+      \frac{v}{r_1} = \frac{qB}{m}\\
+      r_1 = \frac{mv}{qB}\\
+      r_1 = \frac{12u \cdot 2\cdot 10^{5} m/s}{e \cdot 0.2T}\\
+      r_1\approx 0.125 m
+    \end{gathered}
+  \]
+  (c) Its mass is 13$u$, so its radius is:
+  \[
+    \begin{gathered}
+      r_2=\frac{13}{12}r_1\\
+      d_2=\frac{26}{12}r_1\\
+      d_2-2r_1=\frac{1}{6}r_1\\
+      d_2-d_1\approx2.1cm
+    \end{gathered}
+  \]
+  So the 2.1cm difference checks out.
+\end{solution}
+\begin{solution}{ex:em-11}
+  The rms current is:
+  \[
+    \begin{gathered}
+      I_{rms} =  \frac{P}{U_{rms}}
+      I_{rms,1} = \frac{100 MW}{20 kV}\\
+      I_{rms,1} = 5 \cdot 10^{3}\\
+      I_{rms,2} = \frac{100 MW}{400 kV}\\
+      I_{rms,2} = 250 A
+    \end{gathered}
+  \]
+  The power lost in each scenario is given by:
+  \[
+    \begin{gathered}
+      P_{loss} = RI^2\\
+      P_{loss,1} = RI_{rms,1}^2\\
+      P_{loss,1} = 2.0\Omega \cdot (5 \cdot 10^3)^2\\
+      P_{loss,1} = 5 \cdot 10^{7} W\\
+      \frac{P{loss,1}}{P} = 0.5\\
+      P_{loss,2} = RI_{rms,2}^2\\
+      P_{loss,2} = 2.0\Omega \cdot (250A)^2\\
+      P_{loss,2} = 2.0\Omega \cdot (250A)^2\\
+      P_{loss,2} = 6.25 * 10^4 W\\
+      \frac{P_{loss,2}}{P} = 0.000625
+    \end{gathered}
+  \]
+  (c) The power loss scales according to the inverse of the voltage squared. Therefore it is extremely beneficial to use high voltage for power grids, and then step it down near consumers for security reasons. The device that facilitates this is called a transformer.
+\end{solution}
+\begin{solution}{ex:em-12}
+  Using Snell's law:
+  \[
+    n_1sin(\theta_1)=n_2sin(\theta_2) \qquad (n_1 = 1, n_2 = 1.52, \theta_1 = 50\deg)\\
+    sin(50\deg) = 1.52 sin(\theta_2)
+    \theta_2 = arcsin(\frac{sin(50\deg)}{1.52})
+  \]
 \end{solution}
