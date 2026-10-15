@@ -91,17 +91,166 @@
       P_{loss,2} = RI_{rms,2}^2\\
       P_{loss,2} = 2.0\Omega \cdot (250A)^2\\
       P_{loss,2} = 2.0\Omega \cdot (250A)^2\\
-      P_{loss,2} = 6.25 * 10^4 W\\
+      P_{loss,2} = 6.25 \cdot 10^4 W\\
       \frac{P_{loss,2}}{P} = 0.000625
     \end{gathered}
   \]
   (c) The power loss scales according to the inverse of the voltage squared. Therefore it is extremely beneficial to use high voltage for power grids, and then step it down near consumers for security reasons. The device that facilitates this is called a transformer.
 \end{solution}
 \begin{solution}{ex:em-12}
-  Using Snell's law:
+  (a) Using Snell's law:
   \[
-    n_1sin(\theta_1)=n_2sin(\theta_2) \qquad (n_1 = 1, n_2 = 1.52, \theta_1 = 50\deg)\\
-    sin(50\deg) = 1.52 sin(\theta_2)
-    \theta_2 = arcsin(\frac{sin(50\deg)}{1.52})
+    \begin{gathered}
+      n_1sin(\theta_1)=n_2sin(\theta_2) \qquad (n_1 = 1, n_2 = 1.52, \theta_1 = 50^\circ)\\
+      sin(50^\circ) = 1.52 sin(\theta_2)\\
+      \theta_2 = arcsin(\frac{sin(50^\circ)}{1.52})\\
+      \theta_2 \approx 30.3^\circ
+    \end{gathered}
   \]
+  (b) For glass to air, we have:
+  \[
+    \begin{gathered}
+      n_1sin(\theta_1)=n_2sin(\theta_2) \qquad (n_1 = 1, n_2 = 1.52, \theta_2 = arcsin(\frac{sin(50^\circ)}{1.52}))\\
+      sin(\theta_1) = 1.52 \frac{sin(50^\circ)}{1.52}\\
+      sin(\theta_1) = sin(50^\circ)\\
+      \theta_1 = 50^\circ
+    \end{gathered}
+  \]
+  Thus it is parallel to the original ray. The critical angle for the glass-air face if when Snell's equation has no solutions:
+  \[
+    \begin{gathered}
+      sin(\theta_1)=1.52sin(\theta_2)\\
+      1.52sin(\theta_2) = 1\\
+      sin(\theta_2) = \frac{1}{1.52}\\
+      \theta_2 = arcsin(\frac{1}{1.52})\\
+      \theta_2 \approx = 41.1^\circ
+    \end{gathered}
+  \]
+  So the critical angle is about $41.1^\circ$ for the glass-air face. Total internal reflection does not occur here, since we calculated $\theta_2$ to be about $30.3^\circ$, which is smaller than the critical angle that we calculated.
+  (c)
+  Using Snell's law again:
+  \[
+    \begin{gathered}
+      n_1 sin(\theta_1)=n_2 sin(\theta_2)\\
+      1.5 sin(\theta_1)=1.48 sin(\theta_2)\\
+      \frac{1.5}{1.48}sin(\theta_1)=sin(\theta_2)\\
+      \frac{1.5}{1.48} sin(\theta_1) = 1\\
+      sin(\theta_1) = \frac{1.48}{1.5}\\
+      \theta_1 = arcsin(\frac{1.48}{1.5})\\
+      \theta_1 \approx 80.6^\circ
+    \end{gathered}
+  \]
+  The critical angle is $80.6^\circ$, so light stays in the fibre when it is at most $10^\circ$ from the parallel of the wire.
+\end{solution}
+\begin{solution}{ex:em-13}
+  (a) Let's use the equation for converging mirrors/thin lenses:
+  \[
+    \begin{gathered}
+      \frac{1}{f}=\frac{1}{a}+\frac{1}{b}, \qquad m=-\frac{b}{a}\\
+      \frac{1}{12}=\frac{1}{30}+\frac{1}{b}\\
+      \frac{b}{12}=\frac{b}{30}+1\\
+      \frac{b}{6}=\frac{b}{15}+2\\
+      \frac{b}{2}=\frac{b}{5}+6\\
+      \frac{5b}{10}=\frac{2b}{5}+6\\
+      \frac{3b}{10}=6\\
+      3b=60\\
+      b=20 (cm)\\
+      m=-\frac{b}{a}\\
+      m=-\frac{20}{30}\\
+      m=-\frac{2}{3}
+    \end{gathered}
+  \]
+  The image distance is around $20cm$, so the image is real, inverted and shrunk by 1.5.
+  (b)
+  \[
+    \begin{gathered}
+      \frac{1}{f}=\frac{1}{a}+\frac{1}{b}, \qquad m=-\frac{b}{a}\\
+      \frac{1}{12}=\frac{1}{8}+\frac{1}{b}\\
+      \frac{b}{12}=\frac{b}{8}+1\\
+      \frac{b}{6}=\frac{b}{4}+2\\
+      \frac{2b}{12}=\frac{3b}{12}+2\\
+      -\frac{b}{12}=2\\
+      -b=24\\
+      b=-24 (cm)\\
+      m=-\frac{-24}{8}\\
+      m=3\\
+    \end{gathered}
+  \]
+  So the image is virtual (on the side of the lens), upright and enlarged by 3.\\
+  (c)
+  Its top edge must sit at 1.7m for the person to see themselves and the bottom edge can be at most at $\frac{1.7m}{2}=0.85m$ from the floor. The length of the mirror would then be 0.85m, which does not depend on the distance from the mirror.
+\end{solution}
+\begin{solution}{ex:em-14}
+  (a) We know that $d=\frac{1}{500}mm$, and we can calculate $\theta_1$:
+  \[
+    \begin{gathered}
+      tan(\theta_1)=\frac{0.331}{1.2}\\
+      \theta_1=arctan(\frac{0.331}{1.2})\\
+      \theta_1\approx 15.4^\circ
+    \end{gathered}
+  \]
+  (b)
+  Using the equations for grating:
+  \[
+    \begin{gathered}
+      d \sin(\theta_m)=\lambda\\
+      d \frac{0.331}{\sqrt{1.2^2+0.331^2}} = \lambda\\
+      \frac{1}{500} \cdot \frac{0.331}{\sqrt{1.2^2+0.331^2}}mm= \lambda \\
+      \frac{1}{500} \cdot \frac{0.331}{\sqrt{1.2^2+0.331^2}} \cdot 10^{-3} m= \lambda \\
+      \lambda \approx 532 nm
+    \end{gathered}
+  \]
+  (c)
+  White light is composed of a combination of all wavelengths, so we no longer see the same interference patterns, since there is no more visible constructive/destructive interference. Instead, since longer wavelengths spread further on the screen, we see a prism-like image, where there is white in the middle, then a gradient of hues on either side ending with red light on the extremities.
+\end{solution}
+\begin{solution}{ex:em-15}
+  (a) Using Faraday's law for induction:
+  \[
+    \begin{gathered}
+      U_{ind}=-N \frac{d}{dt}\Phi (t)\\
+      U_1 = -N_1 \frac{d}{dt} \Phi_1 (t)\\
+      U_2= -N_2 \frac{d}{dt} \Phi_2 (t)\\
+      \frac{U_2}{U_1} = \frac{-N_2 \frac{d}{dt} \Phi_2 (t)}{-N_1 \frac{d}{dt} \Phi_1 (t)}\\
+      \frac{U_2}{U_1} = \frac{N_2}{N_1}
+    \end{gathered}
+  \]
+  In the final step we assume that $\Phi_1 (t) = \Phi_2 (t)$, i.e. they share the same magnetic flux.
+  Let's find $U_{2,rms}$:
+  \[
+    \frac{U_{2,rms}}{U_{1,rms}}=\frac{N_2}{N_1}\\
+    U_{2,rms}=\frac{N_2}{N_2}\cdot U_{1,rms}\\
+    U_{2,rms}=\frac{20}{200} \cdot 230V\\
+    U_{2,rms}=23V
+  \]
+  (b) Using Ohm's law:
+  \[
+    \begin{gathered}
+      U=RI\\
+      U_{2,rms}=R_2 I_2\\
+      I_2 = \frac{U_{2,rms}}{R_2}\\
+      I_2 = \frac{23V}{4.0\Omega}\\
+      I_2 = 5.75 A
+    \end{gathered}
+  \]
+  Let's calculate the power:
+  \[
+    \begin{gathered}
+      P=UI\\
+      P_2=U_{2,rms}I_2\\
+      P_2=23V \cdot 5.75A\\
+      P_2=132.25 W
+    \end{gathered}
+  \]
+  If energy were perfectly conserved, we would have $P_1=P_2$, so:
+  \[
+    \begin{gathered}
+      P_1=P_2\\
+      U_{1,rms}I_1=U_{2,rms}I_2\\
+      230V \cdot I_1 = 23V \cdot 5.75 A \\
+      I_1=0.575A
+    \end{gathered}
+  \]
+  (c)
+  The first mechanism is the power dissipated by the wire itself, as we have seen in exercise 2.3.
+
 \end{solution}
