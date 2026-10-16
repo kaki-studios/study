@@ -1,0 +1,250 @@
+%! TEX root = main.tex
+
+\subsection{Linear maps: what they preserve, and what they forget}
+
+Lesson~1 described the static geometry of vector spaces. Now we study the
+maps between them. A system $A\mathbf{x}=\mathbf{b}$ asks two questions:
+does $\mathbf{b}$ lie among the achievable outputs of $A$, and if so, is
+$\mathbf{x}$ unique? Both questions are about the map
+$\mathbf{x}\mapsto A\mathbf{x}$. Differentiation is another map of the same
+shape: $D(p)=p'$ is linear, and it ``forgets'' exactly the constant
+polynomials. The kernel and the image make this precise.
+
+\begin{definition}[Linear map]
+A function $T\colon V\to W$ between vector spaces is \emph{linear} if
+\[
+  T(u+v)=T(u)+T(v), \qquad T(av)=aT(v)
+\]
+for all $u,v\in V$ and $a\in\R$. Equivalently,
+$T(au+bv)=aT(u)+bT(v)$. By induction, $T$ preserves every linear
+combination:
+\[
+  T(a_1v_1+\cdots+a_kv_k)=a_1T(v_1)+\cdots+a_kT(v_k).
+\]
+Taking $a=0$ gives $T(0)=0$: every linear map sends zero to zero.
+\end{definition}
+
+In code terms, a linear map is a pure function that distributes over the
+two vector operations: the response to a combined input is the combination
+of the responses (superposition). The analogy breaks where programs
+branch: no thresholds, saturation, or case splits can be linear.
+
+\begin{example}[Linear maps and an impostor]
+\begin{enumerate}[label=(\alph*)]
+  \item Projection $P\colon\R^3\to\R^3$, $P(x,y,z)=(x,y,0)$, is linear.
+    Its outputs all lie in the $xy$-plane, and it kills exactly the
+    $z$-axis. We will revisit this in the language of kernels and images.
+  \item Differentiation $D$ on polynomials, $D(p)=p'$, is linear by the
+    sum and constant-multiple rules for derivatives.
+  \item The translation $S\colon\R^2\to\R^2$, $S(x,y)=(x+1,y)$, is
+    \emph{not} linear: $S(0,0)=(1,0)\ne(0,0)$. A translation is a linear
+    map plus a fixed shift (an \emph{affine} map). This is the same
+    phenomenon as in Lesson~1: shifting a subspace off the origin
+    destroys the structure.
+\end{enumerate}
+\end{example}
+
+\begin{definition}[Kernel and image]
+For a linear map $T\colon V\to W$, the \emph{kernel} and \emph{image} are
+\[
+  \ker T=\{v\in V:T(v)=0\}, \qquad
+  \operatorname{im} T=\{T(v):v\in V\}.
+\]
+Note where they live: $\ker T\subseteq V$ (domain side),
+$\operatorname{im}T\subseteq W$ (codomain side).
+\end{definition}
+
+\begin{theorem}[Kernels and images are subspaces]\label{thm:ker-im-subspace}
+If $T\colon V\to W$ is linear, then $\ker T$ is a subspace of $V$ and
+$\operatorname{im}T$ is a subspace of $W$.
+\end{theorem}
+
+\begin{proof}
+Since $T(0)=0$, we have $0\in\ker T$, and $T(0)\in\operatorname{im}T$,
+so both sets are nonempty. If $T(u)=T(v)=0$, then
+$T(au+bv)=aT(u)+bT(v)=0$, so $\ker T$ passes the subspace test.
+If $x=T(u)$ and $y=T(v)$, then $ax+by=T(au+bv)\in\operatorname{im}T$,
+so $\operatorname{im}T$ passes it too.
+\end{proof}
+
+\begin{example}[Kernel and image of a matrix map]\label{ex:kernel-image-matrix}
+Recall the matrix from Lesson~1:
+\[
+  A=\begin{pmatrix}1&2&1\\2&4&3\\1&2&2\end{pmatrix},
+  \qquad T(\mathbf{x})=A\mathbf{x},\quad T\colon\R^3\to\R^3.
+\]
+Row reduction ($R_2-2R_1$, $R_3-R_1$, $R_3-R_2$, $R_1-R_2$) gives pivots
+in columns $1$ and $3$, and $A\mathbf{x}=0$ reduces to $x_1+2x_2=0$,
+$x_3=0$. Hence
+\[
+  \ker T=\operatorname{span}\left\{\begin{pmatrix}-2\\1\\0\end{pmatrix}\right\},
+\]
+which has dimension $1$. The image is the column space, spanned by the
+pivot columns of the \emph{original} matrix (columns $1$ and $3$):
+\[
+  \operatorname{im}T
+  =\operatorname{span}\left\{
+    \begin{pmatrix}1\\2\\1\end{pmatrix},
+    \begin{pmatrix}1\\3\\2\end{pmatrix}\right\},
+\]
+which has dimension $2$. Note that $1+2=3$, the dimension of the domain.
+That is no coincidence.
+\end{example}
+
+\begin{theorem}[A linear map is fixed by its values on a basis]\label{thm:basis-determines-map}
+Let $(v_1,\ldots,v_n)$ be a basis of $V$. For every choice of vectors
+$w_1,\ldots,w_n\in W$, there is exactly one linear map $T\colon V\to W$
+with $T(v_i)=w_i$ for all $i$.
+\end{theorem}
+
+\begin{proof}
+Every $v\in V$ has unique coordinates $v=\sum_i a_iv_i$ (Lesson~1), so
+the formula $T(v)=\sum_i a_iw_i$ is well defined. It satisfies
+$T(v_i)=w_i$, and linearity follows directly from the coordinate
+arithmetic. Any linear $S$ with $S(v_i)=w_i$ must satisfy
+$S(v)=\sum_i a_iw_i$ by preservation of combinations, so $T$ is unique.
+\end{proof}
+
+\begin{theorem}[Maps $\R^n\to\R^m$ are matrices]\label{thm:maps-are-matrices}
+Every linear map $T\colon\R^n\to\R^m$ has the form $T(\mathbf{x})=A\mathbf{x}$
+for a unique $m\times n$ matrix $A$, whose $j$-th column is $T(e_j)$.
+\end{theorem}
+
+\begin{proof}
+The standard basis vectors $e_1,\ldots,e_n$ form a basis of $\R^n$, so by
+\Cref{thm:basis-determines-map} the values $T(e_j)$ determine $T$. Writing
+$\mathbf{x}=\sum_j x_je_j$ and using linearity,
+\[
+  T(\mathbf{x})=\sum_j x_jT(e_j)=A\mathbf{x},
+  \qquad A=\begin{pmatrix}T(e_1)&\cdots&T(e_n)\end{pmatrix}.
+\]
+\end{proof}
+
+A system $A\mathbf{x}=\mathbf{b}$ therefore asks: is $\mathbf{b}$ in
+$\operatorname{im}T$, and is the preimage unique?
+
+\begin{lemma}[Exchange lemma]\label{lem:exchange}
+If $(v_1,\ldots,v_n)$ spans $V$ and $(w_1,\ldots,w_m)$ is linearly
+independent in $V$, then $m\le n$.
+\end{lemma}
+
+\begin{proof}
+Suppose $m>n$. We show by induction on $k=0,\ldots,n$ that, after
+reordering the $v$'s, the list $w_1,\ldots,w_k,v_{k+1},\ldots,v_n$ still
+spans $V$. This holds for $k=0$. Assume it for some $k<n$ and write
+\[
+  w_{k+1}=a_1w_1+\cdots+a_kw_k+b_{k+1}v_{k+1}+\cdots+b_nv_n.
+\]
+Not all $b_j$ are zero: otherwise $w_{k+1}$ would be a combination of
+$w_1,\ldots,w_k$, contradicting independence. Reorder
+$v_{k+1},\ldots,v_n$ so that $b_{k+1}\ne0$. Then $v_{k+1}$ is a linear
+combination of $w_1,\ldots,w_{k+1},v_{k+2},\ldots,v_n$ (divide by
+$b_{k+1}$), so that list spans everything the old one did. At $k=n$,
+$w_1,\ldots,w_n$ span $V$, so $w_{n+1}$ is their linear combination,
+contradicting independence. Hence $m\le n$.
+\end{proof}
+
+\begin{corollary}[Dimension is well defined]\label{cor:dim-well-defined}
+Any two finite bases of the same vector space have the same number of
+vectors. This closes the open claim from Lesson~1: $\dim V$ is unambiguous.
+\end{corollary}
+
+\begin{proof}
+Apply \Cref{lem:exchange} twice: each basis spans, and the other is
+independent, so each size is $\le$ the other.
+\end{proof}
+
+\begin{corollary}[Extending an independent list]\label{cor:extend-basis}
+In a space with a finite basis, every linearly independent list extends
+to a basis.
+\end{corollary}
+
+\begin{proof}
+Start with the independent list. Append the vectors of a finite basis one by one, keeping each new vector
+only when it lies outside the span of everything kept so far. The kept
+list stays independent by construction, and it spans $V$, since every
+basis vector is either kept or was already in the span when discarded.
+\end{proof}
+
+\begin{definition}[Rank and nullity]
+For a linear map $T\colon V\to W$, the \emph{rank} is $\dim\operatorname{im}T$
+and the \emph{nullity} is $\dim\ker T$.
+\end{definition}
+
+\begin{theorem}[Rank--nullity]\label{thm:rank-nullity}
+Let $T\colon V\to W$ be linear, with $V$ having a finite basis of $n$
+vectors. Then
+\[
+  \dim\ker T+\dim\operatorname{im}T=n.
+\]
+\end{theorem}
+
+\begin{proof}
+Let $(u_1,\ldots,u_k)$ be a basis of $\ker T$, and extend it by
+\Cref{cor:extend-basis} to a basis $(u_1,\ldots,u_n)$ of $V$. We claim
+that $T(u_{k+1}),\ldots,T(u_n)$ is a basis of $\operatorname{im}T$.
+It spans: for $v=\sum_{i=1}^n a_iu_i$,
+\[
+  T(v)=\sum_{i=1}^n a_iT(u_i)=\sum_{i=k+1}^n a_iT(u_i),
+\]
+since $T(u_i)=0$ for $i\le k$. It is independent: if
+$\sum_{i=k+1}^n b_iT(u_i)=0$, then $\sum_{i=k+1}^n b_iu_i\in\ker T$, so it
+equals $\sum_{j=1}^k c_ju_j$ for some coefficients $c_j$. Independence of
+the full basis $(u_1,\ldots,u_n)$ forces every $b_i$ (and every $c_j$) to
+be zero. Thus $\dim\operatorname{im}T=n-k$.
+\end{proof}
+
+\begin{corollary}[Injectivity test]\label{cor:injectivity-test}
+$T$ is injective if and only if $\ker T=\{0\}$.
+\end{corollary}
+
+\begin{proof}
+$T(u)=T(v)$ holds if and only if $T(u-v)=0$, so distinct inputs collide
+exactly when a nonzero vector lies in the kernel.
+\end{proof}
+
+For a matrix map $T(\mathbf{x})=A\mathbf{x}$, rank--nullity is visible in
+row reduction: with $n$ columns, each column is either a pivot column or
+a free column, so
+\[
+  \text{(\# pivot columns)}+\text{(\# free columns)}=n,
+\]
+i.e.\ $\rank A+\dim\ker T=n$. The pivot \emph{indices} come from the
+reduced form, but the basis of $\operatorname{im}T$ must be taken from
+those columns of the \emph{original} matrix. Row operations preserve the
+kernel but generally change the column space, so reading an image basis
+off the reduced matrix is a trap.
+
+\begin{remark}[Reading $A\mathbf{x}=\mathbf{b}$ through rank--nullity]
+A solution exists if and only if $\mathbf{b}\in\operatorname{im}T$. If
+$\mathbf{x}_p$ is one solution, every solution is
+$\mathbf{x}_p+\mathbf{z}$ with $\mathbf{z}\in\ker T$ (indeed,
+$A\mathbf{x}=\mathbf{b}=A\mathbf{x}_p$ gives $A(\mathbf{x}-\mathbf{x}_p)=0$): the solution set is
+either empty or a shifted copy of the kernel. It is a single point
+exactly when the nullity is zero.
+\end{remark}
+
+\begin{remark}[Common traps]
+\begin{itemize}
+  \item The kernel lives in the domain, the image in the codomain. For
+    $T\colon\R^3\to\R^2$, $\ker T\subseteq\R^3$ while
+    $\operatorname{im}T\subseteq\R^2$; writing them in the same space is
+    a type error.
+  \item ``Injective $\iff$ surjective'' needs finite dimensions and
+    $\dim V=\dim W$. It fails in infinite dimensions: differentiation on
+    all polynomials is surjective but kills constants, while
+    multiplication by $x$ is injective but never produces a nonzero
+    constant. Rank--nullity is the finite-dimensional reason the two
+    coincide.
+\end{itemize}
+\end{remark}
+
+In code terms, the kernel measures information loss: a nonzero kernel
+means distinct inputs collide, so the input cannot be reconstructed from
+the output. The rank counts the effective degrees of freedom in the
+output. Real neural networks interleave linear layers with nonlinearities
+precisely to escape these rigid limits.
+
+The next step adds eigenvalues: for a map $T\colon V\to V$, the
+\emph{eigenspace} for $\lambda$ is $\ker(T-\lambda I)$, and
+rank--nullity will tell us how large it can be.
