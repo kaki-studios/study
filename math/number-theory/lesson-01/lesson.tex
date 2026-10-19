@@ -1,0 +1,178 @@
+%! TEX root = main.tex
+
+\subsection{Taming huge exponents: Euler and the Chinese remainder theorem}
+
+A typical competition problem asks for the last two digits of $7^{2026}$.
+Modular arithmetic turns ``last two digits'' into ``compute mod $100$'',
+but repeated multiplication $2026$ times is not a plan, and factorising the
+base does not touch the exponent. Two tools solve this class of problem:
+a theorem controlling how \emph{exponents} collapse mod $n$ (Euler), and a
+theorem splitting one modulus into smaller, friendlier pieces (Chinese
+remainder). Both rest on one fact about greatest common divisors.
+
+\begin{definition}[Congruence and greatest common divisor]
+Write $a \equiv b \pmod{n}$ if $n \mid (a-b)$. Addition and multiplication
+respect congruence: we may reduce mod $n$ at any intermediate step.
+
+The \emph{greatest common divisor} $\gcd(a,n)$ is the largest positive
+integer dividing both. Call $a$ and $n$ \emph{coprime} if $\gcd(a,n)=1$.
+\end{definition}
+
+\begin{theorem}[B\'ezout's identity]\label{thm:bezout}
+For any $a,n$ there exist integers $x,y$ with $ax+ny=\gcd(a,n)$.
+In particular, $a$ has a multiplicative inverse mod $n$ (some $u$ with
+$au \equiv 1 \pmod{n}$) if and only if $\gcd(a,n)=1$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The Euclidean algorithm produces $\gcd(a,n)$ by repeated division with
+remainder; running it backwards (the \emph{extended} Euclidean algorithm)
+writes that gcd as a combination $ax+ny$. If $\gcd(a,n)=1$ this reads
+$ax+ny=1$, and reducing mod $n$ gives $ax \equiv 1 \pmod{n}$.
+Conversely, if $au \equiv 1 \pmod{n}$ then $n \mid (au-1)$, so any common
+divisor of $a$ and $n$ divides $1$.
+\end{proof}
+
+In code terms, the extended Euclidean algorithm is a loop over remainders
+that returns triplets $(g,x,y)$ with $ax+ny=g$ --- the same recurrence
+computing the gcd, carrying the coefficients along. The analogy is exact
+here: it \emph{is} the algorithm, not just an analogy.
+
+\begin{example}[Inverting $35$ mod $64$]
+Euclid: $64 = 1\cdot 35+29$, $35 = 1\cdot 29+6$, $29 = 4\cdot 6+5$,
+$6 = 1\cdot 5+1$. Back-substituting,
+\begin{align*}
+1 &= 6 - 5 = 6 - (29 - 4\cdot 6) = 5\cdot 6 - 29 \\
+  &= 5\cdot(35 - 29) - 29 = 5\cdot 35 - 6\cdot 29 \\
+  &= 5\cdot 35 - 6\cdot(64 - 35) = 11\cdot 35 - 6\cdot 64.
+\end{align*}
+Hence $35 \cdot 11 - 64 \cdot 6 = 1$, so $35^{-1} \equiv 11 \pmod{64}$.
+Check: $35 \cdot 11 = 385 = 6\cdot 64 + 1$.
+\end{example}
+
+\begin{definition}[Euler's totient]\label{def:totient}
+$\varphi(n)$ counts the integers $1 \le k \le n$ with $\gcd(k,n)=1$:
+the residues mod $n$ that possess inverses, the \emph{units}.
+\end{definition}
+
+\begin{theorem}[Totient product formula]\label{thm:totient-formula}
+If $n = \prod_i p_i^{e_i}$ is the prime factorisation, then
+\[
+  \varphi(n) = \prod_i \bigl(p_i^{e_i} - p_i^{e_i-1}\bigr)
+  = n\prod_{p \mid n}\Bigl(1-\frac1p\Bigr).
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+For a prime power $p^e$, the numbers up to $p^e$ sharing a factor with
+$p^e$ are exactly the $p^{e-1}$ multiples of $p$, leaving
+$p^e-p^{e-1}$ coprime ones. For several distinct primes the counts
+multiply: $\varphi$ is multiplicative on coprime arguments, which follows
+from the Chinese remainder theorem (\cref{thm:crt}) below, since units
+mod $mn$ correspond bijectively to pairs of units mod $m$ and mod $n$.
+\end{proof}
+
+\begin{example}[$\varphi(100)$]
+$100 = 2^2\cdot 5^2$, so
+$\varphi(100) = 100\cdot(1-\tfrac12)(1-\tfrac15) = 100\cdot\tfrac12\cdot\tfrac45 = 40$.
+\end{example}
+
+\begin{theorem}[Euler]\label{thm:euler}
+If $\gcd(a,n)=1$ then $a^{\varphi(n)} \equiv 1 \pmod{n}$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Let $U$ be the set of $\varphi(n)$ units mod $n$. Multiplying every
+element of $U$ by $a$ merely permutes $U$: it stays inside $U$ since
+$a$ and each unit are coprime to $n$, and it is injective because $a$
+has an inverse mod $n$ by \cref{thm:bezout}. Hence the products agree:
+\[
+  \prod_{u \in U}(au) \equiv \prod_{u \in U} u \pmod{n}.
+\]
+The left side is $a^{\varphi(n)}\prod u$; cancelling the product of
+units (each has an inverse) leaves $a^{\varphi(n)} \equiv 1 \pmod{n}$.
+\end{proof}
+
+\begin{corollary}[Fermat's little theorem]\label{cor:fermat}
+If $p$ is prime and $p \nmid a$, then $a^{p-1} \equiv 1 \pmod{p}$.
+\end{corollary}
+
+\begin{proof}
+Every $1 \le k \le p-1$ is coprime to $p$, so $\varphi(p)=p-1$; apply
+\cref{thm:euler}.
+\end{proof}
+
+This is the exponent-collapser: a huge exponent $e$ may be reduced
+mod $\varphi(n)$, turning $a^e$ into a small computation.
+
+\begin{example}[Last two digits of $7^{2026}$]
+Work mod $100$. Since $\gcd(7,100)=1$ and $\varphi(100)=40$,
+$7^{40} \equiv 1 \pmod{100}$. Now $2026 = 50\cdot 40 + 26$, so
+\[
+  7^{2026} \equiv 7^{26} \pmod{100}.
+\]
+Direct squaring: $7^2 = 49$, $7^4 = 49^2 = 2401 \equiv 1 \pmod{100}$,
+so $7^{26} = (7^4)^6\cdot 7^2 \equiv 1^6\cdot 49 = 49$.
+The last two digits are $49$. Note $7^4 \equiv 1$ already: the exponent
+order can divide $\varphi(n)$ strictly, so Euler gives \emph{a}
+working reduction, not always the smallest one.
+\end{example}
+
+The second tool splits the modulus. Computing mod $100$ directly can be
+awkward; computing mod $4$ and mod $25$ is easy, and the next theorem
+glues the answers back together.
+
+\begin{theorem}[Chinese remainder theorem]\label{thm:crt}
+Let $m_1,\ldots,m_k$ be pairwise coprime and $M = \prod_i m_i$.
+For any residues $a_i$, the system $x \equiv a_i \pmod{m_i}$ has a
+solution, unique mod $M$. Explicitly, with $M_i = M/m_i$ and $e_i$
+the inverse of $M_i$ mod $m_i$ (which exists by \cref{thm:bezout}),
+\[
+  x \equiv \sum_i a_i M_i e_i \pmod{M}.
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+$M_i$ is a multiple of every $m_j$ with $j \ne i$, so
+$a_iM_ie_i \equiv 0 \pmod{m_j}$ there, while mod $m_i$ it is
+$a_i \cdot 1 = a_i$ since $M_ie_i \equiv 1 \pmod{m_i}$. Each summand
+thus contributes exactly the required residue at its own modulus and
+vanishes at the others. Uniqueness: the difference of two solutions is
+divisible by each $m_i$, hence by their product $M$.
+\end{proof}
+
+\begin{example}[CRT reconstruction]
+Solve $x \equiv 2 \pmod{3}$, $x \equiv 3 \pmod{5}$, $x \equiv 2 \pmod{7}$.
+Here $M = 105$, $M_1 = 35$, $M_2 = 21$, $M_3 = 15$.
+Inverses: $35 \equiv 2 \pmod{3}$ with inverse $2$; $21 \equiv 1 \pmod{5}$
+with inverse $1$; $15 \equiv 1 \pmod{7}$ with inverse $1$. So
+\[
+  x = 2\cdot 35\cdot 2 + 3\cdot 21\cdot 1 + 2\cdot 15\cdot 1
+  = 140 + 63 + 30 = 233 \equiv 23 \pmod{105}.
+\]
+Check: $23 = 21+2 \equiv 2 \pmod{3}$, $23 = 20+3 \equiv 3 \pmod{5}$,
+$23 = 21+2 \equiv 2 \pmod{7}$.
+\end{example}
+
+\begin{remark}[Common traps]
+\begin{itemize}
+  \item Reducing the \emph{exponent} mod $n$ is wrong; reduce it
+  mod $\varphi(n)$, and only the exponent, never the base's modulus.
+  \item Euler and Fermat both need coprimality: $2^{40} \equiv 1
+  \pmod{100}$ is false ($\gcd(2,100) \ne 1$). Fermat additionally needs
+  a prime modulus.
+  \item CRT needs \emph{pairwise} coprime moduli. For
+  $x \equiv a \pmod{6}$, $x \equiv b \pmod{10}$ there may be no
+  solution at all (take $a=0$, $b=1$).
+  \item This lesson is the core of RSA: with $N=pq$, Euler gives
+  $m^{\varphi(N)} \equiv 1 \pmod{N}$, and B\'ezout produces the
+  decryption exponent $d$ with $ed \equiv 1 \pmod{\varphi(N)}$.
+  On a computer, evaluate $a^e \bmod n$ by binary exponentiation
+  (square-and-multiply, $O(\log e)$ multiplications) --- never by
+  computing $a^e$ first.
+\end{itemize}
+\end{remark}
+
+Next we will meet order, primitive roots, and discrete logarithms, which
+sharpen Euler from ``some working exponent'' to ``the exact cycle
+length''.
