@@ -59,13 +59,59 @@
 \end{solution}
 \begin{solution}{ex:nt-4}
   Since 3 and 100 are coprime, we can use this identity:
-  NOTE: USE CRT
   \[
     \begin{gathered}
       3^{\varphi (100)}\equiv 1 \quad \text{(mod 100)}\\
       3^{40} \equiv 1 \quad \text{(mod 100)}\\
-      3^{2026}=(3^40)^50\cdot 3^{26}\equiv 3^{26} \quad \text{(mod 100)}\\
-
+      3^{2026}=(3^{40})^{50}\cdot 3^{26}\equiv 3^{26} \quad \text{(mod 100)}\\
     \end{gathered}
   \]
+  Now, let's use CRT, with $M=100$. We can set $m_1=4$ and $m_2=25$ and find the system of equations:
+  \[
+    \begin{aligned}
+      3^{\varphi(4)}&\equiv 1 \quad \text{(mod 4)}\\
+      3^{2}&\equiv 1 \quad \text{(mod 4)}\\
+      (3^{2})^{13} &= 3^{26}\\
+      3^{26}&\equiv 1 \quad \text{(mod 4)}\\\\
+      3^{\varphi (25)} &\equiv 1 \quad \text{(mod 25)}\\
+      3^{20}&\equiv 1 \quad \text{(mod 25)}\\
+      3^{26}&=3^{20}\cdot 3^6 \\
+      3^{26}&\equiv 3^6 \equiv 4 \quad \text{(mod 25)}
+    \end{aligned}
+  \]
+  Now, we have $M_1=25$ and $M_2=4$. Inverses: $25\equiv1\quad \text{(mod 4)}$ with $e_1=1$, and $4\equiv 4\quad \text{(mod 25)}$ with $e_2=19$. Now for the final step:
+  \[
+    \begin{gathered}
+      3^{26}\equiv \sum_i a_i M_i e_i \quad \text{(mod 100)}\\
+      3^{26}\equiv 1\cdot 25 \cdot 1 + 4\cdot 4 \cdot 19 \quad \text{(mod 100)}\\
+      3^{26}\equiv 25 + 304 \quad \text{(mod 100)}\\
+      3^{26} \equiv 329 \quad \text{(mod 100)}\\
+      3^{26} \equiv 29 \quad \text{(mod 100)}
+    \end{gathered}
+  \]
+  So the last 2 digits of $3^{2026}$ are 2 and 9.
+\end{solution}
+\begin{solution}{ex:nt-5}
+  Using CRT with $M=4\cdot 5\cdot 7=140$ and $M_1=35$, $M_2=28$, $M_3=20$. Finding the inverses:
+  \[
+    \begin{gathered}
+      35\equiv 3 \quad \text{(mod 4)}\\
+      3\cdot 35 \equiv 1 \quad \text{(mod 4)}\\\\
+      28\equiv 3 \quad \text{(mod 5)}\\
+      2\cdot 28 \equiv 1 \quad \text{(mod 5)}\\\\
+      20\equiv 6 \quad \text{(mod 7)}\\
+      6\cdot 20 \equiv 1 \quad \text{(mod 7)}\\
+    \end{gathered}
+  \]
+  Now let's use CRT to find the answer:
+  \[
+    \begin{gathered}
+      x\equiv \sum_i a_i M_i e_i \quad \text{(mod M)}\\
+      x \equiv 1 \cdot 35 \cdot 3 + 2\cdot 28 \cdot 2 + 3\cdot 20 \cdot 6 \quad \text{(mod M)}\\
+      x \equiv 105 + 112 + 360 \quad \text{(mod M)}\\
+      x \equiv 577 (mod M)\\
+      x \equiv 17 \quad \text{(mod M)}
+    \end{gathered}
+  \]
+  The smallest non-negative solution is 17, and all of the solutions are of the form $nM+17, n\in \N$
 \end{solution}
