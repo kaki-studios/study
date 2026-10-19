@@ -11,7 +11,7 @@
   \]
   The residues coprime to 72 are:\\ $1,5,7,11,13,17,19,23,25,29,31,35,37,41,43,47,49,53,55,59,61,65,67,71$\\
 \end{solution}
-\begin{solution}{ex:nt-1}
+\begin{solution}{ex:nt-2}
   Using Euler's algorithm and then back-substituting afterwards:
   \[
     \begin{gathered}
@@ -40,4 +40,32 @@
   \]
   So the multiplicative inverse of 17 mod 64 is 49.
 
+\end{solution}
+\begin{solution}{ex:nt-3}
+  Since 7 is prime and $3\nmid 7$, using Fermat's little theorem, we have:
+  \[
+    \begin{gathered}
+      3^6\equiv 1 \quad \text{(mod 7)}\\
+      3^{100}=(3^6)^{16}\cdot 3^4\\
+      (3^6)^{16}\cdot 3^4\equiv 3^4 \quad \text{(mod 7)}\\
+      3^4=81\equiv 4 \quad \text{(mod 7)}\\
+    \end{gathered}
+  \]
+  Thus, we have:
+  \[
+    3^{100}\equiv 4 \quad \text{(mod 7)}
+  \]
+  
+\end{solution}
+\begin{solution}{ex:nt-4}
+  Since 3 and 100 are coprime, we can use this identity:
+  NOTE: USE CRT
+  \[
+    \begin{gathered}
+      3^{\varphi (100)}\equiv 1 \quad \text{(mod 100)}\\
+      3^{40} \equiv 1 \quad \text{(mod 100)}\\
+      3^{2026}=(3^40)^50\cdot 3^{26}\equiv 3^{26} \quad \text{(mod 100)}\\
+
+    \end{gathered}
+  \]
 \end{solution}
