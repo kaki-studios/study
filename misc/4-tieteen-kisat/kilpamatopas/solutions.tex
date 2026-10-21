@@ -1,0 +1,50 @@
+%! TEX root = main.tex
+\begin{exercise}\label{ex:km-1}
+  Find b such that $1988x^2+bx+8891$ and $8891x^2+bx+1988$ share a root.
+\end{exercise}
+\begin{solution}{ex:km-1}
+  When they share a root, this equation holds:
+  \[
+    \begin{gathered}
+      1988x^2+bx+8891=8891x^2+bx+1988\\
+      (1988-8891)x^2+(8891-1988)=0\\
+      -6903x^2+6903=0\\
+      6903x^2=6903\\
+      x^2=1
+    \end{gathered}
+  \]
+  The common root must be -1 or 1. Then using Vieta's formulas on the first polynomial:
+  \[
+    \begin{gathered}
+      \pm r_2= \frac{c}{a}\\
+      r_2 = \pm \frac{c}{a}\\
+      \pm 1 + r_2 = -\frac{b}{a}\\
+      \pm (1+\frac{c}{a})=-\frac{b}{a}\\
+      \pm (a+c)=b\\
+      b=\pm 10879
+    \end{gathered}
+  \]
+\end{solution}
+\begin{exercise}\label{ex:km-2}
+  Let $a,b,c,d\in \R^+$. Prove that
+  \[
+    \frac{1}{a}+\frac{1}{b}+\frac{4}{c}+\frac{16}{d}\geq \frac{64}{a+b+c+d}
+  \]
+\end{exercise}
+\begin{solution}{ex:km-2}
+  We can write the LHS as:
+  \[
+    \frac{1^2}{a}+\frac{1^2}{b}+\frac{2^2}{c}+\frac{4^2}{d}
+  \]
+  Cauchy-Schwartz in Engel form states that:
+  \[
+    \frac{(\sum_{k=1}^{n}x_k)^2}{\sum_{k=1}^{n}y_k}\leq \sum_{k=1}^{n}\frac{x_k^2}{y_k}
+  \]
+  Using Cauchy-Schwartz with: $x_1=(1,1,2,4)$ and $y_1=(a,b,c,d)$, we get:
+  \[
+    \begin{gathered}
+      \frac{8^2}{a+b+c+d}\leq \frac{1}{a}+\frac{1}{b}+\frac{4}{c}+\frac{16}{d}\\
+      \frac{64}{a+b+c+d}\leq \frac{1}{a}+\frac{1}{b}+\frac{4}{c}+\frac{16}{d}\\
+    \end{gathered}
+  \]
+\end{solution}
