@@ -1,0 +1,119 @@
+%! TEX root = main.tex
+\begin{feedback}[\cref{ex:la-7}]
+Your conclusions for all three maps are correct. In part (a), the matrix
+is also correct: its columns are the images of $e_1$ and $e_2$. The
+linearity calculation starts with $T_1(au+bv)$ only implicitly, so label
+the two sides or introduce the expression you are expanding. The same
+issue occurs in part (c), where the first displayed line names $T$ rather
+than $T_3$ and then writes $T_1$ and $T_2$ on the right. Keep the map
+names consistent. There are also unmatched right parentheses after
+$au_1-2au_2$ and $bv_1-2bv_2$; remove these rather than leaving them as
+algebraic noise.
+
+Part (b) is a good counterexample. To make the calculation fully
+transparent, identify the left side as $T_2(2x)$ and the right side as
+$2T_2(x)$, rather than only showing the resulting coordinates. Part (c)
+should not be described as similar to $T_2$ ``with a smaller rank'': $T_2$
+is nonlinear, so its rank has not been defined in this lesson, and the
+reason $T_3$ is linear is the coordinate calculation you give.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-8}]
+Your recovery of $T(e_1)$ and $T(e_2)$ from the two given values is
+correct, and the general formula for $T(x,y)$ follows correctly from
+those images. There is one sign error in the matrix: you found
+$T(e_2)=(1/2,-1/2,1/2)^T$, but its third entry becomes $+1/2$ in your
+matrix instead of $-1/2$. Thus the displayed matrix does not represent
+the formula immediately above it.
+
+When you revise, use each recovered standard-basis image as a column and
+check your matrix against both of the originally supplied values. The
+phrase ``where the basis vectors are in the image'' is also imprecise:
+you have found their images, not located the basis vectors inside
+$\operatorname{im}T$.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-9}]
+The row reduction, pivot columns, equations for the kernel, and image
+basis are correct. In particular, you correctly took the image basis from
+the original matrix. Your two kernel vectors do belong to $\ker T$, and
+they are linearly independent: for example, their third and fourth
+coordinates form the matrix
+\[
+  \begin{pmatrix}1&2\\-1&-6\end{pmatrix},
+\]
+whose determinant is nonzero. They also have the right number for a
+two-dimensional kernel.
+
+The missing step is the derivation of these vectors from the free
+variables. Set $x_3=s$ and $x_4=t$, solve the two displayed equations for
+$x_1$ and $x_2$, and show that the resulting general vector is a linear
+combination of your two claimed vectors. Without that calculation, the
+sentence about two degrees of freedom explains the expected dimension,
+but does not prove that this particular pair spans the entire kernel.
+The notation $\ker A$ is acceptable for a matrix map, but $\ker T$ matches
+the exercise's notation.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-10}]
+The conclusion is correct, and your use of linearity followed by
+injectivity contains the central idea. However, the proof does not yet
+handle the definition of linear independence for the whole list. A
+dependent list need not contain a vector $v_c$ that is a combination of
+just two other vectors $v_a$ and $v_b$. It might instead satisfy a
+relation involving three or more vectors, so your three-vector equation
+only treats a special case.
+
+Start instead with an arbitrary relation
+$\sum_{i=1}^k c_iT(v_i)=0$, where $c_1,\ldots,c_k\in\R$. Use linearity
+and injectivity to obtain a relation among $v_1,\ldots,v_k$, and then
+state what their independence forces about every $c_i$. You can prove
+the result directly; contradiction is not necessary.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-11}]
+You have correctly proved that injectivity implies surjectivity in the
+equal finite-dimensional setting. Writing
+$\operatorname{span}(\operatorname{im}T)\ne W$ is redundant because
+$\operatorname{im}T$ is already a subspace; the direct statement is
+$\operatorname{im}T\ne W$. The step from $\dim\ker T>0$ to
+noninjectivity needs the reason that a nontrivial kernel contains a
+nonzero vector $v$, while $T(v)=0=T(0)$. Listing distinct vectors
+$v_1,\ldots,v_k$ does not itself establish that there are at least two.
+
+More importantly, this is an ``if and only if'' exercise, and the
+converse is missing. You must also assume that $T$ is surjective and use
+$\dim\operatorname{im}T=n$ together with rank--nullity to determine the
+kernel. In both directions, state explicitly where the equal dimensions
+are used, and use the kernel criterion for injectivity from the lesson.
+\end{feedback}
+
+\begin{feedback}[\cref{ex:la-12}]
+Your first observation about a nonzero kernel vector is on the right
+track, but make the collision explicit: if $v\ne0$ and $T(v)=0$, then
+$T(x+v)=T(x)$ for every input $x$. Thus $x$ and $x+v$ are distinct inputs
+with the same output, which explains why the output cannot determine the
+input uniquely. Merely saying that the input ``can't be reconstructed''
+could be read as a claim about practical computation rather than this
+mathematical nonuniqueness.
+
+The rank discussion needs correction. The scalar coordinates of $Ax$ are
+always real numbers; saying that they are ``not linearly independent''
+when $\operatorname{rank}A<m$ is not the relevant statement. Instead,
+describe the image as a subspace of $\R^m$ of dimension
+$\operatorname{rank}A$: at most that many independent output degrees of
+freedom can vary, even though the output has $m$ scalar entries. Also,
+rank--nullity constrains rank by the number of input columns; it does not
+by itself justify your claim involving $m$.
+
+The final composition argument is not correct as written. Nonnegative
+rank and nullity do not imply that neither can exceed $m$, and
+``more expressive ($\operatorname{rank}A>m$) outputs'' is impossible
+for a map $\R^n\to\R^m$: the rank is always at most $m$ because
+$\operatorname{im}A\subseteq\R^m$. The rank is also at most $n$, by
+rank--nullity. Replace this part with an argument about the composition
+itself: two matrices $A$ and $B$ compose to another single matrix, and
+the image of the composition is contained in the image of the outer map.
+Explain why this bounds, rather than increases, the available output
+degrees of freedom.
+\end{feedback}

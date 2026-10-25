@@ -100,5 +100,12 @@
   But since $v_1,\ldots, v_k$ is linearly independent, there's a contradiction. Thus, $T(v_1),\ldots,T(v_k)$ is linearly independent.
 \end{solution}
 \begin{solution}{ex:la-11}
-  NOTE: reason using the dimensions, if T isn't surjective, it's rank must be smaller than dim W, so it can't be injective
+  First, let's assume T is not surjective. This would mean that its image doesn't span the codomain, so $\text{span}\operatorname{im}T \neq W$. This would imply that $\dim \operatorname{im} T < n$, so by rank-nullity, we have:
+  \[
+    \dim \ker T > 0
+  \]
+  If the null space has dimension $> 0$ this means there exist multiple distinct vectors $v_1,\ldots,v_k$ where $T(v_1)=\ldots=T(v_k)=0$, which would mean T is not injective. Thus T has to be surjective for it to be injective.
+\end{solution}
+\begin{solution}{ex:la-12}
+  If $\dim \ker T > 0$ that would make T non-injective, as we just saw in the previous exercise. This means the input can't be reconstructed from the output. Also, $ \operatorname{rank} A = \dim\operatorname{im} A$, so if $\operatorname{rank} A < m$ that means that the coordinates of $Ax$ are not linearly independent. Stacking these linear layers doesn't change rank-nullity, and since neither the rank or the nullity can be negative, they can't be $>m$ either. This means that no matter how much linear layers you stack with no nonlinearity in between, you will never get more expressive ($\operatorname{rank} A> m$) outputs.
 \end{solution}
