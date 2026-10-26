@@ -1,0 +1,209 @@
+%! TEX root = main.tex
+
+\begin{exercise}\label{ex:ml-1}
+A batch of $m=4$ examples with $n=3$ features is fed to a single affine layer
+followed by $\operatorname{relu}$:
+\[
+  X=\begin{pmatrix}1&0&2\\0&3&1\\-1&1&1\\2&1&0\end{pmatrix},\qquad
+  W=\begin{pmatrix}1&-1\\0&2\\1&1\end{pmatrix},\qquad
+  \mathbf{b}=\begin{pmatrix}0.5\\-0.5\end{pmatrix}.
+\]
+\begin{enumerate}[label=(\alph*)]
+  \item Compute $Z=XW+\mathbf{1}_4\mathbf{b}^{\!\top}$ and $R=\operatorname{relu}(Z)$.
+    Check that every row of $Z$ equals
+    $\mathbf{x}_i^{\!\top}W+\mathbf{b}^{\!\top}$ computed on its own.
+  \item State the shapes of $Z$ and $R$, and verify that
+    $\mathbf{1}_4\mathbf{b}^{\!\top}$ really has the shape you claim.
+  \item How many scalar parameters does this layer have, and what would it be
+    for $n=784$, $p=128$?
+  \item Which entries of $R$ are zero, and why is the map $X\mapsto R$ not
+    linear in $X$? Give explicit $X$ and a nonzero scalar $a$ for which
+    $\operatorname{relu}(aX)\ne a\operatorname{relu}(X)$, and identify which
+    entry of $Z$ is responsible.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:ml-2}
+Run a full backward pass by hand. The network has $m=n=2$, $h=2$, $k=1$, and
+the mean squared error objective $L=\frac{1}{2m}\norm{Z_2-Y}_F^2$:
+\[
+  X=\begin{pmatrix}1&2\\3&1\end{pmatrix},\qquad
+  Y=\begin{pmatrix}2\\1\end{pmatrix},\qquad
+  W_1=\begin{pmatrix}0&1\\1&-1\end{pmatrix},\quad
+  \mathbf{b}_1=\begin{pmatrix}1\\0\end{pmatrix},\quad
+  W_2=\begin{pmatrix}1\\2\end{pmatrix},\quad
+  b_2=0.
+\]
+\begin{enumerate}[label=(\alph*)]
+  \item Compute $Z_1$, $R$, $Z_2$, and $L$.
+  \item Compute $\bar Z_2$, $\bar W_2$, $\bar b_2$, $\bar R$, $\bar Z_1$,
+    $\bar W_1$, $\bar{\mathbf b}_1$, using
+    \eqref{eq:mse-adjoint}--\eqref{eq:w1}.
+  \item Verify one entry of $\bar W_1$ numerically by the finite difference
+    \[
+      \frac{L(W_1+hE_{kj})-L(W_1-hE_{kj})}{2h}
+    \]
+    with $h=10^{-6}$, where $E_{kj}$ is the elementary matrix with a single $1$
+    in position $(k,j)$.
+  \item Explain why $\bar Z_1$ has a zero entry even though $\bar R$ does not.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:ml-3}
+Let $Z\in\R^{m\times k}$ and $Y\in\R^{m\times k}$ be constant, and
+\[
+  L(Z)=\frac{1}{2m}\norm{Z-Y}_F^2=\frac{1}{2m}\sum_{i=1}^{m}\sum_{j=1}^{k}(Z_{ij}-Y_{ij})^2 .
+\]
+\begin{enumerate}[label=(\alph*)]
+  \item Compute $\partial L/\partial Z_{ij}$ directly from the sum, and hence
+    show that $\bar Z=\frac{1}{m}(Z-Y)$, i.e.\ that the adjoint of $Z$ is
+    $(Z-Y)/m$ and not its transpose.
+  \item A classmate writes $\bar Z=(Z-Y)^{\!\top}/m$ ``because the derivative of
+    a vector with respect to a vector should be transposed''. Give a concrete
+    matrix $Z$ and target $Y$ for which the two expressions have different
+    shapes, and say which shape the downstream formulas
+    \eqref{eq:w2}--\eqref{eq:Rbar} require.
+  \item Show that for $k=1$ (scalar output per example) the formula reduces to
+    the familiar $1$-dimensional one: $\bar Z_i=(Z_i-Y_i)/m$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:ml-4}
+Fix a dataset with $m$ examples, so that
+$L_D(\theta)=\frac{1}{m}\sum_{i=1}^{m}\ell_i(\theta)$ with
+$\ell_i(\theta)=\ell(f_\theta(\mathbf{x}_i),\mathbf{y}_i)$. A minibatch of size
+$B$ is a subset $S\subseteq\{1,\ldots,m\}$ of size $B$, chosen uniformly at
+random, and the minibatch loss is
+$\hat L_S(\theta)=\frac{1}{B}\sum_{i\in S}\ell_i(\theta)$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $\mathbb{E}\bigl[\nabla\hat L_S(\theta)\bigr]=\nabla L_D(\theta)$
+    for every $\theta$, where the expectation is over the uniform choice of $S$.
+  \item Show that sampling with replacement is still unbiased: if
+    $i_1,\ldots,i_B$ are drawn independently and uniformly from
+    $\{1,\ldots,m\}$ and the batch loss is
+    $\frac{1}{B}\sum_{b=1}^{B}\ell_{i_b}(\theta)$, then the expected gradient
+    is again $\nabla L_D(\theta)$. Which of the two schemes (subset of size
+    $B$, or $B$ draws with replacement) has the smaller variance? Give an
+    intuitive argument; an exact formula is not needed, but do say how the
+    answer changes as $B$ approaches $m$.
+  \item Suppose someone uses the \emph{sum} over the minibatch instead of the
+    mean, i.e.\ $\tilde L_S=\sum_{i\in S}\ell_i$. Show that
+    $\mathbb{E}[\nabla\tilde L_S]=B\nabla L_D(\theta)$, and explain in one
+    sentence what this does to a fixed learning rate $\eta$ when $B$ is doubled.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:ml-5}
+Consider a two-layer network with \emph{no} activation between the layers:
+\[
+  Z_2=(XW_1+\mathbf{1}\mathbf{b}_1^{\!\top})W_2+\mathbf{1}\mathbf{b}_2^{\!\top},
+  \qquad W_1\in\R^{n\times h},\ W_2\in\R^{h\times k}.
+\]
+Take $n=k=3$, $h=2$, and
+\[
+  W_1=\begin{pmatrix}1&0\\0&1\\1&1\end{pmatrix},\qquad
+  W_2=\begin{pmatrix}1&0&1\\0&1&1\end{pmatrix},\qquad
+  \mathbf{b}_1=\begin{pmatrix}1\\1\end{pmatrix},\qquad
+  \mathbf{b}_2=\mathbf{0}.
+\]
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $Z_2=XM+\mathbf{1}\mathbf{c}^{\!\top}$ for explicit $M$ and
+    $\mathbf{c}$, and give $M$ and $\mathbf{c}$.
+  \item Compute $M$, and compute $\rank M$ and $\rank W_1$. Then prove the
+    general bound
+    \[
+      \rank(W_1W_2)\le\min(\rank W_1,\rank W_2).
+    \]
+  \item Deduce that this network cannot compute the identity map $\R^3\to\R^3$,
+    no matter what $W_1,W_2$ are with $h=2$, and state the smallest $h$ that
+    would be required if no nonlinearity were used.
+  \item Explain in one or two sentences why inserting $\operatorname{relu}$
+    between the layers escapes the rank bound, even though each region of input
+    space is still affine.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:ml-6}
+Let $n=1$, $h=2$, $k=1$, $m=2$, with
+\[
+  X=\begin{pmatrix}1\\2\end{pmatrix},\qquad
+  W_1=\begin{pmatrix}-1&-2\end{pmatrix},\qquad
+  \mathbf{b}_1=\begin{pmatrix}0\\0\end{pmatrix},\qquad
+  W_2=\begin{pmatrix}1\\1\end{pmatrix},\qquad b_2=0,
+\]
+and the usual $\operatorname{relu}$ and mean squared error with targets
+$Y=(0,1)^{\!\top}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Compute $Z_1$, $R$, $Z_2$, and $L$.
+  \item Compute all adjoints and show that $\bar W_1=\mathbf{0}$ and
+    $\bar{\mathbf b}_1=\mathbf{0}$.
+  \item Deduce exactly what one gradient descent step with $\eta>0$ changes,
+    and explain why no number of further steps can ever turn either hidden unit
+    on. This failure mode is called a \emph{dead ReLU}.
+  \item Give one concrete change to the initialisation of $W_1$ or
+    $\mathbf{b}_1$ that would avoid the dead unit here, and say precisely which
+    quantity in your computation it makes nonzero.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:ml-7}
+A \emph{gradient check} compares an analytic adjoint $\bar\theta_j$ with the
+central finite difference
+\[
+  \hat\theta_j(h)=\frac{L(\theta+h\mathbf{e}_j)-L(\theta-h\mathbf{e}_j)}{2h}.
+\]
+\begin{enumerate}[label=(\alph*)]
+  \item Assuming $L$ is three times differentiable, use Taylor expansion to show
+    that
+    \[
+      \hat\theta_j(h)=\frac{\partial L}{\partial\theta_j}+O(h^2).
+    \]
+  \item Explain why, in floating point arithmetic with relative precision
+    $\varepsilon_{\mathrm{mach}}$, the computed difference has an error term of
+    order $\varepsilon_{\mathrm{mach}}\abs{L}/h$. Balancing this against the
+    truncation error, derive the exponent $p$ in $h\asymp\varepsilon_{\mathrm{mach}}^{p}$
+    that minimises the total error, and give the numerical value of $h$ for
+    double precision. (Note that a \emph{one-sided} difference
+    $\bigl(L(\theta+h\mathbf{e}_j)-L(\theta)\bigr)/h$ has truncation error of
+    order $h$, and therefore a different exponent. Say what it is.)
+  \item Write pseudocode for \texttt{grad\_check(loss, backward, theta)}
+    that returns the maximum relative discrepancy over all $d$ coordinates.
+    State the precondition on the network and data. Then state one place where
+    the check is expected to be inaccurate rather than wrong, and why.
+  \item Your check passes for a two-layer network but fails for a deeper one.
+    List two distinct causes that are consistent with a genuine implementation
+    bug in the deeper network.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{ex:ml-8}
+A framework represents each layer as a pair of functions
+\[
+  \begin{aligned}
+    \texttt{forward}&\colon \text{input}\mapsto(\text{output},\text{cache}),\\
+    \texttt{backward}&\colon(\text{adjoint of output},\text{cache})\mapsto
+      (\text{adjoint of input},\text{parameter adjoints}).
+  \end{aligned}
+\]
+Suppose the computation is a chain
+\[
+  G_0\xrightarrow{\Phi_1}G_1\xrightarrow{\Phi_2}\cdots
+  \xrightarrow{\Phi_r}G_r,
+\]
+with $L$ a scalar function of $G_r$ only.
+\begin{enumerate}[label=(\alph*)]
+  \item Prove by induction on $r$, using \cref{lem:adjoint-chain}, that applying
+    the $\texttt{backward}$ functions in the order $\Phi_r,\Phi_{r-1},\ldots,\Phi_1$
+    yields $\bar G_1,\ldots,\bar G_r$ and, for each parameter of each $\Phi_a$,
+    its partial derivatives.
+  \item Explain why the induction step needs the \emph{cache} from the forward
+    pass, and identify which lines of
+    \eqref{eq:mse-adjoint}--\eqref{eq:w1} would become impossible to evaluate
+    without it.
+  \item Suppose the same layer object is applied twice to the same input (weight
+    sharing), so that $\Phi_1=\Phi_2$ as functions of the same parameters.
+    Explain why the backward pass of that layer runs twice and why the two
+    results must be \emph{added}, not overwritten, and connect this to the
+    multivariate chain rule.
+\end{enumerate}
+\end{exercise}

@@ -1,0 +1,99 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.15cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist[enumerate]{leftmargin=*,itemsep=0.65em,topsep=0.4em}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\lhead{Olympiad Practice Examination}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\problem}[3]{%
+  \subsection*{Problem #1 \; \textnormal{\small[#2]}}\label{prob:#3}%
+}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+
+\title{\vspace{-1.5cm}\bfseries Olympiad Practice Examination}
+\author{Eleven Topics --- One Problem Each}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.8em}
+
+\begin{center}
+\fbox{\parbox{0.91\textwidth}{
+\textbf{Suggested time: 4 hours.} \quad Full solutions are expected.
+Problems are not necessarily in order of difficulty. Analytic and synthetic
+geometry are treated as separate topics. Calculators are not needed.
+}}
+\end{center}
+
+\problem{1}{Polynomials}{polynomials}
+Determine all nonconstant polynomials $P(x)$ with real coefficients such that
+\[
+  (x-1)P(x+1)=(x+2)P(x)
+  \qquad\text{for every }x\in\RR.
+\]
+
+\problem{2}{Inequalities}{inequalities}
+Let $a,b,c>0$ satisfy $abc=1$. Prove that
+\[
+  \frac{1}{a^3(b+c)}+\frac{1}{b^3(c+a)}
+  +\frac{1}{c^3(a+b)}\ge\frac32.
+\]
+Determine all equality cases.
+
+\problem{3}{Functional Equations}{functional-equations}
+Determine all functions $f:\RR\to\RR$ satisfying
+\[
+  f(x+y)+f(x-y)=2f(x)\cos y
+  \qquad\text{for all }x,y\in\RR.
+\]
+
+\problem{4}{Complex Numbers}{complex-numbers}
+Let $n\ge2$ be an integer, and let $\omega=e^{2\pi i/n}$. Evaluate, in closed form,
+\[
+  \sum_{k=0}^{n-1}\frac{1}{2-\omega^k}.
+\]
+
+\problem{5}{Combinatorics}{combinatorics}
+For an integer $n\ge1$, a sequence of $n$ symbols $+$ and $n$ symbols $-$ is called \emph{balanced} if every nonempty initial segment contains at least as many $+$ symbols as $-$ symbols. Prove that the number of balanced sequences is the Catalan number
+\[
+  \frac{1}{n+1}\binom{2n}{n}.
+\]
+
+\problem{6}{Pigeonhole Principle}{pigeonhole}
+Let $n\ge1$ be an integer. Determine the greatest possible number of elements in a subset $S$ of $\{1,2,\ldots,2n\}$ such that no element of $S$ divides a different element of $S$.
+
+\problem{7}{Graph Theory}{graph-theory}
+A connected graph has $n\ge2$ vertices, and every vertex has even degree. Prove that its edges can be oriented so that, at every vertex, the indegree and outdegree are equal.
+
+\problem{8}{Game Theory}{game-theory}
+Two players alternately remove stones from a pile initially containing $2026$ stones. On a turn, a player must remove $2^j$ stones for some nonnegative integer $j$, provided that many stones remain. The player who removes the last stone wins. Determine which player has a winning strategy and describe that strategy completely.
+
+\problem{9}{Number Theory}{number-theory}
+Determine all positive integers $n$ for which
+\[
+  2^n+n\mid 8^n+n.
+\]
+
+\problem{10}{Geometry --- Analytic}{analytic-geometry}
+The parabola $y=x^2$ has focus $F=(0,\tfrac14)$. A line through $F$ meets the parabola at two distinct points $A$ and $B$. Prove that the circle with diameter $AB$ is tangent to the line $y=-\tfrac14$.
+
+\problem{11}{Geometry --- Synthetic}{synthetic-geometry}
+Let $ABCD$ be a convex cyclic quadrilateral whose diagonals $AC$ and $BD$ intersect at $P$ and are perpendicular. The line through $P$ perpendicular to $AB$ meets line $CD$ at $M$. Prove that $M$ is the midpoint of $CD$.
+
+\end{document}

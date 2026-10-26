@@ -1,0 +1,532 @@
+%! TEX root = main.tex
+
+\subsection{Motivation: what problem is machine learning solving?}
+
+Everything that follows is an answer to one question. We can measure a
+\emph{loss}: a single number that says how badly some function $f_\theta$
+performs on data. How do we find the parameters $\theta$ that make it small?
+
+This reframes what you already know. ``A neural network is
+$w\cdot x+b$'' describes one \emph{function} in a large \emph{family} of
+functions. Machine learning is not about that function; it is about the
+optimisation problem sitting on top of it. Three ingredients are needed:
+\begin{enumerate}[label=\arabic*.]
+  \item a family of candidate functions, called the \emph{model} or
+    \emph{hypothesis class}, indexed by parameters $\theta$;
+  \item a \emph{loss} that turns ``how wrong is $f_\theta$ on this example''
+    into a real number;
+  \item an algorithm that searches $\theta$-space for a low loss.
+\end{enumerate}
+Matrices enter in step~1, because a linear layer evaluated on a batch of
+inputs is a matrix product. Backpropagation enters in step~3, because you
+cannot search $\R^{d}$ blindly when $d$ is $10^9$: you need the gradient,
+and backprop is the algorithm that computes it.
+
+The roadmap for this topic:
+\begin{enumerate}[label=\arabic*.]
+  \item supervised learning as loss minimisation, and the linear layer as a
+    matrix (this lesson);
+  \item the chain rule in matrix form, and backpropagation as reverse-mode
+    automatic differentiation (this lesson);
+  \item gradient descent, minibatching, and then generalisation---why small
+    training loss is not the goal;
+  \item the same machinery for sequential decisions: dynamic programming,
+    $Q$-learning, and the policy gradient, which is backprop applied to a
+    stochastic objective.
+\end{enumerate}
+
+\subsection{The supervised learning contract}
+
+\begin{definition}[Supervised learning problem]
+An \emph{example} is a pair $(\mathbf{x}, \mathbf{y})$ with
+$\mathbf{x}\in\R^{n}$ (the input or features) and $\mathbf{y}\in\R^{k}$
+(the target). A \emph{dataset} is a finite list
+$D=((\mathbf{x}_1,\mathbf{y}_1),\ldots,(\mathbf{x}_m,\mathbf{y}_m))$.
+
+Fix a \emph{model} $f_\theta\colon\R^{n}\to\R^{k}$ depending on parameters
+$\theta\in\R^{d}$, and a \emph{per-example loss}
+$\ell\colon\R^{k}\times\R^{k}\to\R_{\ge 0}$. The \emph{empirical risk} of
+$\theta$ is
+\[
+  L_D(\theta)=\frac{1}{m}\sum_{i=1}^{m}\ell\bigl(f_\theta(\mathbf{x}_i),\mathbf{y}_i\bigr).
+\]
+\emph{Training} means solving, at least approximately,
+$\min_{\theta}L_D(\theta)$.
+\end{definition}
+
+Two comments on this definition, both of which matter later.
+
+First, $L_D$ is an \emph{average}, not a sum. This is only a choice of scale,
+but it means the loss does not blow up when you change the batch size, and an
+``average gradient'' is genuinely an average.
+
+Second, $L_D$ is a function of one variable: the flat vector $\theta$. All the
+interesting structure (matrices, layers, activations) is hidden inside
+$f_\theta$. This is why the mathematics of training is \emph{calculus plus
+linear algebra}, and why we will never need a separate theory for each
+architecture: only $\partial L/\partial\theta$ is needed, however $f_\theta$
+is built.
+
+\begin{example}[Losses you will meet]
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{Squared error}, for regression: $\ell(\hat{\mathbf{y}},\mathbf{y})=\tfrac12\norm{\hat{\mathbf{y}}-\mathbf{y}}^2$.
+    The factor $\tfrac12$ cancels the $2$ from differentiating a square; it is
+    pure convenience and changes no minimiser.
+  \item \emph{Mean squared error} (MSE) over a batch: $L=\frac{1}{2m}\norm{Z-Y}_F^2$,
+    where the rows of $Z\in\R^{m\times k}$ are the predictions and the rows
+    of $Y$ are the targets, and $\norm{\cdot}_F$ is the Frobenius norm
+    $\norm{A}_F^2=\sum_{ij}A_{ij}^2$.
+  \item \emph{Softmax cross-entropy}, for $C$-way classification, which we
+    will build in a later lesson from the same ingredients.
+\end{enumerate}
+\end{example}
+
+The Frobenius norm is worth noticing: it is the Euclidean norm of the matrix
+flattened into a vector. So squaring it is exactly ``sum of squares over all
+entries'', and MSE is ``average squared coordinate error''.
+
+\subsection{A layer is a matrix, a batch is a stacked matrix}
+
+\begin{definition}[Affine (fully connected) layer]
+An affine layer with $n$ inputs and $p$ outputs has parameters
+$W\in\R^{n\times p}$ (the \emph{weight matrix}) and $\mathbf{b}\in\R^{p}$
+(the \emph{bias}). It maps a single input $\mathbf{x}\in\R^{n}$ to
+\[
+  \mathbf{z}=W^{\!\top}\mathbf{x}+\mathbf{b}\in\R^{p}.
+\]
+\end{definition}
+
+Note the transposition: with $\mathbf{x}$ as a column, the $j$-th output
+coordinate is $z_j=\sum_{k=1}^{n}W_{kj}x_k+b_j$, i.e.\ the inner product of
+$\mathbf{x}$ with the $j$-th \emph{column} of $W$. In your linear algebra
+course the layer would naturally be written as $A\mathbf{x}+\mathbf{b}$ with
+$A\in\R^{p\times n}$; the convention above stores $A^{\!\top}$ instead so
+that the batch version needs no transposition. Both are the same map; only the
+storage differs.
+
+Now feed a whole batch at once. Put the inputs as the \emph{rows} of
+$X\in\R^{m\times n}$ and the outputs as the rows of $Z\in\R^{m\times p}$. Then
+\[
+  Z=XW+\mathbf{1}_m\mathbf{b}^{\!\top},
+\]
+where $\mathbf{1}_m\in\R^{m}$ is the all-ones vector, so
+$\mathbf{1}_m\mathbf{b}^{\!\top}\in\R^{m\times p}$ has every row equal to
+$\mathbf{b}^{\!\top}$. Row $i$ of this identity reads
+$\mathbf{z}_i^{\!\top}=\mathbf{x}_i^{\!\top}W+\mathbf{b}^{\!\top}$, which is
+the single-example layer transposed. This is the whole content of the next
+proposition.
+
+\begin{proposition}[Batching is not a new operation]\label{prop:batching}
+Let $X\in\R^{m\times n}$ have rows $\mathbf{x}_1^{\!\top},\ldots,\mathbf{x}_m^{\!\top}$.
+Then the rows of $Z=XW+\mathbf{1}_m\mathbf{b}^{\!\top}$ are exactly
+$f(\mathbf{x}_1)^{\!\top},\ldots,f(\mathbf{x}_m)^{\!\top}$ for the affine layer
+$f$ above. Consequently the batch computation is one matrix multiplication
+whose arithmetic cost is $\Theta(mnp)$, i.e.\ exactly $m$ times the cost of a
+single example, with no saving from sharing the work.
+\end{proposition}
+
+\begin{proof}
+Row $i$ of $XW$ is $\sum_{k=1}^{n}X_{ik}W_{k\cdot}=\mathbf{x}_i^{\!\top}W$, and
+row $i$ of $\mathbf{1}_m\mathbf{b}^{\!\top}$ is $\mathbf{b}^{\!\top}$. Add them.
+Independence across $i$ holds because the $i$-th row of $Z$ depends only on the
+$i$-th row of $X$.
+\end{proof}
+
+\begin{remark}[Why rows and not columns]
+Storing examples as rows is a convention, and PyTorch, JAX and TensorFlow all
+follow it. The concrete benefit is that the feature axis $n$ is the
+\emph{second} index of $X$, so the $n$ entries belonging to one example are
+contiguous in a row-major array, and the whole layer is a single BLAS call
+$XW$ with no transposition of the batch. The cost is conceptual: the elementary
+linear-algebra object ``apply the map to $\mathbf{x}$'' becomes ``multiply the
+row by $W$'', which is why the transpose in the definition of the layer cannot
+be avoided. Pick one convention, write it down, and check shapes against it;
+mixing the two is the source of most dimension errors.
+\end{remark}
+
+\begin{remark}[Why a nonlinearity is mandatory]
+By \cref{prop:batching} a layer is affine. Compose two affine layers:
+\[
+  \mathbf{z}=W_2^{\!\top}\bigl(W_1^{\!\top}\mathbf{x}+\mathbf{b}_1\bigr)+\mathbf{b}_2
+  =(W_1W_2)^{\!\top}\mathbf{x}+\bigl(W_2^{\!\top}\mathbf{b}_1+\mathbf{b}_2\bigr).
+\]
+The composition is again affine, with weight $W_1W_2$. So depth without
+nonlinearity buys nothing: you are still fitting a single affine map, now with
+a rank constraint ($\operatorname{rank}(W_1W_2)\le\min(\operatorname{rank}W_1,\operatorname{rank}W_2)$).
+This is the same ``rank cannot increase under composition'' argument as in your
+linear algebra exercises, and it is the reason every real network interleaves
+a nonlinear map.
+\end{remark}
+
+\begin{definition}[Activation, and an MLP]
+An \emph{activation} is a nonlinear scalar function $\sigma$ applied entrywise
+to a matrix, written $\sigma(Z)$ with $\sigma(Z)_{ij}=\sigma(Z_{ij})$. The
+standard choice here is the rectified linear unit
+\[
+  \operatorname{relu}(t)=\max(t,0).
+\]
+A \emph{multi-layer perceptron} (MLP) with one hidden layer is
+\begin{align*}
+  Z_1&=XW_1+\mathbf{1}\mathbf{b}_1^{\!\top}, &
+  R&=\operatorname{relu}(Z_1), &
+  Z_2&=RW_2+\mathbf{1}\mathbf{b}_2^{\!\top},
+\end{align*}
+with $W_1\in\R^{n\times h}$, $W_2\in\R^{h\times k}$. $Z_1$ is called the
+\emph{pre-activation} and $R$ the \emph{hidden representation}.
+\end{definition}
+
+Why does this help, given that each layer is affine? Entrywise $\operatorname{relu}$
+applied to a matmul output is a \emph{piecewise}-affine map. Fix the pattern of
+which entries are positive (a boolean matrix, the \emph{mask}); on the region
+of inputs $X$ where that pattern is constant, the network reduces to a single
+affine map, and different regions give different affine maps. So an MLP is an
+affine spline: many linear pieces glued together. The mask is a piece of data
+depending on the input, which is precisely what a fixed matrix cannot express.
+
+\begin{remark}[Parameter counting]
+The first layer has $nh+h$ parameters, the second $hk+k$, total
+$nh+h+hk+k$. For $n=784$, $h=128$, $k=10$ this is about $10^5$; for language
+models the same formula with $h\sim10^{4}$ in dozens of layers yields
+$10^{9}$--$10^{11}$. Number the parameters in some fixed order and stack them
+into $\theta\in\R^{d}$. Gradients will have shape $d$ too, and the whole point
+of backprop is to get all $d$ of them for roughly the cost of one forward pass.
+\end{remark}
+
+\subsection{The objective is a scalar, so the gradient is a vector}
+
+\begin{definition}[Gradient]
+For a differentiable $L\colon\R^{d}\to\R$, the gradient $\nabla L(\theta)$ is
+the vector in $\R^{d}$ whose $j$-th entry is
+$\partial L/\partial\theta_j$. The \emph{total derivative} at $\theta$ is the
+row vector $\nabla L(\theta)^{\!\top}$, the unique linear map
+$\R^{d}\to\R$ with
+\[
+  L(\theta+\delta)=L(\theta)+\nabla L(\theta)^{\!\top}\delta+o(\norm{\delta}).
+\]
+\end{definition}
+
+Everything downstream depends on one structural fact: \emph{the loss is
+scalar}. Whatever the shape of an intermediate quantity, the derivative of
+$L$ with respect to it has the same shape as the quantity. This is why we can
+avoid the $4$-index tensors that ``derivative of a matrix with respect to a
+matrix'' would otherwise require.
+
+\begin{definition}[Adjoint]
+Let $L$ be the scalar loss and let $G$ be any intermediate matrix or vector in
+the computation. Write
+\[
+  \bar{G}=\frac{\partial L}{\partial G},\qquad \bar{G}_{ij}=\frac{\partial L}{\partial G_{ij}},
+\]
+so $\bar{G}$ has the \emph{same shape as} $G$. We call $\bar{G}$ the
+\emph{adjoint} of $G$, also called its \emph{upstream gradient}. For the
+parameters, $\bar{W}$ and $\bar{\mathbf b}$ are the gradient pieces we want.
+\end{definition}
+
+The adjoint is not the naive ``derivative matrix''. If $G\in\R^{m\times p}$
+then $G$ has $mp$ entries; a linear map $\R^{mp}\to\R$ is described by $mp$
+numbers, and $\bar G$ is exactly that description. In linear algebra language,
+$\bar G$ is the element of the dual space $(\R^{m\times p})^*$ corresponding to
+$\mathrm{d}L$, transported back to $G$'s own shape. That identification is what
+makes ``same shape'' a legal convention.
+
+\begin{lemma}[Chain rule, adjoint form]\label{lem:adjoint-chain}
+Suppose $L$ depends on $G$ and $G$ depends on $H$ through a differentiable map
+$\Phi$, so that $G=\Phi(H)$. Then the adjoints satisfy
+\[
+  \bar{H}=\bigl(D\Phi(H)\bigr)^{\!\top}\bar{G},
+\]
+where $D\Phi(H)$ is the Jacobian of $\Phi$ at $H$ (a linear map between the
+flattened spaces) and $^{\!\top}$ denotes its transpose (the adjoint map).
+\end{lemma}
+
+\begin{proof}
+Flatten $H$ and $G$ into vectors $\mathbf{h},\mathbf{g}$. By definition
+$D\Phi$ is the matrix with $\partial g_a/\partial h_b$ in position $(a,b)$.
+Then for each $b$,
+\[
+  \frac{\partial L}{\partial h_b}
+  =\sum_{a}\frac{\partial L}{\partial g_a}\frac{\partial g_a}{\partial h_b}
+  =\sum_{a}\bigl(D\Phi\bigr)_{ab}\,\bar{G}_{a}
+  =\bigl((D\Phi)^{\!\top}\bar{G}\bigr)_{b}. \qedhere
+\]
+\end{proof}
+
+So backpropagation is one line of mathematics: \emph{multiply the upstream
+adjoint by the transpose of the Jacobian, at every step, moving backwards}.
+The only work is computing $D\Phi^{\!\top}\bar G$ for each kind of layer without
+ever forming $D\Phi$. The saving is enormous. For a layer with $n=10^{3}$
+inputs, $p=10^{3}$ outputs and a batch of $m=10^{4}$ examples, the Jacobian of
+$W\mapsto Z$ is the $(mp)\times(np)$ matrix of size $10^{7}\times10^{6}$, while
+the product $X^{\!\top}\bar Z$ is an $n\times p$ matrix computed with one
+matmul. Reverse mode never materialises the Jacobian; it only ever applies its
+transpose to a vector.
+
+\begin{theorem}[Backprop through an affine layer]\label{thm:affine-backprop}
+Let $Z=XW+\mathbf{1}_m\mathbf{b}^{\!\top}$ with $X\in\R^{m\times n}$,
+$W\in\R^{n\times p}$, $\mathbf{b}\in\R^{p}$, and let $\bar Z$ be the adjoint of
+$Z$. Then
+\[
+  \bar W=X^{\!\top}\bar Z,\qquad
+  \bar{\mathbf b}=\bar Z^{\!\top}\mathbf{1}_m,\qquad
+  \bar X=\bar Z\,W^{\!\top}.
+\]
+\end{theorem}
+
+\begin{proof}
+Since $Z_{ij}=\sum_{k}X_{ik}W_{kj}+b_j$, we have
+$\partial Z_{ij}/\partial W_{kj'}=\delta_{jj'}X_{ik}$,
+$\partial Z_{ij}/\partial b_{j'}=\delta_{jj'}$, and
+$\partial Z_{ij}/\partial X_{ik'}=\delta_{kk'}W_{kj}$. Summing over all
+$(i,j)$ with the adjoint weights $\bar Z_{ij}$:
+\begin{align*}
+  \bar W_{kj}
+  &=\sum_{i}\sum_{j'}\bar Z_{ij'}\frac{\partial Z_{ij'}}{\partial W_{kj}}
+   =\sum_{i}\bar Z_{ij}X_{ik}=(X^{\!\top}\bar Z)_{kj},\\
+  \bar b_{j}
+  &=\sum_{i}\sum_{j'}\bar Z_{ij'}\frac{\partial Z_{ij'}}{\partial b_{j}}
+   =\sum_{i}\bar Z_{ij}=(\bar Z^{\!\top}\mathbf{1}_m)_{j},\\
+  \bar X_{ik}
+  &=\sum_{i'}\sum_{j}\bar Z_{i'j}\frac{\partial Z_{i'j}}{\partial X_{ik}}
+   =\sum_{j}\bar Z_{ij}W_{kj}=(\bar Z W^{\!\top})_{ik}. \qedhere
+\end{align*}
+\end{proof}
+
+\begin{remark}[Reading the three formulas]
+All three are ``sum over the index the layer contracted away''.
+\begin{itemize}
+  \item $\bar W=X^{\!\top}\bar Z$: sum the outer products $\mathbf{x}_i\bar{\mathbf{z}}_i^{\!\top}$
+    over the batch. Each example contributes the change it would like in $W$.
+  \item $\bar{\mathbf b}=\bar Z^{\!\top}\mathbf{1}_m$: column sums of $\bar Z$. The
+    bias is added to every example identically, so its gradient is the total
+    over the batch.
+  \item $\bar X=\bar ZW^{\!\top}$: the same map as the forward pass but with $W$
+    transposed, pushing the error back to the inputs. If you do not need
+    $\bar X$ (the first layer), skip it---this is the one step you can omit.
+\end{itemize}
+Shapes are a complete correctness check: $X^{\!\top}\bar Z$ is
+$(n\times m)(m\times p)=n\times p$, matching $W$; $\bar ZW^{\!\top}$ is
+$(m\times p)(p\times n)=m\times n$, matching $X$. A dimension mismatch always
+means you transposed the wrong factor.
+\end{remark}
+
+\begin{theorem}[Backprop through an entrywise activation]\label{thm:relu-backprop}
+Let $R=\sigma(Z)$ with $\sigma$ applied entrywise and differentiable. Then
+\[
+  \bar Z=\bar R\odot\sigma'(Z),
+\]
+where $\odot$ is the Hadamard (entrywise) product and $\sigma'(Z)$ is the matrix
+of entrywise derivatives. For $\sigma=\operatorname{relu}$,
+$\sigma'(t)=\mathbf{1}[t>0]$, so
+\[
+  \bar Z_{ij}=\bar R_{ij}\cdot\mathbf{1}[Z_{ij}>0].
+\]
+\end{theorem}
+
+\begin{proof}
+Since $R_{ij}$ depends only on $Z_{ij}$, and $R_{ij'}$ for $j'\ne j$ does not
+depend on $Z_{ij}$, the Jacobian is diagonal within each entry:
+$\partial R_{ij}/\partial Z_{ij}=\sigma'(Z_{ij})$ and
+$\partial R_{ij}/\partial Z_{i'j'}=0$ if $(i,j)\ne(i',j')$. Hence
+$\bar Z_{ij}=\sum_{i'j'}\bar R_{i'j'}\partial R_{i'j'}/\partial Z_{ij}
+=\bar R_{ij}\sigma'(Z_{ij})$.
+\end{proof}
+
+\begin{remark}[The ReLU derivative at $0$]
+The function $\operatorname{relu}$ is not differentiable at $0$, and no
+derivative value there is ``correct''. Every framework picks $0$, which means
+an exactly-zero pre-activation receives no gradient. This is a convention, not a
+theorem, and it is the usual way a unit dies (\cref{ex:ml-6}). All our formulas
+use $\mathbf{1}[t>0]$, matching that convention.
+\end{remark}
+
+The ReLU adjoint is a mask multiply, and that is the whole story of
+``nonlinearity'' in the backward pass: the forward pass decides which units are
+on, and the backward pass lets gradient through exactly those.
+
+\begin{example}[Adjunction is not optional: a wrong-but-plausible formula]
+A common mistake is to write $\bar Z=\sigma'(\bar R)$ or to forget that the
+mask must use the \emph{forward} values $Z$, not $\bar R$. \Cref{thm:relu-backprop}
+shows both are wrong: the mask is a fixed $0/1$ pattern determined in the
+forward pass, and it multiplies the incoming gradient entrywise. Similarly,
+writing $W_2\bar R$ instead of $\bar R W_2^{\!\top}$ has incompatible shapes
+(unless $m=k$, and then it is silently wrong). \emph{Check shapes before you
+check algebra.}
+\end{example}
+
+\subsection{The full backward pass of a one-hidden-layer MLP}
+
+Assemble the pieces. With $Z_1=XW_1+\mathbf{1}\mathbf{b}_1^{\!\top}$,
+$R=\operatorname{relu}(Z_1)$, $Z_2=RW_2+\mathbf{1}\mathbf{b}_2^{\!\top}$, and the
+mean squared error objective
+\[
+  L=\frac{1}{2m}\norm{Z_2-Y}_F^2,
+\]
+the adjoints are, in reverse order:
+\begin{align}
+  \bar Z_2 &= \frac{1}{m}\bigl(Z_2-Y\bigr),
+  \label{eq:mse-adjoint}\\
+  \bar W_2 &= R^{\!\top}\bar Z_2, \qquad \bar{\mathbf b}_2=\bar Z_2^{\!\top}\mathbf{1}_m, \label{eq:w2}\\
+  \bar R &= \bar Z_2 W_2^{\!\top}, \label{eq:Rbar}\\
+  \bar Z_1 &= \bar R\odot\mathbf{1}[Z_1>0], \label{eq:z1bar}\\
+  \bar W_1 &= X^{\!\top}\bar Z_1, \qquad \bar{\mathbf b}_1=\bar Z_1^{\!\top}\mathbf{1}_m. \label{eq:w1}
+\end{align}
+The only ad hoc line is \eqref{eq:mse-adjoint}; it is a direct computation,
+which we do in the exercises. Everything else is
+\cref{thm:affine-backprop} and \cref{thm:relu-backprop}.
+
+\begin{remark}[Why this is fast]
+Let $d$ be the number of parameters and $T_{\text{fwd}}$ the cost of evaluating
+$L$. The backward pass costs about $2T_{\text{fwd}}$: each layer theorem does
+one matrix multiply whose cost is comparable to the forward one. Crucially the
+cost is \emph{independent of $d$} as a separate factor---it is proportional to
+the size of the computation, which already scales with $d$. A naive
+finite-difference gradient estimate, by contrast, needs one full forward pass
+per parameter: $O(d)\cdot T_{\text{fwd}}$.
+
+The structural reason is that $L$ has one output. Forward-mode differentiation
+propagates a directional derivative $\langle\nabla L,\mathbf{v}\rangle$ (a
+\emph{Jacobian-vector product}), which is cheap per input direction but must be
+repeated for each of the $d$ parameters. Reverse-mode propagates
+$D\Phi^{\!\top}\bar G$ (a \emph{vector-Jacobian product}), which is cheap per
+output. Since the output is one scalar, one reverse sweep suffices. This is the
+entire content of ``backpropagation'', and it is exactly reverse-mode automatic
+differentiation applied to the scalar loss.
+\end{remark}
+
+\begin{remark}[Common mistakes]
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{Forgetting the $1/m$.} If the loss is the mean, every gradient
+    carries $1/m$. Omit it and the effective learning rate scales with batch
+    size, which is the single most common reason a training run ``mysteriously''
+    diverges when you change the batch size.
+  \item \emph{Transposing the wrong factor.} Use the shape check above. Every
+    \emph{weight} gradient has the form $(\text{the layer's input})^{\!\top}\bar Z$:
+    $\bar W_2=R^{\!\top}\bar Z_2$ and $\bar W_1=X^{\!\top}\bar Z_1$. The bias
+    gradient is instead the column sum of $\bar Z$. For the adjoint passed
+    \emph{through} to the input, the transposed weight goes on the \emph{right}:
+    $\bar R=\bar Z_2W_2^{\!\top}$, $\bar X=\bar ZW^{\!\top}$.
+  \item \emph{Accidentally differentiating through the data.} $X$ and $Y$ are
+    constants. $\bar X$ is only needed when a layer sits below; forgetting to
+    stop the backward pass at the first layer is harmless, but ``updating'' $X$
+    is not.
+  \item \emph{Applying the mask in the wrong place.} The rule is
+    $\bar Z_1=\bar R\odot M$ with $M=\mathbf{1}[Z_1>0]$ the \emph{forward} mask.
+    Writing $\operatorname{relu}(\bar R)$ is wrong: that is a different,
+    nonlinear operation. Multiplying $M$ into $\bar W_1$ entrywise is also wrong;
+    the mask has to be applied to $\bar R$ \emph{before} the matrix product
+    $X^{\!\top}(\cdot)$.
+  \item \emph{Believing the gradient is the update.} The gradient is a direction
+    of steepest increase; training moves \emph{against} it. Also, a zero
+    gradient component means ``no first-order information'', not ``this
+    parameter is useless''.
+\end{enumerate}
+\end{remark}
+
+\subsection{Using the gradient: gradient descent}
+
+\begin{definition}[Gradient descent]
+With step size (learning rate) $\eta>0$, the update is
+\[
+  \theta^{(t+1)}=\theta^{(t)}-\eta\nabla L_D\bigl(\theta^{(t)}\bigr).
+\]
+\emph{Stochastic} gradient descent (SGD) replaces $L_D$ by the average loss over
+a random \emph{minibatch} of examples, which is an unbiased estimator of
+$\nabla L_D$ whenever the batch is sampled uniformly (see the exercises).
+\end{definition}
+
+\begin{proposition}[Descent lemma]\label{prop:descent}
+Let $L$ be differentiable at $\theta$ with $\nabla L(\theta)\ne0$. Then for
+every sufficiently small $\eta>0$,
+$L(\theta-\eta\nabla L(\theta))<L(\theta)$.
+\end{proposition}
+
+\begin{proof}
+By the definition of the total derivative,
+\[
+  L(\theta-\eta\nabla L(\theta))
+  =L(\theta)-\eta\norm{\nabla L(\theta)}^2+o(\eta\norm{\nabla L(\theta)}).
+\]
+Write $r(\eta)=o(\eta\norm{\nabla L})/\eta\to0$ as $\eta\to0$. Then the
+difference equals $-\eta\bigl(\norm{\nabla L}^2-r(\eta)\bigr)$, which is
+negative once $\abs{r(\eta)}<\norm{\nabla L}^2$.
+\end{proof}
+
+This is a local statement only. It says a small enough step decreases the
+loss; it says nothing about reaching a global minimum, and nothing about the
+gap between $L_D$ and performance on unseen data. Both are real issues, taken up
+in the next lesson.
+
+\begin{example}[A complete numerical backward pass]\label{exa:numeric-backprop}
+Take $m=3$ examples with $n=2$ features, a hidden layer of width $h=2$, and one
+output ($k=1$):
+\[
+  X=\begin{pmatrix}1&2\\2&1\\1&-1\end{pmatrix},\quad
+  Y=\begin{pmatrix}1\\0\\2\end{pmatrix},\quad
+  W_1=\begin{pmatrix}1&-2\\2&1\end{pmatrix},\quad
+  \mathbf{b}_1=\begin{pmatrix}0\\1\end{pmatrix},\quad
+  W_2=\begin{pmatrix}1\\-1\end{pmatrix},\quad
+  b_2=\tfrac12.
+\]
+\emph{Forward.} $Z_1=XW_1+\mathbf{1}\mathbf{b}_1^{\!\top}$, so
+\[
+  Z_1=\begin{pmatrix}5&1\\4&-2\\-1&-2\end{pmatrix},\qquad
+  R=\operatorname{relu}(Z_1)=\begin{pmatrix}5&1\\4&0\\0&0\end{pmatrix},
+\]
+and $Z_2=RW_2+b_2\mathbf{1}$ gives
+$Z_2=(4.5,\,4.5,\,0.5)^{\!\top}$. Hence
+\[
+  L=\frac{1}{2\cdot3}\bigl(3.5^2+4.5^2+(-1.5)^2\bigr)=\frac{34.75}{6}\approx5.792.
+\]
+
+\emph{Backward.} Applying \eqref{eq:mse-adjoint}--\eqref{eq:w1}:
+\begin{align*}
+  \bar Z_2&=\tfrac13(3.5,\,4.5,\,-1.5)^{\!\top}\approx(1.167,\,1.5,\,-0.5)^{\!\top},\\
+  \bar W_2&=R^{\!\top}\bar Z_2
+   =\begin{pmatrix}5\cdot1.167+4\cdot1.5\\ 1\cdot1.167\end{pmatrix}
+   \approx\begin{pmatrix}11.833\\1.167\end{pmatrix},
+  & \bar b_2&=\textstyle\sum_i\bar Z_{2,i}\approx2.167,\\
+  \bar R&=\bar Z_2W_2^{\!\top}=
+   \begin{pmatrix}1.167&-1.167\\1.5&-1.5\\-0.5&0.5\end{pmatrix},\\
+  \bar Z_1&=\bar R\odot\mathbf{1}[Z_1>0]=
+   \begin{pmatrix}1.167&-1.167\\1.5&0\\0&0\end{pmatrix},\\
+  \bar W_1&=X^{\!\top}\bar Z_1
+   =\begin{pmatrix}4.167&-1.167\\3.833&-2.333\end{pmatrix},
+  & \bar{\mathbf b}_1&\approx\begin{pmatrix}2.667\\-1.167\end{pmatrix}.
+\end{align*}
+Three of the six ReLU units are off ($Z_1$ has three nonpositive entries), and
+their adjoints are exactly $0$: those entries of $\bar W_1$ receive no signal at
+all from this batch.
+\end{example}
+
+\begin{remark}[Reading the example as a program]
+The computation is a graph, and the backward pass is the same graph reversed
+with each node replaced by its adjoint rule:
+\[
+  X\longrightarrow Z_1\longrightarrow R\longrightarrow Z_2\longrightarrow L,
+\]
+with $W_1,\mathbf{b}_1$ attached to $Z_1$ and $W_2,b_2$ attached to $Z_2$. A
+framework stores exactly the values needed by the mask (\eqref{eq:z1bar} needs
+$Z_1$) and frees the rest, which is why activation memory dominates training
+cost for large models. In code the layer is an object with two methods:
+\texttt{forward(inputs) -> outputs} returning the cache, and
+\texttt{backward(adjoint) -> (input\_adjoint, param\_grads)}. That is the whole
+interface; \cref{ex:ml-8} asks you to justify it.
+\end{remark}
+
+\subsection{What this lesson did not do}
+
+Two honest gaps. First, we derived gradients but not the conditions for a
+minimum: the derivative test, convexity, saddle points and the fact that in
+high dimension almost every stationary point is a saddle. Second, everything
+here is about $L_D$, the loss on data we have. Nothing above explains why
+minimising $L_D$ makes the model useful on new data, and the answer is not
+calculus: it involves capacity, regularisation, and the bias--variance
+decomposition.
+
+Both come next. After that, the RL thread starts: in reinforcement learning the
+loss is \emph{random}---it depends on sampled trajectories---so the object to
+differentiate is an expectation, and the policy gradient theorem is exactly the
+chain rule of this lesson applied to that expectation. Keep \cref{lem:adjoint-chain}
+in mind; it is the only tool the policy gradient needs.

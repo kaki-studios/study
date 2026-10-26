@@ -1,0 +1,285 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\lhead{Olympiad Practice Examination --- Answer Key}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\solution}[2]{\subsection*{Problem #1 --- #2}}
+
+\title{\vspace{-1.5cm}\bfseries Olympiad Practice Examination\\Answer Key and Worked Solutions}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2em}
+
+\solution{1}{Polynomials}
+The answers are
+\[
+  \boxed{P(x)=c\,x(x-1)(x+1)\qquad(c\in\RR\setminus\{0\}).}
+\]
+
+Substituting $x=1,-2,0$ in turn into the given identity gives
+$P(1)=P(-1)=P(0)=0$. Hence
+\[
+  P(x)=x(x-1)(x+1)Q(x)
+\]
+for some real polynomial $Q$. Since
+$P(x+1)=(x+1)x(x+2)Q(x+1)$, substitution and cancellation of the nonzero
+polynomial $x(x-1)(x+1)(x+2)$ give
+\[
+  Q(x+1)=Q(x).
+\]
+Thus $Q(n)=Q(0)$ for every nonnegative integer $n$. The polynomial
+$Q(x)-Q(0)$ therefore has infinitely many roots, so $Q$ is constant.
+Nonconstancy of $P$ forces this constant to be nonzero.
+
+Conversely, for $P(x)=c x(x-1)(x+1)$,
+\[
+  (x-1)P(x+1)=c(x-1)x(x+1)(x+2)=(x+2)P(x),
+\]
+so every displayed polynomial is a solution.
+
+\solution{2}{Inequalities}
+Set $x=1/a$, $y=1/b$, $z=1/c$. Then $xyz=1$ and
+\[
+  \frac1{a^3(b+c)}
+  =\frac{x^3yz}{y+z}
+  =\frac{x^2}{y+z}.
+\]
+The other two terms transform similarly. By Cauchy--Schwarz (Engel form),
+\[
+  \sum_{\mathrm{cyc}}\frac{x^2}{y+z}
+  \ge \frac{(x+y+z)^2}{2(x+y+z)}
+  =\frac{x+y+z}{2}
+  \ge\frac32,
+\]
+where the last step is AM--GM together with $xyz=1$. Equality requires
+$x=y=z$ and $xyz=1$, so equality holds exactly at
+\[
+  \boxed{a=b=c=1}.
+\]
+
+\solution{3}{Functional Equations}
+The solutions are
+\[
+  \boxed{f(x)=a\sin x+b\cos x\qquad(a,b\in\RR).}
+\]
+
+Let $b=f(0)$. Putting $x=0$ gives
+\[
+  f(y)+f(-y)=2b\cos y. \tag{1}
+\]
+Define $g(x)=f(x)-b\cos x$. Since $b\cos x$ itself satisfies the given
+equation, $g$ also satisfies it. Moreover, (1) shows that $g$ is odd.
+
+Applying the equation for $g$ first with $(x,y)$ and then with $(y,x)$, and
+using oddness in the second equation, yields
+\begin{align*}
+  g(x+y)+g(x-y)&=2g(x)\cos y,\\
+  g(x+y)-g(x-y)&=2g(y)\cos x.
+\end{align*}
+Adding and dividing by $2$, we obtain
+\[
+  g(x+y)=g(x)\cos y+g(y)\cos x. \tag{2}
+\]
+Let $a=g(\pi/2)$. Putting $y=\pi/2$ in (2) gives
+$g(x+\pi/2)=a\cos x$. Replacing $x$ by $x-\pi/2$ therefore gives
+$g(x)=a\sin x$, and hence $f(x)=a\sin x+b\cos x$.
+
+Finally, the addition formulas for sine and cosine show directly that every
+function of this form satisfies the original equation.
+
+\solution{4}{Complex Numbers}
+The numbers $\omega^k$, $0\le k<n$, are precisely the roots of $z^n-1$, so
+\[
+  z^n-1=\prod_{k=0}^{n-1}(z-\omega^k).
+\]
+Taking the logarithmic derivative at $z=2$ gives
+\[
+  \sum_{k=0}^{n-1}\frac1{2-\omega^k}
+  =\frac{n2^{n-1}}{2^n-1}.
+\]
+Thus the requested value is
+\[
+  \boxed{\dfrac{n2^{n-1}}{2^n-1}}.
+\]
+
+\solution{5}{Combinatorics}
+There are $\binom{2n}{n}$ unrestricted sequences containing $n$ copies of
+each sign. Call a sequence \emph{bad} if some initial segment contains more
+$-$ signs than $+$ signs.
+
+In a bad sequence, take the first position at which the running total (with
+$+$ counted as $1$ and $-$ as $-1$) equals $-1$. Reflect every symbol
+\emph{after} that position, interchanging $+$ and $-$. The resulting sequence
+has $n-1$ copies of $+$ and $n+1$ copies of $-$.
+
+Conversely, every sequence with these new counts must reach running total
+$-1$ at some first position. Reflecting the suffix after that position
+reconstructs a bad sequence with $n$ copies of each sign. These operations
+are inverse bijections. Consequently, the number of bad sequences is
+$\binom{2n}{n+1}$, and the number of balanced sequences is
+\[
+  \binom{2n}{n}-\binom{2n}{n+1}
+  =\binom{2n}{n}\left(1-\frac n{n+1}\right)
+  =\boxed{\frac1{n+1}\binom{2n}{n}}.
+\]
+
+\solution{6}{Pigeonhole Principle}
+The maximum is $\boxed{n}$.
+
+Every positive integer has a unique representation as $2^j q$ with $q$ odd.
+For each odd $q\le 2n-1$, form the chain
+\[
+  C_q=\{q,2q,4q,\ldots\}\cap\{1,2,\ldots,2n\}.
+\]
+These $n$ chains partition the universe, and within any one chain, every two
+distinct elements are comparable by divisibility. If $S$ had at least $n+1$
+elements, the pigeonhole principle would put two elements in the same chain.
+One would then divide the other, a contradiction. Therefore $|S|\le n$.
+
+This bound is attained by
+\[
+  S=\{n+1,n+2,\ldots,2n\}.
+\]
+Indeed, if $a,b\in S$ and $a<b$, then $2a>2n\ge b$, so $b/a$ cannot be an
+integer greater than $1$. Thus no element divides a different element, and
+the maximum is exactly $n$.
+
+\solution{7}{Graph Theory}
+A connected graph in which every vertex has even degree has an Euler circuit.
+Traverse one such circuit and orient each edge in the direction of traversal.
+Whenever the circuit enters a vertex, it next leaves that vertex, contributing
+one to its indegree and one to its outdegree. At the starting vertex, the
+final arrival and initial departure are paired similarly. Hence indegree and
+outdegree are equal at every vertex.
+
+\solution{8}{Game Theory}
+The losing positions are precisely the multiples of $3$.
+
+Indeed, no power of $2$ is divisible by $3$, so every move from a multiple of
+$3$ leaves a position not divisible by $3$. Conversely, from $n\equiv1\pmod3$,
+removing $1$ stone leaves a multiple of $3$; from $n\equiv2\pmod3$, removing
+$2$ stones leaves a multiple of $3$. These moves are legal, including at
+$n=1,2$, where they win immediately. Induction on the number of stones proves
+the classification.
+
+Since $2026\equiv1\pmod3$, the \textbf{first player} has a winning strategy.
+Remove $1$ stone initially. After each opposing move, the position is not a
+multiple of $3$: remove $1$ stone if its residue is $1$, and $2$ stones if its
+residue is $2$. This always returns a multiple of $3$ to the opponent. The
+pile strictly decreases, and eventually the opponent receives $3$ stones;
+after any legal move, the first player removes the remaining $1$ or $2$
+stones and wins.
+
+\solution{9}{Number Theory}
+The answers are $\boxed{n=1,2,4,6}$.
+
+Modulo $2^n+n$, we have $2^n\equiv-n$. Therefore
+\[
+  8^n+n=(2^n)^3+n\equiv-n^3+n=-n(n-1)(n+1).
+\]
+Thus the desired divisibility is equivalent to
+\[
+  2^n+n\mid n^3-n. \tag{1}
+\]
+
+For $n\ge10$, we claim that $2^n>n^3$. At $n=10$, this is $1024>1000$. If it
+holds for some $n\ge10$, then
+\[
+  2^{n+1}>2n^3>(n+1)^3,
+\]
+because $(1+1/n)^3\le(11/10)^3<2$. This proves the claim by induction.
+Consequently, for $n\ge10$,
+\[
+  2^n+n>n^3>n^3-n>0,
+\]
+so (1) is impossible. Checking the remaining values gives
+\[
+\begin{array}{c|c|c|c}
+ n&2^n+n&n^3-n&\text{Divisibility?}\\ \hline
+ 1&3&0&\text{yes}\\
+ 2&6&6&\text{yes}\\
+ 3&11&24&\text{no}\\
+ 4&20&60&\text{yes}\\
+ 5&37&120&\text{no}\\
+ 6&70&210&\text{yes}\\
+ 7&135&336&\text{no}\\
+ 8&264&504&\text{no}\\
+ 9&521&720&\text{no}
+\end{array}
+\]
+which completes the proof.
+
+\clearpage
+\solution{10}{Geometry --- Analytic}
+For any point $X=(x,x^2)$ on the parabola,
+\[
+  XF=\sqrt{x^2+\left(x^2-\frac14\right)^2}
+  =x^2+\frac14,
+\]
+which is its distance to the line $d:y=-\frac14$.
+
+A vertical line through $F$ meets the parabola only once, so the given line
+is nonvertical. Write it as $y=mx+\frac14$. Its intersections with the
+parabola have abscissae satisfying
+\[
+  x^2-mx-\frac14=0.
+\]
+The discriminant is $m^2+1>0$, and the product $uv$ of the two roots $u,v$
+is $-1/4<0$. Hence $F$, whose abscissa is $0$, lies between $A$ and $B$ on
+the focal chord, giving $AF+BF=AB$.
+
+Let $O$ be the midpoint of $AB$. The circle with diameter $AB$ has center $O$
+and radius $AB/2$. Using the focal-distance calculation above, the distance
+from $O$ to $d$ is
+\[
+  \frac{y_A+y_B}{2}+\frac14
+  =\frac{(y_A+\frac14)+(y_B+\frac14)}2
+  =\frac{AF+BF}{2}
+  =\frac{AB}{2}.
+\]
+The center's distance to $d$ therefore equals the radius, proving that the
+circle is tangent to $d$.
+
+\solution{11}{Geometry --- Synthetic}
+All angles in this argument are directed modulo $180^\circ$. Because
+$PM\perp AB$ and $PD\perp AC$, rotating both $AB$ and $AC$ through $90^\circ$
+gives
+\[
+  \angle MPD=\angle(PM,PD)=\angle(AB,AC)=\angle BAC.
+\]
+Using that $A,B,C,D$ are concyclic and that $P\in BD$, $M\in CD$, we get
+\[
+  \angle BAC=\angle BDC=\angle(DP,DM)=\angle PDM.
+\]
+Thus $\angle MPD=\angle PDM$, so $MP=MD$.
+
+Similarly, $PM\perp AB$ and $PC\perp PB$ imply
+\[
+  \angle MPC=\angle(PM,PC)=\angle(AB,PB)=\angle ABD.
+\]
+Cyclicity and collinearity then give
+\[
+  \angle ABD=\angle ACD=\angle(CP,CM)=\angle PCM.
+\]
+Hence $\angle MPC=\angle PCM$, so $MP=MC$. Combining the two length
+equalities yields $MC=MD$. Since $M$ lies on line $CD$ and is equidistant from
+$C$ and $D$, it must be their midpoint. \qed
+
+\end{document}
