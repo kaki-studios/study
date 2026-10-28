@@ -1,0 +1,775 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.15cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setlist[enumerate]{leftmargin=*,itemsep=0.3em,topsep=0.3em}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\lhead{Physics Practice Examination --- Answer Key}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\problem}[2]{\subsection*{Problem #1 \; \textnormal{\small[#2]}}}
+\newcommand{\unit}[1]{\,\mathrm{#1}}
+\newenvironment{parts}{\begin{enumerate}[label=\textbf{\alph*)}]}{\end{enumerate}}
+
+\title{\vspace{-1.4cm}\bfseries Physics Practice Examination\\Answer Key and Worked Solutions}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2em}
+
+%======================================================================
+\problem{1}{FY1}
+Theory gives $T=2\pi\sqrt{(l+r)/g}$, hence
+\[
+  T^2 = \frac{4\pi^2}{g}\,l + \frac{4\pi^2 r}{g},
+\]
+a straight line in $l$ with slope $k=4\pi^2/g$ and intercept
+$b=4\pi^2r/g$. It must be $T^2$ that is plotted: $T$ against $l$ is a
+square-root curve, and fitting it with a straight line would be a modelling
+error. The intercept is nonzero precisely because of the bob radius, so the
+model must keep $r$.
+
+\textbf{(a)} As above: $k=4\pi^2/g$, $b=4\pi^2r/g$.
+
+\textbf{(b)} Least squares (unweighted; no uncertainties are quoted):
+\[
+  T^2 = 4.0805\,l + 0.02242\qquad(T^2\ \text{in}\ \unit{s^2},\ l\ \text{in m}),
+\]
+so
+\[
+  g=\frac{4\pi^2}{4.0805\unit{s^2/m}} = 9.67\unit{m/s^2}.
+\]
+Residuals in $T^2$ are $-3.1,\,1.7,\,3.6,\,0.1,\,-2.3\unit{ms^2}$, giving
+$s_y=3.2\cdot10^{-3}\unit{s^2}$ with $\nu=3$ degrees of freedom and
+\[
+  s_k=\frac{s_y}{\sqrt{\sum (l_i-\bar l)^2}} = 5.1\cdot10^{-3}\unit{s^2/m},
+  \qquad \frac{s_k}{k}=0.12\%.
+\]
+Since $g\propto k^{-1}$, $\Delta g/g=\Delta k/k$, so
+\[
+  \boxed{g = (9.67\pm0.01)\unit{m/s^2}}\qquad(0.12\%).
+\]
+This is a \emph{statistical} uncertainty: it describes the scatter of these
+five points only.
+
+\textbf{(c)} Intercept $b=(4\pi^2/g)r$, with standard uncertainty
+$s_b=s_y\sqrt{1/n+\bar l^2/\sum(l_i-\bar l)^2}=3.4\cdot10^{-3}\unit{s^2}$.
+Then
+\[
+  r=\frac{b\,g}{4\pi^2}=5.5\unit{mm},\qquad
+  \Delta r\approx0.8\unit{mm},
+\]
+and $b/s_b=6.6$. The intercept is significantly positive (about
+$6\sigma$), consistent with a bob of roughly $1\unit{cm}$ diameter.
+Fitting a model with $r=0$ imposed would be a modelling error.
+
+\textbf{(d)} The finite-amplitude correction is
+\[
+  T=T_0\Bigl(1+\frac{\theta_0^2}{16}\Bigr),\qquad
+  \theta_0=20.0^\circ=0.3491\unit{rad},\quad
+  \frac{\theta_0^2}{16}=0.00762 .
+\]
+Since $g\propto1/T^2$, the fitted slope is too large by
+$(1+0.00762)^2=1.01529$, so
+\[
+  g_{\text{wrong}}=\frac{9.81}{1.01529}=9.663\unit{m/s^2},
+\]
+i.e.\ $1.50\%$ low, against the observed $1.4\%$. The correction therefore
+accounts for the discrepancy, and applying it gives
+\[
+  g_{\text{corr}} = 9.67\cdot1.01529 = \boxed{9.82\unit{m/s^2}} .
+\]
+This is a \emph{systematic} error: it shifts $g$ in one direction, it is
+\emph{not} reduced by more repetitions, and it is invisible in the fit
+residuals --- the points lie on a perfect straight line with the wrong
+slope. The statistical uncertainty from part (b) therefore does not cover
+the deviation, which is why the result looked inconsistent. Removing it:
+\begin{itemize}
+\item Vary the amplitude ($5^\circ$, $10^\circ$, $20^\circ$) and extrapolate
+      $T$ to $\theta_0\to0$. This is the correct procedure.
+\item Work at such small amplitudes that the correction is below the
+      timing resolution.
+\item With the photogate, time \emph{many} periods and divide.
+\end{itemize}
+The reading uncertainty $\pm0.5^\circ$ alone gives only about
+$\pm0.1\%$ in $g$ (differentiate $(1+\theta_0^2/16)^2$), so this is not a
+reading-uncertainty problem at all: it is a model error.
+
+%======================================================================
+\problem{2}{FY2}
+\textbf{(a)} The kinetic energy of the air of mass $m$ passing the disc in
+time $\Delta t$ is $\tfrac12mv^2$ with $m=\rho Av\Delta t$; hence
+$P=\tfrac12\rho Av^2\cdot v=\tfrac12\rho A v^3$. Dimensional check:
+$\unit{kg/m^3}\cdot\unit{m^2}\cdot\unit{m^3/s^3}=\unit{J/s}$.
+With $A=\pi D^2/4=1.131\cdot10^{4}\unit{m^2}$ and $v=12\unit{m/s}$,
+\[
+  P_w = 1.17\cdot10^{7}\unit{W} = \boxed{11.7\unit{MW}}.
+\]
+Air cannot be stopped dead: mass conservation forces it to leave the rotor
+with some speed, so the extracted power is
+$P=\tfrac12\dot m(v_1^2-v_2^2)$ with $v_2>0$. Optimising over $v_2$ gives
+the Betz limit $C_{p,\max}=16/27=0.593$. At $12\unit{m/s}$ the turbine
+delivers $2.50\unit{MW}$, i.e.\ $21\%$ of $P_w$ and $36\%$ of the Betz
+limit; it is well below Betz because $12\unit{m/s}$ is already at the rated
+point, where the controller deliberately spills power.
+
+\textbf{(b)} With $\bar v=7.5\unit{m/s}$,
+$\tfrac12\rho A\bar v^3=2.863\unit{MW}$, and
+\[
+  \overline{v^3}=\frac6\pi\bar v^3 = 1.9099\,\bar v^3
+  \;\Longrightarrow\;
+  \overline{P}_{\text{avail}}=\tfrac12\rho A\overline{v^3}=5.468\unit{MW}.
+\]
+Hence
+\[
+  C_p = \frac{2.50\unit{MW}}{5.468\unit{MW}} = \boxed{0.457} < 0.593 .
+\]
+Using $\bar v^3$ would give $C_p=0.87>16/27$, which is impossible. Because
+$v\mapsto v^3$ is convex, $\overline{v^3}\ge\bar v^3$, so substituting the
+mean speed \emph{underestimates} the available power and
+\emph{overestimates} $C_p$. The two coincide only for a perfectly steady
+wind.
+
+\textbf{(c)} $E=P_{\text{rated}}\,t\,\text{CF}
+=2.50\unit{MW}\cdot8760\unit{h}\cdot0.35=7.67\unit{GWh}$, so
+\[
+  N=\frac{0.010\cdot90\unit{TWh}}{7.67\unit{GWh}} \approx
+  \boxed{1.2\cdot10^{2}\ \text{turbines}} .
+\]
+CO$_2$ avoided: $7.665\cdot10^{6}\unit{kWh}\cdot0.90\unit{kg/kWh}
+=6.9\cdot10^{6}\unit{kg} \approx \boxed{6.9\cdot10^{3}\unit{t}}$ per year.
+
+\textbf{(d)} $\overline{v^3}=\tfrac12(5^3+10^3)=562.5$ whereas
+$\bar v^3=7.5^3=421.9$, so the alternating site yields
+\[
+  \frac{562.5}{421.875}=\boxed{\frac43}
+\]
+times more power --- a $33\%$ gain from the same mean speed. This is why
+the average power involves $\overline{v^3}$. A real turbine does not keep
+producing more at ever higher wind speed because it is rated at a design
+wind speed ($\approx12$--$13\unit{m/s}$ here): above it, pitch control sheds
+power to protect the structure, and at storm speeds the machine is shut
+down.
+
+%======================================================================
+\problem{3}{FY3}
+\textbf{(a)} $\rho_0=p_0M/(RT_0)
+=101.3\cdot10^{3}\cdot0.0290/(8.314\cdot293.15)
+=\boxed{1.205\unit{kg/m^3}}$.
+
+\textbf{(b)} Buoyancy must balance the total weight,
+\[
+  V\rho_0 g = V\rho_i g + (m_{\text{env}}+m_{\text{bask}}+m_{\text{pay}})g,
+\]
+so the required internal density is
+\[
+  \rho_i=\rho_0-\frac{m_{\text{tot}}}{V}
+  =1.205-\frac{180+90+350}{2.2\cdot10^3}
+  =1.205-0.2818=0.9235\unit{kg/m^3}.
+\]
+At constant pressure $\rho\propto1/T$, hence
+\[
+  T_i=T_0\frac{\rho_0}{\rho_i}=293.15\cdot\frac{1.2053}{0.9235}
+  =382.6\unit{K}=\boxed{109^\circ\text{C}}.
+\]
+
+\textbf{(c)} At $T_i=393.15\unit{K}$,
+$\rho_i=\rho_0T_0/T_i=0.8991\unit{kg/m^3}$, so the total mass that can be
+carried is
+\[
+  m_{\text{tot}}=V(\rho_0-\rho_i)=2.2\cdot10^{3}\cdot0.3063=674\unit{kg},
+\]
+leaving a payload of $674-270=\boxed{4.0\cdot10^{2}\unit{kg}}$.
+
+\textbf{(d)} The burner must supply the enthalpy to raise the entering air
+from $T_0$ to $T_i$:
+\[
+  \dot m=\rho_i\dot V=0.9235\cdot0.45=0.4156\unit{kg/s},
+\]
+\[
+  P=\dot m\,c_p\,(T_i-T_0)=0.4156\cdot1005\cdot(382.6-293.15)
+  =\boxed{3.7\cdot10^{4}\unit{W}\approx37\unit{kW}}.
+\]
+Approximations: (i) constant pressure, so $c_p$ is the right specific
+heat; (ii) the air leaves at the same temperature at which it enters, i.e.\
+no heat is lost through the fabric and the mixing/leakage losses are
+ignored. Every one of these makes the estimate a \emph{lower bound}: real
+envelopes lose heat and the expelled air carries away more enthalpy than
+assumed. That $37\unit{kW}$ is unrealistically small for a
+$2200\unit{m^3}$ balloon (typical burners are hundreds of kW) is exactly
+the size of the neglected losses.
+
+%======================================================================
+\problem{4}{FY4}
+\textbf{(a)} With B descending and A moving up the plane, the driving force
+is
+\[
+  m_Bg-m_Ag\sin\theta = 29.43-19.62=9.81\unit{N},
+\]
+while the maximum static friction is
+$\mu_s m_Ag\cos\theta=0.25\cdot33.98=8.50\unit{N}$. Since $9.81>8.50$, A
+does move as assumed. Then $f_k=\mu_k m_Ag\cos\theta=6.80\unit{N}$ and
+\[
+  a=\frac{m_Bg-m_Ag\sin\theta-f_k}{m_A+m_B}
+  =\frac{9.81-6.80}{7.00}=\boxed{0.430\unit{m/s^2}},
+\]
+\[
+  T=m_B(g-a)=3.00(9.81-0.430)=\boxed{28.1\unit{N}}.
+\]
+Check on A: $T-m_Ag\sin\theta-f_k=28.14-19.62-6.80=1.72\unit{N}$ and
+$m_Aa=1.72\unit{N}$. \checkmark
+
+\textbf{(b)} $v=\sqrt{2ah}=\sqrt{2\cdot0.4305\cdot0.80}
+=\boxed{0.830\unit{m/s}}$.
+Energy balance (all terms in J):
+\[
+  \underbrace{m_Bgh}_{23.54}
+  =\underbrace{m_Agh\sin\theta}_{\Delta U_A=15.70}
+  +\underbrace{f_kh}_{W_f=5.44}
+  +\underbrace{\tfrac12(m_A+m_B)v^2}_{K=2.41},
+\]
+and $15.70+5.44+2.41=23.54$. \checkmark
+
+\textbf{(c)} After B lands, only gravity and friction act on A:
+\[
+  a_2=g(\sin\theta+\mu_k\cos\theta)=9.81(0.500+0.1732)
+  =6.60\unit{m/s^2}
+\]
+(deceleration), so
+\[
+  s=\frac{v^2}{2a_2}=\frac{0.6887}{13.21}=\boxed{5.2\unit{cm}}.
+\]
+A stays put only if $\mu_s\ge\tan\theta=0.577$; here $\mu_s=0.25$, so A
+slides back down.
+
+\textbf{(d)} Sliding down, $a_3=g(\sin\theta-\mu_k\cos\theta)
+=9.81(0.500-0.1732)=3.21\unit{m/s^2}$, and the distance back to the point
+where B landed is $s=5.2\unit{cm}$. So A's speed there is
+\[
+  v_A=\sqrt{2a_3s}=\sqrt{2\cdot3.206\cdot0.05215}
+  =\boxed{0.578\unit{m/s}} .
+\]
+At that instant the string snaps taut. The jerk is so brief that the
+impulses of gravity and friction are negligible; the tension impulse
+$J=\int T\,dt$ is internal to the pair A+B, so momentum is conserved. B is
+at rest on the floor at that moment and is jerked into motion, so the two
+blocks end up with a common speed
+\[
+  (m_A+m_B)V=m_Av_A \;\Longrightarrow\;
+  V=\frac{m_A}{m_A+m_B}v_A=\frac47\cdot0.578=\boxed{0.33\unit{m/s}},
+\]
+with an impulse $J=m_BV=\boxed{0.99\unit{N\,s}}$ transferred from A to B
+(the same $J$ equals $m_A(v_A-V)$). The kinetic energy is
+\[
+  K_{\text{before}}=\tfrac12m_Av_A^2=0.669\unit{J},\qquad
+  K_{\text{after}}=\tfrac12(m_A+m_B)V^2=0.382\unit{J},
+\]
+so $0.287\unit{J}$ is lost in the inelastic jerk, i.e.\ the fraction
+\[
+  \frac{|\Delta K|}{K}=\frac{m_B}{m_A+m_B}=\frac37=0.43,
+\]
+exactly as in a perfectly inelastic collision, and this fraction does not
+depend on the masses' arrangement.
+
+What happens next is a nice check on the sign conventions: A is moving
+down the plane and B upward, so gravity now opposes the motion, and with
+the string taut
+\[
+  a=\frac{m_Ag\sin\theta-m_Bg-\mu_km_Ag\cos\theta}{m_A+m_B}
+  =\frac{19.62-29.43-6.80}{7.00}=-2.4\unit{m/s^2},
+\]
+i.e.\ the pair decelerates. Starting from $V=0.33\unit{m/s}$ it stops
+after only $0.023\unit{m}$ and $0.14\unit{s}$, whereupon B falls back onto
+the floor and the string goes slack again. The blocks therefore descend in
+a sequence of small jerks, losing energy at every one; the total energy lost
+is not recoverable, which is why a taut inelastic string is not a
+conservative constraint.
+
+%======================================================================
+\problem{5}{FY5}
+\textbf{(a)} $r=R_E+h=6.771\cdot10^{6}\unit{m}$ and
+$GM_E=3.984\cdot10^{14}\unit{m^3/s^2}$.
+\[
+  v=\sqrt{\frac{GM_E}{r}}=\sqrt{\frac{3.984\cdot10^{14}}{6.771\cdot10^{6}}}
+  =\boxed{7.67\unit{km/s}},
+\]
+\[
+  T=\frac{2\pi r}{v}=5.55\cdot10^{3}\unit{s}=\boxed{92.4\unit{min}},
+\]
+\[
+  g(r)=\frac{GM_E}{r^2}=\boxed{8.69\unit{m/s^2}}.
+\]
+
+\textbf{(b)} Circular motion requires $mv^2/r=GM_Em/r^2$, hence
+$K=\tfrac12mv^2=\tfrac12 GM_Em/r$. Since $U=-GM_Em/r$, we get
+$K=-\tfrac12U$ and
+\[
+  E=K+U=\tfrac12U=-\frac{GM_Em}{2r}.
+\]
+With $m=4.2\cdot10^{5}\unit{kg}$,
+\[
+  E=-\frac{3.984\cdot10^{14}\cdot4.2\cdot10^{5}}{2\cdot6.771\cdot10^{6}}
+  =-1.24\cdot10^{13}\unit{J}
+  =\boxed{-12.4\unit{TJ}}.
+\]
+Escape speed: $v_{\text{esc}}=\sqrt{2GM_E/r}=10.8\unit{km/s}=\sqrt2\,v$.
+The two numbers differ by exactly this factor because escaping means
+supplying $|E|=K$: you need to raise $E$ from $-K$ to $0$.
+
+\textbf{(c)} $E\propto-1/r$, so with $\Delta r=-1.00\unit{km}$,
+\[
+  \Delta E \approx -\frac{|E|\,\Delta r}{r}
+  =-\frac{1.236\cdot10^{13}\cdot(-10^{3})}{6.771\cdot10^{6}}
+  = \boxed{+1.8\unit{GJ}} .
+\]
+The total energy \emph{decreases} by $1.8\unit{GJ}$: that energy must be
+removed from the orbit (by drag or by a retro burn). Of it, the potential
+energy falls by $2\times1.8\unit{GJ}=3.7\unit{GJ}$ while the kinetic energy
+rises by $1.8\unit{GJ}$ (since $K=-E$). From $v=\sqrt{GM/r}$,
+$\mathrm dv=-\tfrac12(v/r)\mathrm dr$, so
+\[
+  \Delta v = +\tfrac12\frac{v}{r}\cdot10^{3}=\boxed{+0.57\unit{m/s}},
+\]
+and $T\propto r^{3/2}$ gives $\Delta T=\tfrac32(T/r)\Delta r=-1.2\unit{s}$.
+So the station speeds \emph{up} by $0.57\unit{m/s}$ while losing energy: a
+retro burn lowers the orbit and converts more potential energy into kinetic
+energy than the burn removes. A prograde burn instead raises the orbit and
+slows the station. This is the reverse of the intuition from driving a car.
+
+\textbf{(d)} $a=\omega^2R_s=0.256^2\cdot50.0=3.28\unit{m/s^2}$. At the
+head, $R=50.0-1.80=48.2\unit{m}$, so
+\[
+  a_{\text{head}}=\omega^2\cdot48.2=3.16\unit{m/s^2},
+\]
+i.e.\ $1-48.2/50.0=3.6\%$ weaker. The relative gradient is
+$\Delta a/a=\Delta R/R_s$, so to keep it below a few per cent $R_s$ must be
+large compared with human height: a healthy habitat needs a radius of
+tens or hundreds of metres. Small habitats suffer Coriolis artefacts,
+gradients and vertigo.
+
+\textbf{(e)} In the habitat frame the pendulum's equilibrium direction is
+radial and the restoring "gravity" is the centrifugal acceleration at its
+own location; taking the bob's radius as $\approx50\unit{m}$, so that
+$g_{\text{eff}}=a=3.28\unit{m/s^2}$,
+\[
+  T=2\pi\sqrt{\frac{L}{a}}=2\pi\sqrt{\frac{3.00}{3.28}}
+  =\boxed{6.0\unit{s}},
+\]
+against $2\pi\sqrt{3.00/9.81}=3.5\unit{s}$ on Earth: longer by
+$\sqrt{9.81/3.28}=\sqrt3$, since the period scales as $g^{-1/2}$. (Strictly
+the bob sits $3.00\unit{m}$ inboard of the feet, where $a$ is $6\%$ smaller;
+using $R=47$ and $50\unit{m}$ gives $6.2$ and $6.0\unit{s}$ respectively.
+The point of the question is the scaling, not the third digit.)
+
+%======================================================================
+\problem{6}{FY5}
+\textbf{(a)} $s=A\sin\omega t$ with
+$\omega=2\pi f=2.765\cdot10^{3}\unit{rad/s}$ and $A=5.00\cdot10^{-4}\unit{m}$:
+\[
+  v_{\max}=\omega A=\boxed{1.38\unit{m/s}},\qquad
+  a_{\max}=\omega^2A=\boxed{3.82\cdot10^{3}\unit{m/s^2}}\approx390\,g.
+\]
+The air molecules oscillate about fixed positions; they do not travel with
+the wave. For a pipe closed at one end, resonances occur at
+$l_n+\Delta l=(2n-1)\lambda/4$, so
+\[
+  l_2-l_1=\frac{\lambda}{2}
+  \;\Longrightarrow\;
+  \lambda=2(0.572-0.182)=0.780\unit{m},
+\]
+\[
+  v=f\lambda=440\cdot0.780=\boxed{343\unit{m/s}} .
+\]
+
+\textbf{(b)} The ideal quarter-wave length is $\lambda/4=0.195\unit{m}$, but
+the resonance is at $0.182\unit{m}$: the air just outside the open end also
+moves, effectively lengthening the pipe. In this convention
+$l_{\text{resonance}}+\Delta l=\lambda/4$, so
+\[
+  \Delta l=\frac{\lambda}{4}-l_1=0.195-0.182=1.3\unit{cm}.
+\]
+With $\Delta l=0.6r$, $r=1.3/0.6=2.2\unit{cm}$ (diameter about
+$4.3\unit{cm}$) --- a plausible resonance tube. $\Delta l$ cancels in
+$l_2-l_1$ because it is the same for every resonance, but it does not
+cancel in $\Delta l$ itself, which is why the absolute positions are what
+determine the tube geometry.
+
+\textbf{(c)} $f_2=f\pm4.0\unit{Hz}$, i.e.\ $436$ or $444\unit{Hz}$.
+To decide: load the unknown fork slightly (a dab of plasticine). Loading
+lowers its frequency, so the beat frequency increases if $f_2$ was already
+above $440\unit{Hz}$, and decreases if it was below. Beats occur at
+$|f_1-f_2|=4.0$ per second, so in $5.0\unit{s}$ there are
+$\boxed{20}$ beats.
+
+\textbf{(d)} With the same end correction,
+$\lambda_{\text{CO}_2}=4(l_1+\Delta l)=4(0.140+0.013)=0.612\unit{m}$, so
+\[
+  v_{\text{CO}_2}=440\cdot0.612=\boxed{269\unit{m/s}}.
+\]
+Kinetic theory gives $v=\sqrt{\gamma RT/M}$:
+\[
+  v_{\text{air}}=\sqrt{\frac{1.40\cdot8.314\cdot293}{0.0290}}
+  =343\unit{m/s},\qquad
+  v_{\text{CO}_2}=\sqrt{\frac{1.30\cdot8.314\cdot293}{0.0440}}
+  =268\unit{m/s}.
+\]
+The measured value agrees within $0.4\%$. The speed drops because the
+larger molar mass dominates the slightly smaller $\gamma$: $v\propto
+\sqrt{\gamma/M}$, and $M$ rises by a factor $1.52$ while $\gamma$ falls by
+only $7\%$. The beat frequency of part (c) is a property of the two forks,
+not of the medium, so it is unchanged; only the wavelength changes.
+
+%======================================================================
+\problem{7}{FY6}
+\textbf{(a)} $R_1\parallel R_2$: $R_p=18\cdot22/40=9.90\unit{\Omega}$.
+Total $R_{\text{tot}}=9.90+15.0+3.0=27.9\unit{\Omega}$, so
+\[
+  I=\frac{12.0}{27.9}=\boxed{0.430\unit{A}}.
+\]
+Terminal voltage $U=E-Ir=12.0-1.29=\boxed{10.7\unit{V}}$. The parallel
+voltage is $U_p=IR_p=4.258\unit{V}$, hence
+\[
+  I_{R_1}=\frac{4.258}{18}=\boxed{0.237\unit{A}},\qquad
+  I_{R_2}=\frac{4.258}{22}=\boxed{0.194\unit{A}},
+\]
+and $0.237+0.194=0.430\unit{A}$. \checkmark\ The capacitor carries $U_p$:
+\[
+  Q=CU_p=2.2\cdot10^{-6}\cdot4.258=\boxed{9.4\unit{\mu C}},\qquad
+  W=\tfrac12CU_p^2=\boxed{2.0\cdot10^{-5}\unit{J}}.
+\]
+
+\textbf{(b)} Powers:
+\[
+\begin{array}{ll}
+R_3: I^2R_3=2.77\unit{W} & R_1:U_p^2/R_1=1.01\unit{W}\\
+R_2:U_p^2/R_2=0.824\unit{W} & r: I^2r=0.555\unit{W}
+\end{array}
+\]
+summing to $5.16\unit{W}$, while $EI=12.0\cdot0.430=5.16\unit{W}$.
+\checkmark\ Efficiency (external resistors only):
+\[
+  \eta=\frac{2.77+1.01+0.824}{5.16}=0.892=\boxed{89\%}.
+\]
+
+\textbf{(c)} With the voltmeter across the parallel pair, $R_1$ is loaded:
+\[
+  R_1'=\frac{R_1R_V}{R_1+R_V},\quad
+  R_p'=\frac{R_1'R_2}{R_1'+R_2},\quad
+  I'=\frac{E}{R_p'+R_3+r},\quad U'=I'R_p' .
+\]
+As $R_V\to\infty$, $U=4.258\unit{V}$.
+$R_V=200\unit{\Omega}$: $R_1'=16.51$, $R_p'=9.45\unit{\Omega}$,
+$I'=0.437\unit{A}$, $U'=\boxed{4.13\unit{V}}$ (3\% low).
+$R_V=30\unit{\Omega}$: $R_1'=11.25$, $R_p'=7.44\unit{\Omega}$,
+$I'=0.471\unit{A}$, $U'=\boxed{3.51\unit{V}}$ (18\% low).
+The reading is always too small because the voltmeter draws current,
+lowering the equivalent resistance of the pair and therefore its voltage
+drop. Solving $U'(R_V)=0.99\,U$ gives
+$R_V\approx6.3\cdot10^{2}\unit{\Omega}$, i.e.\ some $60\times$ the
+$9.9\unit{\Omega}$ it is in parallel with. The practical rule is
+$R_V\gg R_{\text{measured}}$; real meters have $\unit{M\Omega}$ inputs, so
+the error vanishes.
+
+\textbf{(d)} A diode's $I$--$U$ characteristic is exponential: a small
+voltage change produces a huge current change, so direct connection to
+$9.0\unit{V}$ would destroy the LED. The series resistor sets the current:
+\[
+  R=\frac{U-U_f}{I}=\frac{9.0-2.0}{0.020}=\boxed{350\unit{\Omega}},
+  \qquad P_R=I^2R=\boxed{0.14\unit{W}} .
+\]
+Reversed, the diode is in the blocking direction: essentially no current
+flows (only $\unit{nA}$ leakage), the LED does not light, and nothing is
+damaged. As the battery discharges its terminal voltage falls, so
+$U_R=U_{\text{batt}}-U_f$ falls, the current $I=U_R/R$ falls and the LED
+dims. Because $U_f$ is nearly pinned by the exponential characteristic,
+almost the whole voltage change appears across $R$, so the dimming is
+gradual.
+
+%======================================================================
+\problem{8}{FY7}
+\textbf{(a)} $f=3000/60=50\unit{Hz}$, $\omega=2\pi f=314\unit{rad/s}$.
+With the coil normal at angle $\theta=\omega t$ to $\mathbf B$,
+\[
+  \Phi=BA\cos\omega t,\qquad
+  e=-N\frac{d\Phi}{dt}=NBA\omega\sin\omega t .
+\]
+\[
+  \hat e=NBA\omega
+  =100\cdot0.85\cdot1.22\cdot10^{-2}\cdot314
+  =\boxed{3.3\cdot10^2\unit{V}},
+\]
+\[
+  e_{\text{rms}}=\frac{\hat e}{\sqrt2}=\boxed{2.3\cdot10^2\unit{V}}.
+\]
+Over a quarter turn, $\bar e=N\Delta\Phi/\Delta t$ with $\Delta\Phi=BA$
+and $\Delta t=T/4=1/(4f)$, giving
+\[
+  \bar e = 4NBAf = \frac{2}{\pi}\hat e .
+\]
+Hence $\hat e/\bar e=\pi/2=1.57$. The reason is that $e(t)$ is sinusoidal:
+a quarter turn covers the quarter of the sine from zero to its peak, whose
+mean is $(2/\pi)$ times the peak, just as for any sinusoid. (The mean of
+$|e|$ over a full period is also $(2/\pi)\hat e$, while the rms is
+$\hat e/\sqrt2$; these three averages must not be confused.)
+
+\textbf{(b)} Without a transformer, at $U=230\unit{V}$,
+\[
+  I=\frac{P}{U}=\frac{50\cdot10^{6}}{230}=2.2\cdot10^{5}\unit{A},\qquad
+  P_{\text{loss}}=I^2R=\boxed{4.7\cdot10^{11}\unit{W}},
+\]
+which is nearly $10^{4}$ times the generated power --- utterly impossible.
+That is itself the answer: without a transformer the line cannot deliver
+the power at all. In general
+\[
+  P_{\text{loss}}=I^2R=\frac{P^2R}{U^2},
+\]
+so the loss scales as $U^{-2}$.
+With $U'=110\unit{kV}$: $I=455\unit{A}$ and
+\[
+  P_{\text{loss}}=(455)^2\cdot10=\boxed{2.1\cdot10^{6}\unit{W}
+  =2.1\unit{MW}},
+\]
+which is $\boxed{4.1\%}$ of $50\unit{MW}$. A transformer needs a
+\emph{changing} flux: for DC, $\Phi\propto I$ is constant, so the secondary
+emf $N_2\,d\Phi/dt=0$. DC cannot be transformed, which is why HVDC links
+convert to AC or use power electronics at both ends. Raising the voltage
+is a cost trade: line loss falls as $U^{-2}$ while insulation, tower height
+and clearances cost grows with $U$. The optimum balances the two. It is not
+about transformer efficiency, which already exceeds $99\%$.
+
+%======================================================================
+\problem{9}{FY7}
+\textbf{(a)} Let the rod slide down the incline at speed $v$. The field is
+perpendicular to the rail plane, so
+$\mathcal{E}=BLv$, $I=BLv/R$, and the magnetic force on the rod is
+$F=BIL=B^2L^2v/R$, directed \emph{up} the incline.
+
+\emph{i.} Terminal speed follows from $mg\sin\theta=B^2L^2v_t/R$:
+\[
+  v_t=\frac{mgR\sin\theta}{B^2L^2}
+  =\frac{0.20\cdot9.81\cdot0.30\cdot0.500}{1.2^2\cdot0.30^2}
+  =\boxed{2.27\unit{m/s}} .
+\]
+\emph{ii.}
+$I=BLv_t/R=1.2\cdot0.30\cdot2.27/0.30=\boxed{2.73\unit{A}}$. Electrical
+power
+\[
+  P_e=I^2R=2.73^2\cdot0.30=\boxed{2.23\unit{W}},
+\]
+while the mechanical power released is
+$mg\sin\theta\,v_t=0.981\cdot2.27=2.23\unit{W}$. \checkmark
+
+\emph{iii.} Pushed up at $2.0\unit{m/s}$, the motional emf is
+$\mathcal{E}=BLv=1.2\cdot0.30\cdot2.0=0.72\unit{V}$, so
+$I=0.72/0.30=\boxed{2.4\unit{A}}$, and the magnetic force is now
+\emph{down} the incline, $BIL=1.2\cdot2.4\cdot0.30=0.864\unit{N}$. The
+external force must overcome both:
+\[
+  F=mg\sin\theta+BIL=0.981+0.864=\boxed{1.85\unit{N}} .
+\]
+Power balance: the external power $Fv=1.85\cdot2.0=3.69\unit{W}$ splits
+into $mg\sin\theta\,v=1.96\unit{W}$ of potential energy and
+$I^2R=2.4^2\cdot0.30=1.73\unit{W}$ of Joule heat, and $1.96+1.73=3.69$.
+\checkmark\ The magnetic force itself does no net work: it converts
+mechanical energy into electrical energy at exactly the rate it is
+dissipated.
+
+\emph{iv.} With $\mathbf B$ vertical, the flux through the loop is
+$BA_\perp$ with $A_\perp=A\cos\theta$, so
+\[
+  \mathcal{E}=\frac{d\Phi}{dt}=BLv\cos\theta . \tag{$\ast$}
+\]
+A current $I=BLv\cos\theta/R$ flows, and the magnetic force
+$BIL$ is horizontal; its component along the rails is $BIL\cos\theta$, i.e.
+\[
+  F_{\parallel}=\frac{B^2L^2v\cos^2\theta}{R}.
+\]
+Setting $F_{\parallel}=mg\sin\theta$ gives
+\[
+  v_t=\frac{mgR\sin\theta}{B^2L^2\cos^2\theta}
+  =\frac{v_{t,\perp}}{\cos^2\theta},
+\]
+so with $\theta=30^\circ$ the terminal speed is larger by $4/3$:
+$\boxed{3.03\unit{m/s}}$. The extra factor of $1/\cos^2\theta$ has two
+independent origins: only the component $B\cos\theta$ perpendicular to the
+plane produces motional emf, and only the component $\cos\theta$ of the
+magnetic force lies along the rails. Both must be compensated, hence the
+square. (Check: with $\theta=0$ the expression reduces to the previous
+case, as it must.)
+
+\textbf{(b)} \emph{i.}
+$\sin\theta_c=n_{cl}/n_c=1.45/1.46=0.99315$, so
+$\theta_c=83.3^\circ$ from the normal, i.e.\ $6.7^\circ$ from the axis.
+The numerical aperture is
+\[
+  \mathrm{NA}=\sqrt{n_c^2-n_{cl}^2}=\sqrt{2.916-2.9025}=0.171,
+\]
+so the acceptance angle in air is $\arcsin(\mathrm{NA})=9.8^\circ$. (The
+numerical aperture is defined for the external medium; inside the core the
+limiting ray makes $\arcsin(\mathrm{NA}/n_c)=6.7^\circ$ with the axis.)
+
+\emph{ii.} At the limiting internal angle the geometric path in
+$1.00\unit{m}$ of fibre is $1.00/\cos6.71^\circ=1.0069\unit{m}$, i.e.\
+$0.69\unit{cm}$ extra. The delay relative to the axial ray is
+\[
+  \Delta t=\frac{\Delta L\,n_c}{c}
+  =\frac{0.00690\cdot1.46}{3.00\cdot10^{8}}
+  =\boxed{3.4\cdot10^{-11}\unit{s/m}},
+\]
+i.e.\ $34\unit{ps}$ per metre, or $34\unit{ns}$ per kilometre. Different
+modes therefore arrive at slightly different times, so successive pulses
+smear into each other (modal dispersion) and the bit rate is limited. In a
+step-index fibre with a larger NA ($\approx0.3$) the spread is tens of
+ns/km, which is severe. A graded-index core makes the longer paths travel through
+lower-index glass near the cladding, where the light is faster, so the
+transit times are approximately equalised.
+
+\emph{iii.} $A/A_0=10^{-\alpha d/10}=10^{-0.25\cdot10/10}=10^{-0.25}
+=\boxed{0.56}$, so about $44\%$ is lost over $10\unit{km}$. Silica
+absorbs light by exciting electrons, which needs a photon energy above a
+threshold --- in practice, in the ultraviolet. Violet photons ($h\nu
+\approx2.5\unit{eV}$) are closer to that threshold and are scattered and
+absorbed more strongly, while infrared photons ($\approx0.8\unit{eV}$) have
+too little energy for electronic transitions and are absorbed only by weak
+vibrational tails. That is why the attenuation minimum sits at
+$1.3$--$1.55\unit{\mu m}$ and why long-haul fibres use infrared.
+
+%======================================================================
+\problem{10}{FY8}
+\textbf{(a) i.} $E=hc/\lambda$ with $hc=1240\unit{eV\,nm}$:
+\[
+  E_1=\frac{1240}{589.0}=2.1050\unit{eV},\qquad
+  E_2=\frac{1240}{589.6}=2.1029\unit{eV},
+\]
+so $\Delta E=2.1\unit{meV}$ and
+\[
+  \Delta f=\frac{\Delta E}{h}=\Delta E\cdot\frac{1\unit{eV}}{h}
+  =\boxed{5.2\cdot10^{2}\unit{GHz}}.
+\]
+(Equivalently $\Delta f\approx f\,\Delta\lambda/\lambda
+=5.09\cdot10^{14}\cdot(0.6/589)=5.2\cdot10^{11}\unit{Hz}$.)
+
+\textbf{ii.} The grating constant is
+$d=(1/600)\unit{mm}=1.667\unit{\mu m}$, and $d\sin\theta=k\lambda$:
+\[
+  \sin\theta_1=\frac{589.3\unit{nm}}{1.667\unit{\mu m}}=0.3536
+  \Rightarrow\theta_1=20.7^\circ,
+\]
+\[
+  \sin\theta_2=0.7071\Rightarrow\theta_2=45.0^\circ,\qquad
+  \sin\theta_3=1.061>1\ \text{(no third order)} .
+\]
+So only orders $k=0,1,2$ exist. To resolve the doublet in first order,
+$R=\lambda/\Delta\lambda=589.3/0.6=982=kN$ with $k=1$ requires
+$N=\boxed{9.8\cdot10^{2}}$ illuminated lines, i.e.\ about
+$1.6\unit{mm}$ of grating.
+
+\textbf{iii.} Threshold wavelength
+$\lambda_{\max}=hc/W=1240/2.28=\boxed{544\unit{nm}}$. At $500\unit{nm}$,
+\[
+  E_k^{\max}=\frac{1240}{500}-2.28=2.48-2.28=\boxed{0.20\unit{eV}},
+\]
+and the stopping potential is $\boxed{0.20\unit{V}}$. All three are
+\emph{independent} of intensity; the intensity controls the \emph{number}
+of photoelectrons per second (the photocurrent), not their maximum energy.
+This is the content of Einstein's explanation: photon energy depends only
+on frequency.
+
+\textbf{(b) i.}
+\[
+  \Delta m=(2.014102+3.016049)-(4.002602+1.008665)
+  =0.018884\unit{u},
+\]
+\[
+  Q=0.018884\cdot931.494=\boxed{17.59\unit{MeV}} .
+\]
+Taking the deuteron as the consumed fuel,
+\[
+  \frac{Q}{m_D}
+  =\frac{17.59\cdot1.6022\cdot10^{-13}\unit{J}}
+         {2.014102\cdot1.6605\cdot10^{-27}\unit{kg}}
+  =\boxed{8.4\cdot10^{13}\unit{J/kg}} .
+\]
+Fission of U-235 at $200\unit{MeV}$ per nucleus gives
+$8.2\cdot10^{13}\unit{J/kg}$ of uranium, so \emph{per kilogram of fuel
+consumed} the two are within a factor $10$ of each other --- the familiar
+claim that fusion releases ``millions of times'' more energy is per kilogram
+of the light \emph{reagents} only if one compares with chemical fuels, not
+with fission. The decisive advantage of fusion is not the energy per kg but
+the abundance of deuterium. Coal at $3.0\cdot10^{7}\unit{J/kg}$ is a factor
+$2.8\cdot10^{6}$ worse: $1\unit{kg}$ of deuterium releases as much as about
+$2.8\cdot10^{6}\unit{kg}$ of coal.
+
+\textbf{ii.} With $P=2.5\cdot10^{9}\unit{W}$ and
+$Q=17.59\unit{MeV}=2.818\cdot10^{-12}\unit{J}$,
+\[
+  \dot N=\frac{P}{Q}=\boxed{8.9\cdot10^{20}\unit{s^{-1}}} .
+\]
+In one year ($3.156\cdot10^{7}\unit{s}$) that consumes
+$2.80\cdot10^{28}$ deuterons, i.e.\
+\[
+  m_D=2.80\cdot10^{28}\cdot2.014\unit{u}=\boxed{94\unit{kg}} .
+\]
+At $33\unit{g}$ of D per $\unit{m^3}$ of seawater this is about
+$2.8\cdot10^{3}\unit{m^3}$ --- a swimming pool per GW-plant-year. Fuel
+supply is emphatically \emph{not} the limiting problem; achieving and
+sustaining the plasma conditions is.
+
+\textbf{(c) i.} Here $t=12.0\unit{h}=0.500\unit{d}$, so
+$t/T_{1/2}=0.500/8.02=0.06234$ and
+\[
+  A=A_0\,2^{-t/T_{1/2}}=20.0\cdot2^{-0.06234}
+  =\boxed{19.2\unit{GBq}},
+\]
+a fall of only $4.2\%$. The number of nuclei falls by the same $4.2\%$,
+which is why it ``does not visibly change'': $\lambda$ is tiny on this time
+scale. With $\lambda=\ln2/T_{1/2}=1.0003\cdot10^{-6}\unit{s^{-1}}$ and
+$N_0=A_0/\lambda$,
+\[
+  N_0=\frac{20.0\cdot10^{9}}{1.0003\cdot10^{-6}}
+  =\boxed{2.0\cdot10^{16}} .
+\]
+That corresponds to only about $4\unit{\mu g}$ of ${}^{131}\mathrm{I}$:
+the activity is high because the decay constant is large, not because much
+material is present.
+
+\textbf{ii.} Imaging needs radiation that \emph{leaves} the body.
+${}^{131}\mathrm{I}$ is taken up by thyroid tissue, and its \emph{gamma}
+rays ($364\unit{keV}$) penetrate tissue and reach an external camera; its
+eight-day half-life matches the uptake biology while decaying away
+afterwards. An $\alpha$ emitter would be stopped within a few
+$\unit{\mu m}$ of the tissue that absorbed it --- no image, but a large
+local dose. Alpha emitters are useful for targeted \emph{therapy}, not
+imaging.
+
+\textbf{(d)} Gamma: $H=0.20\cdot1=\boxed{0.20\unit{Sv}}$. Alpha:
+$H=0.20\cdot20=\boxed{4.0\unit{Sv}}$, i.e.\ a potentially lethal equivalent
+dose, twenty times the gamma figure for the same absorbed energy. The
+factor $w_R=20$ already encodes the greater biological damage of densely
+ionising tracks. What the grey-to-sievert conversion still ignores is the
+\emph{spatial distribution} of the dose. A body-averaged $0.20\unit{Gy}$
+from gammas is a fairly uniform exposure of all organs; the same average
+delivered by alphas concentrated in the lungs means a much higher local
+dose in a small, radio-sensitive tissue, and the relevant quantity becomes
+the organ dose multiplied by a tissue weighting factor $w_T$ ($\approx
+0.12$ for lung) rather than the whole-body average. In practice an alpha
+dose is always local, so quoting a body-averaged number would understate
+the local effect by orders of magnitude --- which is exactly why inhaled
+alpha emitters such as radon daughters are so hazardous.
+
+\end{document}

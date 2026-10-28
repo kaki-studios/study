@@ -1,0 +1,438 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.15cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist[enumerate]{leftmargin=*,itemsep=0.4em,topsep=0.3em}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\lhead{Physics Practice Examination}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\problem}[3]{%
+  \subsection*{Problem #1 \;\textnormal{\small[#2]}}\label{prob:#3}%
+}
+\newcommand{\unit}[1]{\,\mathrm{#1}}
+
+\newenvironment{parts}{\begin{enumerate}[label=\textbf{\alph*)}]}{\end{enumerate}}
+
+\title{\vspace{-1.4cm}\bfseries Physics Practice Examination\\[2pt]
+\large Finnish Upper Secondary Syllabus (LOPS 2021), Modules FY1--FY8}
+\author{Ten Problems, Weighted Towards FY5--FY8}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.6em}
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{
+\textbf{Suggested time: 4 hours.} \quad 10 problems, 6 points each, 60 points
+total. Calculators and the official formula booklet (\emph{MAOL}) are
+permitted. Full solutions with units are expected; numerical answers to
+2--3 significant figures unless the problem asks for an exact value.
+Problems are \emph{not} in order of difficulty.\\[3pt]
+\textbf{Course mapping:} P1 (FY1) $\cdot$ P2 (FY2) $\cdot$ P3 (FY3) $\cdot$
+P4 (FY4) $\cdot$ P5, P6 (FY5) $\cdot$ P7 (FY6) $\cdot$ P8, P9 (FY7) $\cdot$
+P10 (FY8). Problems 5--10 carry the weight of the higher courses.
+}}
+\end{center}
+
+%======================================================================
+\problem{1}{FY1 --- Measurement, graphical models, uncertainty}{fy1}
+
+A student determines the acceleration of free fall $g$ with a simple pendulum.
+The bob has radius $r$ and hangs on a thread of negligible mass; the
+\emph{effective} length of the pendulum, the quantity that enters the formula
+for the period, is thread length plus bob radius. Little time is available, so
+she makes \emph{one} run at each of five thread lengths and obtains:
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+thread length $l\unit{(m)}$ & period $T\unit{(s)}$\\
+\midrule
+0.200 & 0.914\\
+0.400 & 1.287\\
+0.600 & 1.573\\
+0.800 & 1.813\\
+1.000 & 2.025\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The periods were measured with a photogate that starts and stops the timer
+itself, so the random timing error is at the millisecond level. The angular
+amplitude was $20.0^\circ$ in every run, with a reading uncertainty of
+$\pm0.5^\circ$.
+
+\begin{parts}
+\item Explain why plotting $T^2$ against $l$, rather than $T$ against $l$,
+      gives a straight line, and state what theory predicts for the slope and
+      the intercept of that line (keep $r$ as a symbol).
+\item Determine $g$ and its uncertainty from the scatter of the points about
+      the fitted line. Quote $g\pm\Delta g$ with a sensible number of
+      significant figures.
+\item Determine the bob radius $r$ from the intercept, and judge whether the
+      intercept is significantly different from zero.
+\item Your value turns out to be about $1.4\%$ below $9.81\unit{m/s^2}$. Show
+      quantitatively that the finite angular amplitude accounts for this, and
+      compute the corrected result. Then state, in the language of
+      measurement error, what kind of error this is, what it did to the
+      estimate of $g$, and whether it is visible in the uncertainty of
+      part (b). Finally, say what the experimenter should have done instead,
+      given that the photogate is already available.
+\end{parts}
+
+%======================================================================
+\problem{2}{FY2 --- Energy production, power, efficiency}{fy2}
+
+A wind farm is planned with turbines of rotor diameter $D=120\unit{m}$ in air
+of density $\rho=1.20\unit{kg/m^3}$. The wind is described by a Rayleigh
+distribution, i.e.\ it is characterised by its mean speed $\bar v$, here
+$\bar v=7.5\unit{m/s}$. In such a distribution the mean of the \emph{cube} of
+the speed exceeds the cube of the mean speed:
+$\overline{v^3}=\tfrac{6}{\pi}\,\bar v^{\,3}$. Each turbine delivers a rated
+electrical power $P_{\text{rated}}=2.50\unit{MW}$ above a certain wind speed,
+and the farm's annual capacity factor is $0.35$. Finnish electricity
+consumption is about $90\unit{TWh}$ per year, and coal condensing power emits
+about $0.90\unit{kg}$ of CO$_2$ per kWh.
+
+\begin{parts}
+\item Derive the power flowing through the rotor disc,
+      $P_w=\tfrac12\rho A v^3$, from dimensional and physical reasoning, and
+      evaluate it at $v=12\unit{m/s}$. Why can no turbine extract all of it?
+      State the Betz limit and compare it with the fraction your turbine
+      actually achieves at $12\unit{m/s}$.
+\item A turbine's average output is
+      $\overline{P}=\tfrac12\rho A\,\overline{v^3}\,C_p$, where $C_p$ is the
+      power coefficient. Compute first $\tfrac12\rho A\bar v^{\,3}$, then the
+      correct average available power, and hence $C_p$. Check that $C_p$ is
+      below the Betz limit, and explain in one sentence why using
+      $\bar v^{\,3}$ instead of $\overline{v^3}$ here would be an error, and
+      in which direction.
+\item Compute the annual electrical energy of one turbine in GWh, the number
+      of turbines needed for $1.0\%$ of Finnish consumption, and the CO$_2$
+      avoided per turbine-year relative to coal power.
+\item On one site the wind alternates between $5\unit{m/s}$ and
+      $10\unit{m/s}$, half the time each, so the mean speed is
+      $7.5\unit{m/s}$. Show that this site yields more average power than a
+      site with a perfectly steady $7.5\unit{m/s}$ wind, and give the ratio.
+      Then explain why a real turbine nevertheless does not deliver its
+      maximum power at the highest wind speeds.
+\end{parts}
+
+%======================================================================
+\problem{3}{FY3 --- Thermodynamics, ideal gas, heat}{fy3}
+
+A hot-air balloon has envelope volume $V=2.2\cdot10^{3}\unit{m^3}$. The air
+outside is at $T_0=20.0^\circ$C and pressure $p_0=101.3\unit{kPa}$; the molar
+mass of air is $M=29.0\unit{g/mol}$. The envelope material has mass
+$180\unit{kg}$; basket and burner together have mass $90\unit{kg}$. The
+pressure inside equals the pressure outside at the open mouth, so the internal
+density follows from the ideal gas law. Take $c_p=1.005\unit{kJ/(kg\,K)}$ for
+air and $R=8.314\unit{J/(mol\,K)}$.
+
+\begin{parts}
+\item Compute the density of the outside air.
+\item What must the average temperature of the air inside the balloon be for
+      the balloon to carry a payload of $350\unit{kg}$?
+\item The fabric is rated for at most $120^\circ$C. What is the largest
+      payload the balloon can lift?
+\item In steady flight the burner heats air entering through the mouth at
+      $0.45\unit{m^3/s}$ (measured at the internal temperature) and expels it
+      at the top. Estimate the burner power needed to hold the temperature
+      found in part (b). State the main approximation, and say qualitatively
+      why the true figure is somewhat larger.
+\end{parts}
+
+%======================================================================
+\problem{4}{FY4 --- Forces, Newton's laws, energy, momentum}{fy4}
+
+Two blocks are connected by a light, inextensible string over a frictionless
+ideal pulley. Block A, $m_A=4.00\unit{kg}$, slides on a plane inclined at
+$\theta=30.0^\circ$; block B, $m_B=3.00\unit{kg}$, hangs vertically. The
+coefficients of friction between A and the plane are $\mu_s=0.25$ and
+$\mu_k=0.20$. The system is released from rest, and B falls a distance
+$h=0.80\unit{m}$ before hitting the floor.
+
+\begin{parts}
+\item Show that the system really does start to move as described, with block
+      B going down, and compute the acceleration of the blocks and the
+      tension in the string while B falls.
+\item Compute the speed with which B strikes the floor, and verify the answer
+      with an energy balance for the whole system, listing every term.
+\item After B has landed the string goes slack. Determine how much further
+      block A slides up the plane before stopping, and whether A then stays
+      put. Justify your answer with the numbers.
+\item A now slides back down. Show that it returns to the position it had at
+      the instant B landed, and find its speed there. At that instant the
+      string snaps taut, jerking B (still lying on the floor) into motion.
+      Determine the common speed of the blocks immediately afterwards and the
+      impulse transmitted by the string, and show that the fraction of
+      kinetic energy lost is $m_B/(m_A+m_B)$. Then determine what happens in
+      the next instant, and explain why the system does not simply continue
+      to move together.
+\end{parts}
+
+%======================================================================
+\problem{5}{FY5 --- Circular motion, gravitation, oscillations}{fy5}
+
+The International Space Station orbits at an altitude of $400\unit{km}$. Use
+$M_E=5.97\cdot10^{24}\unit{kg}$, $R_E=6.371\cdot10^{6}\unit{m}$ and
+$G=6.674\cdot10^{-11}\unit{N\,m^2/kg^2}$. Ignore air drag except where asked.
+
+\begin{parts}
+\item Compute the orbital speed, the orbital period, and the local
+      gravitational field strength at the station's altitude.
+\item Show that for a circular orbit of radius $r$ the kinetic energy of a
+      body of mass $m$ equals $-\tfrac12U$, where $U$ is its gravitational
+      potential energy with $U\to0$ at infinity. The station has mass
+      $4.2\cdot10^{5}\unit{kg}$; compute its total mechanical energy. Then
+      compute the escape speed from $400\unit{km}$ and explain, using
+      $K=-\tfrac12U$, why it exceeds the orbital speed by exactly
+      $\sqrt2$.
+\item How much work must be done \emph{on} the station to lower it from
+      $400\unit{km}$ to $399\unit{km}$? Hence estimate the changes in $v$ and
+      in the period, and explain the sign of the change in $v$ --- in
+      particular why a decelerating manoeuvre makes the station go
+      \emph{faster}.
+\item A crew member in a planned rotating habitat of angular speed
+      $\omega=0.256\unit{rad/s}$ sleeps with head towards the rotation axis,
+      feet against the outer wall at radius $R_s=50.0\unit{m}$. Compute the
+      artificial gravity at the feet, and show that it is $3.6\%$ weaker at
+      the head of a person $1.80\unit{m}$ tall. Why is this gradient a
+      problem, and what does it imply about the size of a healthy rotating
+      habitat?
+\item A $3.00\unit{m}$ pendulum hangs in that habitat. What is its
+      small-oscillation period, and how does it compare with the same
+      pendulum on Earth?
+\end{parts}
+
+%======================================================================
+\problem{6}{FY5 --- Sound, resonance, superposition}{fy5s}
+
+A tuning fork marked $440\unit{Hz}$ produces sound whose displacement
+amplitude at a nearby point is $0.500\unit{mm}$; the speed of sound in air is
+$343\unit{m/s}$. In a resonance-tube experiment with a closed pipe (one open
+end) the first two resonances of this fork occur at effective pipe lengths
+$l_1=0.182\unit{m}$ and $l_2=0.572\unit{m}$.
+
+\begin{parts}
+\item Compute the maximum speed and maximum acceleration of the air
+      molecules, and the wavelength of the sound. Show that
+      $\lambda=2(l_2-l_1)$, and compute the speed of sound from the
+      measurement.
+\item The first resonance is found at a tube length \emph{smaller} than the
+      $\lambda/4$ one would predict for an ideal pipe. Explain the physical
+      reason and determine the end correction $\Delta l$. Using
+      $\Delta l\approx0.6\,r$ for a flanged open end, estimate the tube
+      radius. Why does $\Delta l$ cancel out of $\lambda=2(l_2-l_1)$ but not
+      out of $\Delta l=l_{\text{ideal}}-l_1$?
+\item The same fork is sounded together with a second fork and beats of
+      $4.0\unit{Hz}$ are heard. What are the possible frequencies of the
+      second fork? Describe an experiment that decides between them, and
+      state how many beats are heard in $5.0\unit{s}$ for
+      $f_2=444\unit{Hz}$.
+\item The experiment is repeated in a room filled with carbon dioxide and the
+      first resonance is then at $l_1=0.140\unit{m}$. Assuming the same end
+      correction, determine the speed of sound in CO$_2$ and compare it with
+      the value predicted from $v=\sqrt{\gamma RT/M}$ using
+      $\gamma_{\text{CO}_2}=1.30$, $M_{\text{CO}_2}=44.0\unit{g/mol}$ and the
+      corresponding air values $\gamma=1.40$, $M=29.0\unit{g/mol}$.
+      Would the beat frequency of part (c) change in CO$_2$?
+\end{parts}
+
+%======================================================================
+\problem{7}{FY6 --- DC circuits and capacitors}{fy6}
+
+In the circuit below, $E=12.0\unit{V}$, the battery's internal resistance is
+$r=3.0\unit{\Omega}$, $R_1=18\unit{\Omega}$, $R_2=22\unit{\Omega}$,
+$R_3=15\unit{\Omega}$ and $C=2.2\unit{\mu}$F. The capacitor has negligible
+leakage, and the circuit has been connected for a long time.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95,>=latex,every node/.style={font=\small}]
+  \draw (0,0) -- (0,1.75);
+  \draw[line width=1.2pt] (-0.32,2.10) -- (0.32,2.10);
+  \draw[line width=2.4pt] (-0.16,1.75) -- (0.16,1.75);
+  \draw (0,2.10) -- (0,4.20);
+  \node[left] at (-0.40,1.92) {$E,r$};
+  \draw (0,4.20) -- (4,4.20) -- (4,3.65);
+  \node[draw,minimum width=1.2cm,minimum height=0.45cm] at (4,3.42) {$R_3$};
+  \draw (4,3.20) -- (4,2.70);
+  \fill (4,2.70) circle (2pt);
+  \draw (4,2.70) -- (9,2.70);
+  \node[draw,minimum width=1.2cm,minimum height=0.45cm] at (4,1.35) {$R_1$};
+  \draw (4,2.70) -- (4,1.58); \draw (4,1.12) -- (4,0);
+  \node[draw,minimum width=1.2cm,minimum height=0.45cm] at (6.5,1.35) {$R_2$};
+  \draw (6.5,2.70) -- (6.5,1.58); \draw (6.5,1.12) -- (6.5,0);
+  \node[draw,minimum width=0.9cm,minimum height=0.45cm] at (9,1.35) {$C$};
+  \draw (9,2.70) -- (9,1.58); \draw (9,1.12) -- (9,0);
+  \draw (0,0) -- (9,0);
+\end{tikzpicture}\\[1pt]
+{\small The pair $R_1\parallel R_2$ is in series with $R_3$ and the internal
+resistance; the capacitor is in parallel with that pair.}
+\end{center}
+
+\begin{parts}
+\item Determine the total current, the terminal voltage of the battery, the
+      current in each of $R_1$ and $R_2$, and the charge and energy stored in
+      the capacitor.
+\item Compute the power dissipated in every resistor, verify energy
+      conservation, and determine the circuit's efficiency, defined as the
+      fraction of the chemical power that is dissipated in the external
+      resistors.
+\item A voltmeter of finite resistance $R_V$ is connected across the parallel
+      pair. Derive how the reading depends on $R_V$, evaluate it for
+      $R_V=200\unit{\Omega}$ and $R_V=30\unit{\Omega}$, and explain why these
+      readings are systematically too small. What would you require of $R_V$
+      for a $1\%$ error?
+\item An LED with forward voltage $2.0\unit{V}$ and rated current
+      $20\unit{mA}$ is to be run from a separate $9.0\unit{V}$ battery of
+      negligible internal resistance. Explain why a diode's
+      current--voltage characteristic makes a series resistor necessary, and
+      determine its resistance and the power it dissipates. What happens if
+      the LED is connected the wrong way round, and why does the current fall
+      as such a battery discharges?
+\end{parts}
+
+%======================================================================
+\problem{8}{FY7 --- Induction, generators, transformers}{fy7}
+
+\begin{parts}
+\item A $100$-turn coil of cross-sectional area $1.22\cdot10^{-2}\unit{m^2}$
+      rotates at $3000$ revolutions per minute in a uniform field of
+      $0.85\unit{T}$. Derive the induced emf as a function of time, and
+      compute the peak and rms values. Explain why the peak emf exceeds the
+      average emf over a quarter turn by exactly the factor you find, and
+      state the physical reason for the factor.
+\item That generator feeds a $50\unit{MW}$ load. Electricity is transmitted
+      through a line of total resistance $10\unit{\Omega}$. Compute the line
+      loss both without a transformer (applying the coil's own rms voltage)
+      and with the voltage raised to $110\unit{kV}$, and give the lost
+      fraction of the power in each case. Why can a transformer not be used
+      with a DC source? Why is the transmission voltage a question of
+      \emph{cost}, not of the transformer's efficiency, and what fixes the
+      practical upper limit on it?
+\end{parts}
+
+%======================================================================
+\problem{9}{FY7 --- Induction, wave optics, optical fibre}{fy7b}
+
+\begin{parts}
+\item A straight metal rod of mass $m=0.20\unit{kg}$ and length
+      $L=0.30\unit{m}$ slides on two parallel, frictionless, perfectly
+      conducting rails inclined at $30.0^\circ$ to the horizontal. The rails
+      are joined at the top by a resistor $R=0.30\unit{\Omega}$, so the rod
+      and resistor form a closed loop. A uniform magnetic field of magnitude
+      $B=1.2\unit{T}$ is applied perpendicular to the plane of the rails. The
+      rod is released from rest.
+      \begin{enumerate}[label=\roman*.]
+      \item Derive the terminal speed and compute it.
+      \item At the terminal speed, compute the current and verify that the
+            electrical power equals the rate of loss of mechanical energy.
+      \item From the terminal state, an external force pushes the rod
+            \emph{up} the incline at a constant $2.0\unit{m/s}$. Find the
+            required force and the current, and account for the power balance
+            among the three energy channels.
+      \item Now suppose the field is \emph{vertical} (magnitude $1.2\unit{T}$)
+            while the rails still lie in the inclined plane. Explain why a
+            current \emph{does} flow (compute $\mathcal{E}=BLv\cos\theta$),
+            and show that the terminal speed is larger by the factor
+            $1/\cos^2\theta$ than in the perpendicular case. Why does the
+            magnetic force now need a component along the rails of
+            $mg\sin\theta$, and where does the extra factor of $1/\cos\theta$
+            come from?
+      \end{enumerate}
+\item Light of vacuum wavelength $\lambda=500\unit{nm}$ enters a
+      $1.00\unit{m}$ long silica fibre whose core has index $n_c=1.46$ and
+      cladding $n_{cl}=1.45$.
+      \begin{enumerate}[label=\roman*.]
+      \item Determine the critical angle at the core--cladding boundary, and
+            the greatest angle to the fibre \emph{axis} at which light is
+            still guided inside the core. Hence compute the numerical
+            aperture $\mathrm{NA}=\sqrt{n_c^2-n_{cl}^2}$ and the acceptance
+            angle in air.
+      \item For a ray at that limiting angle, compute the geometric path
+            length in $1.00\unit{m}$ of fibre and the time delay per kilometre
+            relative to the axial ray. Why does this effect limit the bit rate
+            of a step-index fibre, and what does a graded-index core do about
+            it?
+      \item The attenuation at $500\unit{nm}$ is $0.25\unit{dB/km}$. Compute
+            the transmitted fraction after $10\unit{km}$. Then explain why
+            silica fibres transmit infrared far better than violet, using the
+            idea that absorption requires a photon energy matching an
+            electronic transition.
+      \end{enumerate}
+\end{parts}
+
+%======================================================================
+\problem{10}{FY8 --- Quantisation, atoms, nuclei, radiation}{fy8}
+
+\begin{parts}
+\item A sodium lamp emits the doublet at $589.0\unit{nm}$ and
+      $589.6\unit{nm}$.
+      \begin{enumerate}[label=\roman*.]
+      \item Compute the photon energies in $\unit{eV}$, their difference in
+            $\unit{meV}$, and the frequency difference in $\unit{GHz}$.
+      \item The light passes through a grating with $600$ lines per
+            millimetre. Determine all diffraction maxima that exist and their
+            angles, and how many lines must be illuminated to resolve the
+            doublet in first order.
+      \item Light of $500\unit{nm}$ falls on a metal with work function
+            $2.28\unit{eV}$. Compute the threshold wavelength, the maximum
+            kinetic energy of the photoelectrons and the stopping potential.
+            Which of these quantities is independent of the light's intensity,
+            and what does the intensity control instead?
+      \end{enumerate}
+\item The D--T fusion reaction is
+      ${}^{2}\mathrm{H}+{}^{3}\mathrm{H}\to{}^{4}\mathrm{He}+n$, with masses
+      $2.014102$, $3.016049$, $4.002602$ and $1.008665\unit{u}$, where
+      $1\unit{u}=931.494\unit{MeV}/c^2$.
+      \begin{enumerate}[label=\roman*.]
+      \item Compute the energy released per reaction in MeV and, taking only
+            the deuterium as fuel, the energy density in J/kg. Compare it
+            with U-235 fission ($\approx200\unit{MeV}$ per nucleus) and with
+            coal ($\approx30\unit{MJ/kg}$).
+      \item A fusion plant produces $2.5\unit{GW}$ of fusion power. How many
+            reactions per second does that require, and what mass of
+            deuterium per year? Assuming seawater contains about
+            $33\unit{g}$ of deuterium per cubic metre, estimate the volume of
+            seawater needed per year, and judge whether fuel supply is the
+            limiting engineering problem.
+      \end{enumerate}
+\item A ${}^{131}\mathrm{I}$ sample of activity $20.0\unit{GBq}$ is prepared
+      for a patient; the half-life is $8.02\unit{d}$.
+      \begin{enumerate}[label=\roman*.]
+      \item What activity remains after $12.0\unit{h}$? Explain with
+            $N=N_0e^{-\lambda t}$ why the number of nuclei in the sample does
+            not visibly change over that time, and compute the initial number
+            of nuclei.
+      \item Why is ${}^{131}\mathrm{I}$ --- a $\beta^-$ and $\gamma$ emitter
+            with an eight-day half-life --- well suited to thyroid imaging,
+            whereas a pure $\alpha$ emitter of the same activity would be
+            useless for it?
+      \end{enumerate}
+\item One patient absorbs $0.20\unit{Gy}$ from a gamma source distributed
+      through the body; another absorbs the same $0.20\unit{Gy}$ from alpha
+      emitters concentrated in lung tissue. Compute the equivalent dose in
+      each case using $\mathrm{Sv}=\mathrm{Gy}\cdot w_R$, with $w_R=1$ for
+      photons and $w_R=20$ for alpha particles, and judge which case carries
+      the greater health risk in terms of \emph{equivalent} dose. Then state
+      the further factor this conversion ignores and which makes the two cases
+      differ even more.
+\end{parts}
+
+\end{document}
